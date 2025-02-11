@@ -1,0 +1,83 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build",
+            "command": "emcc",
+            "args": [
+                "src/polyfill.c", 
+                "src/breakout/main.c", 
+                "src/breakout/BallObject.c", 
+                "src/breakout/Collision.c", 
+                "src/breakout/Game.c",
+                "src/breakout/GameLevel.c", 
+                "src/breakout/GameObject.c",
+                "src/breakout/Particle.c",
+                "src/breakout/ParticleGenerator.c",
+                "libs/dna/src/glad.c",
+                "libs/dna/src/tglm.c",
+                "libs/dna/src/game.c",
+                "libs/dna/src/shader.c",
+                "libs/dna/src/texture2d.c",
+                "libs/dna/src/arrayrenderer.c",
+                "libs/dna/src/elementrenderer.c",
+                "libs/dna/src/resourcemanager.c",
+                "libs/cfw/src/cfw.c",
+                "libs/cfw/src/cfwfs.c",
+                "libs/cfw/src/bitvector.c",
+                "libs/cfw/src/uuid.c",
+                "libs/cfw/src/random.c",
+                "libs/libcorefw.bc",
+                "libs/libBlocksRuntime.bc",
+                "-std=c18",
+                "-fblocks",
+                "-fenable-matrix",
+                "-Ilibs/cfw/include",
+                "-Ilibs/util/include",
+                "-Ilibs/dna/include",
+                "-Iexternal/stb",
+                "-Iinclude",
+                "-Iinclude/breakout",
+                "-s", "WASM=1",
+                "-s", "USE_WEBGL2=1",
+                "-s", "USE_GLFW=3",
+                "-o", "docs/index.html",
+                "--use-preload-plugins",
+                "--preload-file", "data/shaders/es/elementrender.fs",
+                "--preload-file", "data/shaders/es/elementrender.vs",
+                "--preload-file", "data/shaders/es/triangle.fs",
+                "--preload-file", "data/shaders/es/triangle.vs",
+                "--preload-file", "data/shaders/es/sprite.fs",
+                "--preload-file", "data/shaders/es/sprite.vs",
+                "--preload-file", "data/textures/block.png",
+                "--preload-file", "data/textures/paddle.png",
+                "--preload-file", "data/textures/block_solid.png",
+                "--preload-file", "data/textures/awesomeface.png",
+                "--preload-file", "data/textures/background.png",
+                "--preload-file", "data/levels/one.lvl",
+                "--preload-file", "data/levels/two.lvl",
+                "--preload-file", "data/levels/three.lvl",
+                "--preload-file", "data/levels/four.lvl",
+
+            ],
+
+            "problemMatcher": {
+                "owner": "emcc",
+                "fileLocation": ["relative", "${workspaceFolder}"],
+                "pattern": {
+                    "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+                    "file": 1,
+                    "line": 2,
+                    "column": 3,
+                    "severity": 4,
+                    "message": 5
+                }
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+
+            }
+        }
+    ]
+}

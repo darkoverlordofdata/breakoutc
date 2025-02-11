@@ -1,0 +1,29 @@
+set(SOURCE
+   ${SOURCE}
+   ${CMAKE_CURRENT_SOURCE_DIR}/src/blackboard/blackboard.c
+   ${CMAKE_CURRENT_SOURCE_DIR}/src/blackboard/simpletrigger.c
+   ${CMAKE_CURRENT_SOURCE_DIR}/src/blackboard/trigger.c
+   ${CMAKE_CURRENT_SOURCE_DIR}/src/blackboard/triggermulticondition.c
+   ${CMAKE_CURRENT_SOURCE_DIR}/src/blackboard/triggerstatetype.c
+   ${CMAKE_CURRENT_SOURCE_DIR}/src/core/aspect.c
+   ${CMAKE_CURRENT_SOURCE_DIR}/src/core/component.c
+   ${CMAKE_CURRENT_SOURCE_DIR}/src/core/componentmanager.c
+   ${CMAKE_CURRENT_SOURCE_DIR}/src/core/componenttype.c
+   ${CMAKE_CURRENT_SOURCE_DIR}/src/core/componenttypefactory.c
+   ${CMAKE_CURRENT_SOURCE_DIR}/src/core/entity.c
+   ${CMAKE_CURRENT_SOURCE_DIR}/src/core/entitymanager.c
+   ${CMAKE_CURRENT_SOURCE_DIR}/src/core/entityobserver.c
+   ${CMAKE_CURRENT_SOURCE_DIR}/src/core/entitysystem.c
+   ${CMAKE_CURRENT_SOURCE_DIR}/src/core/manager.c
+   ${CMAKE_CURRENT_SOURCE_DIR}/src/core/world.c
+   ${CMAKE_CURRENT_SOURCE_DIR}/src/managers/groupmanager.c
+   ${CMAKE_CURRENT_SOURCE_DIR}/src/managers/playermanager.c
+   ${CMAKE_CURRENT_SOURCE_DIR}/src/managers/tagmanager.c
+   ${CMAKE_CURRENT_SOURCE_DIR}/src/managers/teammanager.c
+   ${CMAKE_CURRENT_SOURCE_DIR}/src/systems/delayedentityprocessingsystem.c
+   ${CMAKE_CURRENT_SOURCE_DIR}/src/systems/entityprocessingsystem.c
+   ${CMAKE_CURRENT_SOURCE_DIR}/src/systems/intervalentityprocessingsystem.c
+   ${CMAKE_CURRENT_SOURCE_DIR}/src/systems/intervalentitysystem.c
+   ${CMAKE_CURRENT_SOURCE_DIR}/src/systems/voidentitysystem.c
+   PARENT_SCOPE
+)

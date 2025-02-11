@@ -1,0 +1,67 @@
+
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build",
+            "command": "emcc",
+            "args": [
+                "tests/test_oop.c",
+                "tests/oop/animal.c",
+                "tests/oop/cat.c",
+                "tests/oop/dog.c",
+                "libs/dna/src/glad.c",
+                "libs/dna/src/tglm.c",
+                "libs/dna/src/game.c",
+                "libs/dna/src/shader.c",
+                "libs/dna/src/texture2d.c",
+                "libs/dna/src/arrayrenderer.c",
+                "libs/dna/src/elementrenderer.c",
+                "libs/dna/src/resourcemanager.c",
+                "libs/cfw/src/cfw.c",
+                "libs/cfw/src/cfwfs.c",
+                "libs/cfw/src/bitvector.c",
+                "libs/cfw/src/uuid.c",
+                "libs/cfw/src/random.c",
+                "libs/libcorefw.bc",
+                "libs/libBlocksRuntime.bc",
+                "-std=c18",
+                "-fblocks",
+                "-fenable-matrix",
+                "-Ilibs/cfw/include",
+                "-Ilibs/util/include",
+                "-Ilibs/dna/include",
+                "-Iexternal/stb",
+                "-Iinclude",
+                "-s", "WASM=1",
+                "-s", "USE_WEBGL2=1",
+                "-s", "USE_GLFW=3",
+                "-o", "docs/index.html",
+                "--use-preload-plugins",
+                "--preload-file", "data/shaders/es/elementrender.fs",
+                "--preload-file", "data/shaders/es/elementrender.vs",
+                "--preload-file", "data/shaders/es/triangle.fs",
+                "--preload-file", "data/shaders/es/triangle.vs",
+                "--preload-file", "data/images/background.png",
+            ],
+
+            "problemMatcher": {
+                "owner": "emcc",
+                "fileLocation": ["relative", "${workspaceFolder}"],
+                "pattern": {
+                    "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+                    "file": 1,
+                    "line": 2,
+                    "column": 3,
+                    "severity": 4,
+                    "message": 5
+                }
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+
+            }
+        }
+    ]
+}
