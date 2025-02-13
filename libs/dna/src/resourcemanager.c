@@ -167,7 +167,7 @@ DNAShader* LoadShaderFromFile(
     CFString* vShader = CFFS.readTextFile((char*)vShaderFile);
     CFString* fShader = CFFS.readTextFile((char*)fShaderFile);
     
-    return new (DNAShader, vShader, fShader);
+    return New((DNAShader*)cfw_create(DNAShaderClass), vShader, fShader);
 }
 
 /**
@@ -186,7 +186,7 @@ DNATexture2D* LoadTextureFromFile(
     int format = alpha ? GL_RGBA : GL_RGB;
     int stbiFlag = alpha ? STBI_rgb_alpha : STBI_rgb;
 
-    DNATexture2D* texture = new (DNATexture2D, format, format, (char*)file);
+    DNATexture2D* texture = New((DNATexture2D*)cfw_create(DNATexture2DClass), format, format, (char*)file);
 
     stbi_set_flip_vertically_on_load(true); // tell stb_image.h to flip loaded texture's on the y-axis.
     int width, height, nrChannels;

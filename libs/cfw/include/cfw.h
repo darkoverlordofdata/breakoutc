@@ -4,7 +4,7 @@
  */
 #include <corefw/corefw.h>
 
-#define new(T, args...) New((T*)cfw_create((CFClass*)T##Class), ## args)
+// #define new(T, args...) New((T*)cfw_create((CFClass*)T##Class), ## args)
 #define method __attribute__((overloadable))
 
 #include "cfwfs.h"

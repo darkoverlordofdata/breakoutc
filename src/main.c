@@ -8,7 +8,7 @@ int main(int argc, char *argv[])
 
 	CFRefPool *pool = cfw_new(cfw_refpool);
 
-	Demo *demo = new(Demo, "Demo", 720, 480);
+	Demo *demo = NewDemo("Demo", 720, 480);
 
 	Run(demo);
 

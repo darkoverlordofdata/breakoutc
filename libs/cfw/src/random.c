@@ -75,7 +75,7 @@ method unsigned long NextLong(void)
 {
     if (CFRandomInstance == NULL) {
         unsigned long seed = time(NULL);
-        CFRandomInstance = new(CFRandom, seed);
+        CFRandomInstance = New((CFRandom*)cfw_create(CFRandomClass), seed);
     }
 
     return genrand_int32(CFRandomInstance);
@@ -85,7 +85,7 @@ method double NextDouble(void)
 {
     if (CFRandomInstance == NULL) {
         unsigned long seed = time(NULL);
-        CFRandomInstance = new(CFRandom, seed);
+        CFRandomInstance = New((CFRandom*)cfw_create(CFRandomClass), seed);
     }
     return genrand_real1(CFRandomInstance);
 }

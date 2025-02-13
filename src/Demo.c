@@ -11,6 +11,7 @@ static struct CFClass class = {
     .size = sizeof(Demo),
 };
 const CFClass* DemoClass = &class;
+typedef void (*DemoProc)(Demo* this);
 
 
 // Initial size of the player paddle
@@ -37,7 +38,6 @@ static BallObject* Ball;
 ///// methods
 ////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////
-typedef void (*DemoProc)(Demo* this);
 void* New(Demo* this, char* title, int width, int height)
 {
     static struct DNAGameVtbl overrides = {
@@ -54,7 +54,7 @@ void* New(Demo* this, char* title, int width, int height)
     this->State = GAME_ACTIVE;
     this->width = width;
     this->height = height;
-    ResourceManager = new (DNAResourceManager);
+    ResourceManager = New((DNAResourceManager*)cfw_create(DNAResourceManagerClass));
 
     return (void*)this;
 }
@@ -62,6 +62,7 @@ void* New(Demo* this, char* title, int width, int height)
 method void Initialize(Demo* this)
 {
 }
+
 
 method void LoadContent(Demo* this)
 {
@@ -87,19 +88,20 @@ method void LoadContent(Demo* this)
     LoadTexture(ResourceManager, "Resources/textures/awesomeface.png", true, "face");
     LoadTexture(ResourceManager, "Resources/textures/background.jpg", false, "background");
     // Set render-specific controls
-    Renderer = new (DNAArrayRenderer, GetShader(ResourceManager, "sprite"));
-    // Load levels
 
-    Add(this->Levels, new(GameLevel, "Resources/levels/one.lvl", this->width, this->height * 0.5));
-    Add(this->Levels, new(GameLevel, "Resources/levels/two.lvl", this->width, this->height * 0.5));
-    Add(this->Levels, new(GameLevel, "Resources/levels/three.lvl", this->width, this->height * 0.5));
-    Add(this->Levels, new(GameLevel, "Resources/levels/four.lvl", this->width, this->height * 0.5));
+    Renderer = New((DNAArrayRenderer*)cfw_create(DNAArrayRendererClass), GetShader(ResourceManager, "sprite"));
+
+    // Load levels
+    Add(this->Levels, New((GameLevel*)cfw_create(GameLevelClass), "Resources/levels/one.lvl", this->width, this->height * 0.5));
+    Add(this->Levels, New((GameLevel*)cfw_create(GameLevelClass), "Resources/levels/two.lvl", this->width, this->height * 0.5));
+    Add(this->Levels, New((GameLevel*)cfw_create(GameLevelClass), "Resources/levels/three.lvl", this->width, this->height * 0.5));
+    Add(this->Levels, New((GameLevel*)cfw_create(GameLevelClass), "Resources/levels/four.lvl", this->width, this->height * 0.5));
 
     // Configure game objects
     Vec2 playerPos = (Vec2) { this->width / 2 - PLAYER_SIZE.x / 2, this->height - PLAYER_SIZE.y };
-    Player = new(GameObject, "player", playerPos, PLAYER_SIZE, GetTexture(ResourceManager, "paddle"), WHITE);
+    Player = New((GameObject*)cfw_create(GameObjectClass), "player", playerPos, PLAYER_SIZE, GetTexture(ResourceManager, "paddle"), WHITE);
     Vec2 ballPos = playerPos + (Vec2) { PLAYER_SIZE.x / 2 - BALL_RADIUS, -BALL_RADIUS * 2 };
-    Ball = new (BallObject, ballPos, BALL_RADIUS, INITIAL_BALL_VELOCITY, GetTexture(ResourceManager, "face"));
+    Ball = New((BallObject*)cfw_create(BallObjectClass), ballPos, BALL_RADIUS, INITIAL_BALL_VELOCITY, GetTexture(ResourceManager, "face"));
 }
 
 method void Update(Demo* this)
@@ -274,9 +276,9 @@ static inline Collision* CheckCollision(
     difference = closest - center;
 
     if (glm_length(difference) < one->Radius) // not <= since in that case a collision also occurs when object one exactly touches object two, which they are at the end of each collision resolution stage.
-        return new (Collision, true, ArrayDirection(difference), difference);
+        return New((Collision*)cfw_create(CollisionClass), true, ArrayDirection(difference), difference);
     else
-        return new (Collision, false, UP, (Vec2) { 0, 0 });
+        return New((Collision*)cfw_create(CollisionClass), false, UP, (Vec2) { 0, 0 });
 }
 
 /**

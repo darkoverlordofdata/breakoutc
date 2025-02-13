@@ -183,13 +183,13 @@ method void init(
             if (blockType == 1) // Solid
             {
                 DNATexture2D* tex = GetTexture(ResourceManager, "block_solid");
-                GameObject* obj = new (GameObject, "tile", pos, size, tex, color);
+                GameObject* obj = New((GameObject*)cfw_create(GameObjectClass), "tile", pos, size, tex, color);
                 obj->IsSolid = true;
                 Add(this->Bricks, obj);
             } else if (blockType > 1) // Non-solid; now determine its color based on level data
             {
                 DNATexture2D* tex = GetTexture(ResourceManager, "block");
-                GameObject* obj = new (GameObject, "tile", pos, size, tex, color);
+                GameObject* obj = New((GameObject*)cfw_create(GameObjectClass), "tile", pos, size, tex, color);
                 Add(this->Bricks, obj);
             }
         }

@@ -92,3 +92,9 @@ extern method void ResetLevel(Demo* this);
 extern method void ResetPlayer(Demo* this);
 extern method void Dispose(Demo* this);
 extern method void DoCollisions(Demo* this);
+
+static inline Demo* NewDemo(char* title, int width, int height)
+{
+    return New((Demo*)cfw_create(DemoClass), title, width, height);
+}
+
