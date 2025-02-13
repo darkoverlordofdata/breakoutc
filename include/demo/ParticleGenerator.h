@@ -41,3 +41,8 @@ extern method void init(ParticleGenerator* this);
 extern method GLuint firstUnused(ParticleGenerator* this);
 extern method void respawn(ParticleGenerator* this, Particle* particle, GameObject* object, Vec2 offset);
 extern method char* ToString(ParticleGenerator* this);
+
+static inline ParticleGenerator* NewParticleGenerator(DNAShader* shader, DNATexture2D* texture, int amount)
+{
+    return New((ParticleGenerator*)cfw_create(ParticleGeneratorClass), shader, texture, amount);
+}

@@ -54,7 +54,7 @@ void* New(Demo* this, char* title, int width, int height)
     this->State = GAME_ACTIVE;
     this->width = width;
     this->height = height;
-    ResourceManager = New((DNAResourceManager*)cfw_create(DNAResourceManagerClass));
+    ResourceManager = NewDNAResourceManager();
 
     return (void*)this;
 }
@@ -92,16 +92,16 @@ method void LoadContent(Demo* this)
     Renderer = New((DNAArrayRenderer*)cfw_create(DNAArrayRendererClass), GetShader(ResourceManager, "sprite"));
 
     // Load levels
-    Add(this->Levels, New((GameLevel*)cfw_create(GameLevelClass), "Resources/levels/one.lvl", this->width, this->height * 0.5));
-    Add(this->Levels, New((GameLevel*)cfw_create(GameLevelClass), "Resources/levels/two.lvl", this->width, this->height * 0.5));
-    Add(this->Levels, New((GameLevel*)cfw_create(GameLevelClass), "Resources/levels/three.lvl", this->width, this->height * 0.5));
-    Add(this->Levels, New((GameLevel*)cfw_create(GameLevelClass), "Resources/levels/four.lvl", this->width, this->height * 0.5));
+    Add(this->Levels, NewGameLevel("Resources/levels/one.lvl", this->width, this->height * 0.5));
+    Add(this->Levels, NewGameLevel("Resources/levels/two.lvl", this->width, this->height * 0.5));
+    Add(this->Levels, NewGameLevel("Resources/levels/three.lvl", this->width, this->height * 0.5));
+    Add(this->Levels, NewGameLevel("Resources/levels/four.lvl", this->width, this->height * 0.5));
 
     // Configure game objects
     Vec2 playerPos = (Vec2) { this->width / 2 - PLAYER_SIZE.x / 2, this->height - PLAYER_SIZE.y };
-    Player = New((GameObject*)cfw_create(GameObjectClass), "player", playerPos, PLAYER_SIZE, GetTexture(ResourceManager, "paddle"), WHITE);
+    Player = NewGameObject("player", playerPos, PLAYER_SIZE, GetTexture(ResourceManager, "paddle"), WHITE);
     Vec2 ballPos = playerPos + (Vec2) { PLAYER_SIZE.x / 2 - BALL_RADIUS, -BALL_RADIUS * 2 };
-    Ball = New((BallObject*)cfw_create(BallObjectClass), ballPos, BALL_RADIUS, INITIAL_BALL_VELOCITY, GetTexture(ResourceManager, "face"));
+    Ball = NewBallObject(ballPos, BALL_RADIUS, INITIAL_BALL_VELOCITY, GetTexture(ResourceManager, "face"));
 }
 
 method void Update(Demo* this)
@@ -276,9 +276,9 @@ static inline Collision* CheckCollision(
     difference = closest - center;
 
     if (glm_length(difference) < one->Radius) // not <= since in that case a collision also occurs when object one exactly touches object two, which they are at the end of each collision resolution stage.
-        return New((Collision*)cfw_create(CollisionClass), true, ArrayDirection(difference), difference);
+        return NewCollision(true, ArrayDirection(difference), difference);
     else
-        return New((Collision*)cfw_create(CollisionClass), false, UP, (Vec2) { 0, 0 });
+        return NewCollision(false, UP, (Vec2) { 0, 0 });
 }
 
 /**

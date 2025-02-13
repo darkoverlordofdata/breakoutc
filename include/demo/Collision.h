@@ -31,6 +31,7 @@ typedef enum {
 
 /** Defines a Collision Result Tuple */
 struct Collision {
+    CFObject obj;
     bool IsTrue;
     Direction Dir;
     Vec2 Vec;
@@ -38,3 +39,8 @@ struct Collision {
 
 extern method void* New(Collision* this, bool first, Direction second, Vec2 third);
 extern method char* ToString(Collision* this);
+
+static inline Collision* NewCollision(bool first, Direction second, Vec2 third)
+{
+    return New((Collision*)cfw_create(CollisionClass), first, second, third);
+}

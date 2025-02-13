@@ -37,3 +37,7 @@ extern method bool IsCompleted(GameLevel* this);
 extern method void init(GameLevel* this, CFArray* tileData, GLuint levelWidth, GLuint levelHeight);
 extern method char* ToString(GameLevel* this);
 
+static inline GameLevel* NewGameLevel(GLchar *file, int levelWidth, int levelHeight)
+{
+    return New((GameLevel*)cfw_create(GameLevelClass), file, levelWidth, levelHeight);
+}

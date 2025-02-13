@@ -23,6 +23,7 @@ sudo apt install libglfw3-dev
 - [x] remove all macros
     - [~] method    "__attribute__((overloadable))"
     - [x] new       "new(T, args...) New((T*)cfw_create((CFClass*)T##Class), ## args)"
+    - [x] static inline all constructors for prior change
 - [x] remove *-private.h headers
 
 - [ ] upgrade corefw

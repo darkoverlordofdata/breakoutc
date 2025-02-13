@@ -133,3 +133,8 @@ extern method void SetMatrix(
     DNAShader* this,
     const GLchar* name,
     const Mat* matrix);
+
+static inline DNAShader* NewDNAShader(CFString* vShader, CFString* fShader)
+{
+    return New((DNAShader*)cfw_create(DNAShaderClass), vShader, fShader);
+}

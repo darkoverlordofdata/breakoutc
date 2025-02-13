@@ -39,3 +39,8 @@ extern method void Generate(
 extern method void Bind(const DNATexture2D* this);
 
 extern method char* ToString(const DNATexture2D* this);
+
+static inline DNATexture2D* NewDNATexture2D(GLuint internalFormat, GLuint imageFormat, char* path)
+{
+    return New((DNATexture2D*)cfw_create(DNATexture2DClass), internalFormat, imageFormat, path);
+}

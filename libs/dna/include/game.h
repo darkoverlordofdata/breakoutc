@@ -76,3 +76,8 @@ extern method void Initialize(DNAGame* const this);
 extern method void LoadContent(DNAGame* const this);
 extern method void Update(DNAGame* const this);
 extern method void Draw(DNAGame* const this);
+
+static inline DNAGame* NewDNAGame(char* cstr, int width, int height, void* subclass, struct DNAGameVtbl* vptr)
+{
+    return New((DNAGame*)cfw_create(DNAGameClass), cstr, width, height, subclass, vptr);
+}

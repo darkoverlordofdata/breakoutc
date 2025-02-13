@@ -48,3 +48,8 @@ extern method void Draw(BallObject* this, DNAArrayRenderer* renderer);
 extern method void Move(BallObject* this, GLfloat dt, GLuint window_width);
 extern method void Reset(BallObject* this, Vec2 position, Vec2 velocity);
 extern method char* ToString(BallObject*  this);
+
+static inline BallObject* NewBallObject(Vec2 Position, float Radius, Vec2 Velocity, DNATexture2D* Sprite)
+{
+    return New((BallObject*)cfw_create(BallObjectClass), Position, Radius, Velocity, Sprite);
+}

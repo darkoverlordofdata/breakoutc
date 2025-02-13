@@ -37,3 +37,8 @@ extern method DNATexture2D* LoadTexture(
 extern method DNATexture2D* GetTexture(
     const DNAResourceManager* this,
     const char* name);
+
+static inline DNAResourceManager* NewDNAResourceManager()
+{
+    return New((DNAResourceManager*)cfw_create(DNAResourceManagerClass));
+}

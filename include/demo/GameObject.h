@@ -42,4 +42,8 @@ extern method GameObject* New(GameObject* this, char* name, Vec2 Position, Vec2 
 extern method void Draw(GameObject* this, DNAArrayRenderer* renderer);
 extern method char* ToString(GameObject* this);
 
+static inline GameObject* NewGameObject(char* name, Vec2 Position, Vec2 Size, DNATexture2D* Sprite, Vec3 Color)
+{
+    return New((GameObject*)cfw_create(GameObjectClass), name, Position, Size, Sprite, Color);
+}
 
