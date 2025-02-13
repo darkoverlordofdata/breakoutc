@@ -6,6 +6,16 @@
 typedef struct DNAResourceManager DNAResourceManager;
 extern const CFClass* DNAResourceManagerClass;
 
+/**
+ *  class DNAResourceManager
+ */
+ struct DNAResourceManager {
+    CFObject obj;
+    CFMap* Shaders;
+    CFMap* Textures;
+    CFMap* Fonts;
+};
+
 extern method void* New(DNAResourceManager* this);
 
 extern method DNAShader* LoadShader(

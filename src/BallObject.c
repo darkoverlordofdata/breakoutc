@@ -7,21 +7,13 @@
 ** option) any later version.
 ******************************************************************/
 #include "BallObject.h"
-#include "BallObject-private.h"
-#include "GameObject-private.h"
 #include "GameObject.h"
 
-corefw(BallObject);
-#define super GameObject
-
-/**
- * Create new game
- */
-static bool ctor(void* self, va_list args) { return true; }
-static bool equal(void* ptr1, void* ptr2) { return ptr1 == ptr2; }
-static uint32_t hash(void* self) { return (uint32_t)self; }
-static void* copy(void* self) { return NULL; }
-static void dtor(void* self) {}
+static struct CFClass class = {
+    .name = "BallObject",
+    .size = sizeof(BallObject),
+};
+const CFClass* BallObjectClass = &class;
 
 /**
  * BallObject
@@ -40,7 +32,7 @@ method void* New(
 {
     Radius = Radius != 0 ? Radius : 12.5f;
 
-    New((super*)this, "ball", Position, (Vec2) { Radius * 2, Radius * 2 }, Sprite, (Vec3) { 1, 1, 1 });
+    New((GameObject*)this, "ball", Position, (Vec2) { Radius * 2, Radius * 2 }, Sprite, (Vec3) { 1, 1, 1 });
     this->Velocity = Velocity;
     this->Radius = Radius;
     return this;
@@ -109,4 +101,3 @@ method char* ToString(BallObject* this)
     return "BallObject";
 }
 
-#undef super

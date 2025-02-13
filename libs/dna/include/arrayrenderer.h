@@ -1,4 +1,5 @@
 #pragma once
+#include "shader.h"
 #ifdef __EMSCRIPTEN__
 #include <emscripten.h>
 #define GL_GLEXT_PROTOTYPES
@@ -14,6 +15,16 @@
 
 typedef struct DNAArrayRenderer DNAArrayRenderer;
 extern const CFClass* DNAArrayRendererClass;
+
+/**
+ *  class DNAArrayRenderer
+ */
+struct DNAArrayRenderer {
+    CFObject obj;
+    struct DNAShader* shader;
+    GLuint VBO;
+    GLuint VAO;
+};
 
 extern method void* New(DNAArrayRenderer* this, DNAShader* shader);
 

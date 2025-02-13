@@ -18,24 +18,26 @@
 #include <cfw.h>
 #include <dna.h>
 #include "GameObject.h"
-#include "GameObject-private.h"
 #include "Particle.h"
-#include "Particle-private.h"
 
 typedef struct ParticleGenerator ParticleGenerator;
 extern const CFClass* ParticleGeneratorClass;
-
+// ParticleGenerator acts as a container for rendering a large number of
+// particles by repeatedly spawning and updating particles and killing
+// them after a given amount of time.
+struct ParticleGenerator {
+    CFObject obj;
+    Particle* particles;
+    GLuint amount;
+    DNAShader* shader;
+    DNATexture2D* texture;
+    GLuint VAO;
+};
 
 extern method void* New(ParticleGenerator* this, DNAShader* shader, DNATexture2D* texture, int amount);
-
 extern method void Update(ParticleGenerator* this, GLfloat dt, GameObject* object, GLuint newParticles, Vec2 offset);
-
 extern method void Draw(ParticleGenerator* this);
-
 extern method void init(ParticleGenerator* this);
-
 extern method GLuint firstUnused(ParticleGenerator* this);
-
 extern method void respawn(ParticleGenerator* this, Particle* particle, GameObject* object, Vec2 offset);
-
 extern method char* ToString(ParticleGenerator* this);

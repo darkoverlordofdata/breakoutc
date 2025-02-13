@@ -8,6 +8,7 @@
 #endif
 #include <GLFW/glfw3.h>
 #include <corefw/corefw.h>
+#include "cfw.h"
 
 typedef struct DNAGame DNAGame;
 struct DNAGameVtbl;
@@ -23,53 +24,55 @@ struct DNAGameVtbl {
     void (*Draw)(void* self);
 };
 
-// extern void* DNAGame_ctor(DNAGame* this, char* cstr, int width, int height, void* subclass, struct DNAGameVtbl* vptr);
+struct DNAGame {
+    CFObject obj;
+    void* subclass;
+    struct DNAGameVtbl const* override;
+    GLFWwindow* window;
+    char* title;
+    int len;
+    bool* keys;
+    double delta;
+    double factor;
+    uint64_t targetElapsedTime;
+    uint64_t accumulatedElapsedTime;
+    uint64_t maxElapsedTime;
+    uint64_t totalGameTime;
+    uint64_t elapsedGameTime;
+    uint64_t currentTime;
+    long previousTicks;
+    int x;
+    int y;
+    int width;
+    int height;
+    uint32_t flags;
+    int mouseX;
+    int mouseY;
+    bool mouseDown;
+    int sdlVersion;
+    int frameSkip;
+    int gl_major_version;
+    int gl_minor_version;
+    bool isRunning;
+    int ticks;
+    int fps;
+    bool isFixedTimeStep;
+    bool isRunningSlowly;
+    int updateFrameLag;
+    bool shouldExit;
+    bool suppressDraw;
+};
+
 
 extern method void* New(DNAGame* this, char* cstr, int width, int height, void* subclass, struct DNAGameVtbl* vptr);
 
-/**
- * DNAGame::HandleEvents
- */
 extern method void HandleEvents(DNAGame* const this);
-
 extern method char* ToString(DNAGame* this);
-
-/**
- * DNAGame::Start
- */
 extern method void Start(DNAGame* const this);
-
-/**
- * DNAGame::Tick
- */
 extern method void Tick(DNAGame* const this);
-
-/**
- * DNAGame::RunLoop
- */
 extern method void RunLoop(DNAGame* const this);
-
-/**
- * DNAGame::Run
- */
 extern method void Run(DNAGame* const this);
-
-/**
- * DNAGame::Initialize
- */
 extern method void Initialize(DNAGame* const this);
-
-/**
- * DNAGame::LoadContent
- */
 extern method void LoadContent(DNAGame* const this);
-
-/**
- * DNAGame::Update
- */
 extern method void Update(DNAGame* const this);
-
-/**
- * DNAGame::Draw
- */
 extern method void Draw(DNAGame* const this);

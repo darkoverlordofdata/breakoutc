@@ -31,8 +31,6 @@ SOFTWARE.
  * 
  */
 #pragma once
-#ifndef _TGLM_H
-#define _TGLM_H
 #include <math.h>
 /**
  *  OpenCL Vector definitions 
@@ -169,4 +167,3 @@ Mat glm_rotate(Mat m, float angle, Vec3 v);
 Mat glm_rotateZ(Mat m, float angle);
 Mat glm_rotateY(Mat m, float angle);
 
-#endif // _TGLM_H

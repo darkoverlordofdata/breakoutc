@@ -10,19 +10,13 @@
 #endif
 #include "dna.h"
 #include "cfw.h"
-#include "shader-private.h"
 #include <GLFW/glfw3.h>
 
-corefw(DNAShader);
-static bool ctor(void* self, va_list args) { return true; }
-static bool equal(void* ptr1, void* ptr2) { return ptr1 == ptr2; }
-static uint32_t hash(void* self) { return (uint32_t)self; }
-static void* copy(void* self) { return NULL; }
-
-static void dtor(void* self)
-{
-    DNAShader* this = self;
-}
+static struct CFClass class = {
+    .name = "DNAShader",
+    .size = sizeof(DNAShader),
+};
+const CFClass* DNAShaderClass = &class;
 
 method void* New(DNAShader* this, CFString* vShader, CFString* fShader)
 {

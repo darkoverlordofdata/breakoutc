@@ -8,8 +8,6 @@
 ******************************************************************/
 #include "GameLevel.h"
 #include "Demo.h"
-#include "GameLevel-private.h"
-#include "GameObject-private.h"
 #include "GameObject.h"
 
 /**
@@ -22,15 +20,11 @@ static const Vec3 COLOR3 = { 0.8f, 0.8f, 0.4f };
 static const Vec3 COLOR4 = { 1.0f, 0.5f, 0.0f };
 static const Vec3 COLOR5 = { 1.0f, 1.0f, 1.0f };
 
-corefw(GameLevel);
-/**
- * Create new game
- */
-static bool ctor(void* self, va_list args) { return true; }
-static bool equal(void* ptr1, void* ptr2) { return ptr1 == ptr2; }
-static uint32_t hash(void* self) { return (uint32_t)self; }
-static void* copy(void* self) { return NULL; }
-static void dtor(void* self) {}
+static struct CFClass class = {
+    .name = "GameLevel",
+    .size = sizeof(GameLevel),
+};
+const CFClass* GameLevelClass = &class;
 
 /**
  * GameLevel

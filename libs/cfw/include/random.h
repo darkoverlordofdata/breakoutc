@@ -61,15 +61,18 @@
 typedef struct CFRandom CFRandom;
 extern const CFClass *CFRandomClass;
 
+struct CFRandom {
+   CFObject obj;
+   int mti;
+   unsigned long mt[MT19937_N];
+};
+
 // static CFRandom* CFRandomInstance = NULL;
 
 extern method void* New(CFRandom* this);
-
 extern method void* New(CFRandom* this, unsigned long seed);
-
 extern method void* New(CFRandom* this, unsigned long seed[], int length);
 
 extern method unsigned long NextLong(void);
-
 extern method double NextDouble(void);
 

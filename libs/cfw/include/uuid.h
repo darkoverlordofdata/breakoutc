@@ -31,10 +31,22 @@ SOFTWARE.
 typedef struct CFUuid CFUuid;
 extern const CFClass* CFUuidClass;
 
+/**
+ * Generate an RFC 4122 compliant type 4 uuid
+ * 
+ */
+ struct CFUuid
+ {
+     CFObject obj;
+     /* uuid data */
+     unsigned char uuid[16];
+     /* cached string of uuid */
+     char to_string_cache[80];
+ };
+ 
+ 
 extern method void* New(CFUuid* this);
 
 extern method char* GetToStringFormat(char format);
-
 extern method char* ToString(CFUuid* self, char format);
-
 extern method char* ToString(CFUuid* self);

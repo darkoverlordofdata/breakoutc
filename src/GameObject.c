@@ -8,7 +8,6 @@
 ******************************************************************/
 #include "cfw.h"
 #include "GameObject.h"
-#include "GameObject-private.h"
 
 /** Default values */
 static const Vec2 GAME_OBJECT_POSITION = { 0.0f, 0.0f };
@@ -16,15 +15,11 @@ static const Vec2 GAME_OBJECT_SIZE = { 1.0f, 1.0f };
 static const Vec2 GAME_OBJECT_VELOCITY = { 0.0f, 0.0f };
 static const Vec3 GAME_OBJECT_COLOR = { 1.0f, 1.0f, 1.0f };
 
-corefw(GameObject);
-/**
- * Create new game
- */
-static bool ctor(void* self, va_list args) { return true; }
-static bool equal(void* ptr1, void* ptr2) { return ptr1 == ptr2; }
-static uint32_t hash(void* self) { return (uint32_t)self; }
-static void* copy(void* self) { return NULL; }
-static void dtor(void* self) {}
+static struct CFClass class = {
+    .name = "GameObject",
+    .size = sizeof(GameObject),
+};
+const CFClass* GameObjectClass = &class;
 
 /**
  * Constructor

@@ -17,13 +17,17 @@
 #include <GLFW/glfw3.h>
 #include <cfw.h>
 #include <dna.h>
-#include "Particle-private.h"
 
 typedef struct Particle Particle;
 extern const CFClass* ParticleClass;
 
+// Represents a single particle and its state
+struct Particle {
+    Vec2 Position;
+    Vec2 Velocity;
+    Vec4 Color;
+    GLfloat Life;
+};
 
 extern method void* New(Particle* this, DNAShader* shader, DNATexture2D* texture, int amount);
-
-
 extern method char* ToString(Particle* this);

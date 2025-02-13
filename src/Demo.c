@@ -1,22 +1,17 @@
-#include <game-private.h>
 #include "cfw.h"
 #include "Demo.h"
-#include "Demo-private.h"
 #include "GameObject.h"
-#include "GameObject-private.h"
 #include "BallObject.h"
-#include "BallObject-private.h"
+#include "GameLevel.h"
+#include "Collision.h"
+#include "corefw/object.h"
 
-#define super DNAGame
-corefw(Demo);
-/**
- * Create new game
- */
-static bool ctor(void* self, va_list args) { return true; }
-static bool equal(void* ptr1, void* ptr2) { return ptr1 == ptr2; }
-static uint32_t hash(void* self) { return (uint32_t)self; }
-static void* copy(void* self) { return NULL; }
-static void dtor(void* self) { }
+static struct CFClass class = {
+    .name = "Demo",
+    .size = sizeof(Demo),
+};
+const CFClass* DemoClass = &class;
+
 
 // Initial size of the player paddle
 static const Vec2 PLAYER_SIZE = { 100, 20 };
@@ -46,13 +41,13 @@ typedef void (*DemoProc)(Demo* this);
 void* New(Demo* this, char* title, int width, int height)
 {
     static struct DNAGameVtbl overrides = {
-        .Initialize = (DNAGameProc)(DemoProc)(Initialize),
-        .LoadContent = (DNAGameProc)((DemoProc)LoadContent),
-        .Update = (DNAGameProc)((DemoProc)Update),
-        .Draw = (DNAGameProc)((DemoProc)Draw),
+        .Initialize =   (DNAGameProc)(DemoProc)(Initialize),
+        .LoadContent =  (DNAGameProc)((DemoProc)LoadContent),
+        .Update =       (DNAGameProc)((DemoProc)Update),
+        .Draw =         (DNAGameProc)((DemoProc)Draw),
     };
 
-    New((super*)this, title, width, height, this, &overrides);
+    New((DNAGame*)this, title, width, height, this, &overrides);
 
     this->Levels = cfw_new(cfw_array, NULL);
     this->Level = 0;
@@ -72,9 +67,9 @@ method void LoadContent(Demo* this)
 {
     // Load shaders
 #ifdef __EMSCRIPTEN__
-    LoadShader(ResourceManager, "data/shaders/es/sprite.vs", "data/shaders/es/sprite.fs", "sprite");
+    LoadShader(ResourceManager, "Resources/shaders/es/sprite.vs", "Resources/shaders/es/sprite.fs", "sprite");
 #else
-    LoadShader(ResourceManager, "data/shaders/core/sprite.vs", "data/shaders/core/sprite.fs", "sprite");
+    LoadShader(ResourceManager, "Resources/shaders/core/sprite.vs", "Resources/shaders/core/sprite.fs", "sprite");
 #endif
 
     // Configure shaders
@@ -85,24 +80,24 @@ method void LoadContent(Demo* this)
     SetMatrix(shader, "projection", &projection);
 
     // Load textures
-    LoadTexture(ResourceManager, "data/textures/block.png", false, "block");
-    LoadTexture(ResourceManager, "data/textures/paddle.png", false, "paddle");
-    LoadTexture(ResourceManager, "data/textures/block.png", false, "block");
-    LoadTexture(ResourceManager, "data/textures/block_solid.png", false, "block_solid");
-    LoadTexture(ResourceManager, "data/textures/awesomeface.png", true, "face");
-    LoadTexture(ResourceManager, "data/textures/background.jpg", false, "background");
+    LoadTexture(ResourceManager, "Resources/textures/block.png", false, "block");
+    LoadTexture(ResourceManager, "Resources/textures/paddle.png", false, "paddle");
+    LoadTexture(ResourceManager, "Resources/textures/block.png", false, "block");
+    LoadTexture(ResourceManager, "Resources/textures/block_solid.png", false, "block_solid");
+    LoadTexture(ResourceManager, "Resources/textures/awesomeface.png", true, "face");
+    LoadTexture(ResourceManager, "Resources/textures/background.jpg", false, "background");
     // Set render-specific controls
     Renderer = new (DNAArrayRenderer, GetShader(ResourceManager, "sprite"));
     // Load levels
 
-    Add(this->Levels, new (GameLevel, "data/levels/one.lvl", this->width, this->height * 0.5));
-    Add(this->Levels, new (GameLevel, "data/levels/two.lvl", this->width, this->height * 0.5));
-    Add(this->Levels, new (GameLevel, "data/levels/three.lvl", this->width, this->height * 0.5));
-    Add(this->Levels, new (GameLevel, "data/levels/four.lvl", this->width, this->height * 0.5));
+    Add(this->Levels, new(GameLevel, "Resources/levels/one.lvl", this->width, this->height * 0.5));
+    Add(this->Levels, new(GameLevel, "Resources/levels/two.lvl", this->width, this->height * 0.5));
+    Add(this->Levels, new(GameLevel, "Resources/levels/three.lvl", this->width, this->height * 0.5));
+    Add(this->Levels, new(GameLevel, "Resources/levels/four.lvl", this->width, this->height * 0.5));
 
     // Configure game objects
     Vec2 playerPos = (Vec2) { this->width / 2 - PLAYER_SIZE.x / 2, this->height - PLAYER_SIZE.y };
-    Player = new (GameObject, "player", playerPos, PLAYER_SIZE, GetTexture(ResourceManager, "paddle"), WHITE);
+    Player = new(GameObject, "player", playerPos, PLAYER_SIZE, GetTexture(ResourceManager, "paddle"), WHITE);
     Vec2 ballPos = playerPos + (Vec2) { PLAYER_SIZE.x / 2 - BALL_RADIUS, -BALL_RADIUS * 2 };
     Ball = new (BallObject, ballPos, BALL_RADIUS, INITIAL_BALL_VELOCITY, GetTexture(ResourceManager, "face"));
 }
@@ -170,7 +165,7 @@ method void Draw(Demo* this)
 
 method void Run(Demo* this)
 {
-    Run((super*)this);
+    Run((DNAGame*)this);
 }
 
 /**
@@ -181,16 +176,16 @@ method void ResetLevel(Demo* this)
 {
     if (this->Level == 0) {
         GameLevel* level = Get(this->Levels, 0);
-        Load(level, "data/levels/one.lvl", this->width, this->height * 0.5f);
+        Load(level, "Resources/levels/one.lvl", this->width, this->height * 0.5f);
     } else if (this->Level == 1) {
         GameLevel* level = Get(this->Levels, 1);
-        Load(level, "data/levels/two.lvl", this->width, this->height * 0.5f);
+        Load(level, "Resources/levels/two.lvl", this->width, this->height * 0.5f);
     } else if (this->Level == 2) {
         GameLevel* level = Get(this->Levels, 2);
-        Load(level, "data/levels/three.lvl", this->width, this->height * 0.5f);
+        Load(level, "Resources/levels/three.lvl", this->width, this->height * 0.5f);
     } else if (this->Level == 3) {
         GameLevel* level = Get(this->Levels, 3);
-        Load(level, "data/levels/four.lvl", this->width, this->height * 0.5f);
+        Load(level, "Resources/levels/four.lvl", this->width, this->height * 0.5f);
     }
 }
 
@@ -348,5 +343,3 @@ method void DoCollisions(Demo* this)
     }
     // DSFree(result);
 }
-
-#undef super

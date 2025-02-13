@@ -11,9 +11,8 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "cfw.h"
 #include "dna.h"
-#include "resourcemanager-private.h"
-#include "shader-private.h"
-#include "texture2d-private.h"
+#include "shader.h"
+#include "texture2d.h"
 #include <stb_image.h>
 
 #include <fcntl.h>
@@ -23,11 +22,15 @@
 #include <sys/stat.h>
 
 
-corefw(DNAResourceManager);
-static bool ctor(void* self, va_list args) { return true; }
-static bool equal(void* ptr1, void* ptr2) { return ptr1 == ptr2; }
-static uint32_t hash(void* self) { return (uint32_t)self; }
-static void* copy(void* self) { return NULL; }
+static void dtor(void* self);
+
+const static CFClass class = {      
+    .name = "DNAResourceManager",             
+    .size = sizeof(DNAResourceManager), 
+    .dtor = dtor     
+};                                  
+const CFClass* DNAResourceManagerClass = &class;
+
 
 void Init(DNAResourceManager* this);
 

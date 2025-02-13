@@ -7,24 +7,20 @@
 #else
 #include <glad/glad.h>
 #endif
-#include "arrayrenderer-private.h"
+#include "arrayrenderer.h"
 #include "cfw.h"
 #include "dna.h"
 #include <GLFW/glfw3.h>
 
-corefw(DNAArrayRenderer);
+static void dtor(void* self);
 
-static bool ctor(void* self, va_list args) { return true; }
-static bool equal(void* ptr1, void* ptr2) { return ptr1 == ptr2; }
-static uint32_t hash(void* self) { return (uint32_t)self; }
-static void* copy(void* self) { return NULL; }
+const static CFClass class = {      
+    .name = "DNAArrayRenderer",             
+    .size = sizeof(DNAArrayRenderer), 
+    .dtor = dtor     
+};                                  
+const CFClass* DNAArrayRendererClass = &class;
 
-/**
- * ArrayRenderer
- * 
- * @param shader to use for rendering
- * 
- */
 static void dtor(void* self)
 {
     DNAArrayRenderer* this = self;
@@ -32,7 +28,13 @@ static void dtor(void* self)
     glDeleteBuffers(1, &this->VBO);
 }
 
-method void* New(DNAArrayRenderer* this, DNAShader* shader)
+/**
+ * ArrayRenderer
+ * 
+ * @param shader to use for rendering
+ * 
+ */
+ method void* New(DNAArrayRenderer* this, DNAShader* shader)
 {
     this->shader = shader;
     // set up vertex data (and buffer(s)) and configure vertex attributes

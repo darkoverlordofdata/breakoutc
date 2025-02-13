@@ -42,7 +42,6 @@
 */
 
 #include "random.h"
-#include "random-private.h"
 #include <limits.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -66,12 +65,11 @@ static inline void init_by_array(CFRandom* this, unsigned long init_key[], int k
 static inline unsigned long genrand_int32(CFRandom* this);
 static inline double genrand_real1(CFRandom* this);
 
-corefw(CFRandom);
-static bool ctor(void* self, va_list args) { return true; }
-static bool equal(void* ptr1, void* ptr2) { return ptr1 == ptr2; }
-static uint32_t hash(void* self) { return (uint32_t)self; }
-static void* copy(void* self) { return NULL; }
-static void dtor(void* self) {}
+static struct CFClass class = {
+    .name = "CFRandom",
+    .size = sizeof(CFRandom),
+};
+const CFClass* CFRandomClass = &class;
 
 method unsigned long NextLong(void)
 {

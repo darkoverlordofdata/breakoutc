@@ -29,25 +29,48 @@ SOFTWARE.
 #include <assert.h>
 #include "cfw.h"
 
+/**
+ *  MACRO Min
+ *      cache results of calculation in pocket scope 
+ */
+#define Min(a, b)            \
+    ({                       \
+        __auto_type _a = a;  \
+        __auto_type _b = b;  \
+        (_a < _b) ? _a : _b; \
+    })
+
+/**
+ *  MACRO Max
+ *      cache results of calculation in pocket scope 
+ */
+#define Max(a, b)            \
+    ({                       \
+        __auto_type _a = a;  \
+        __auto_type _b = b;  \
+        (_a > _b) ? _a : _b; \
+    })
+
 typedef struct CFBitVector CFBitVector;
 extern const CFClass *CFBitVectorClass;
 
+/**
+ * CFBitVector instance variables
+ */
+ struct CFBitVector {
+    CFObject obj;
+    int length;
+    unsigned int* words;
+};
+
+
 extern method void* New(CFBitVector* this);
-
 extern method void* New(CFBitVector* this, int nbits);
-
 extern method int NextSetBit(CFBitVector* this, int fromIndex); 
-
 extern method bool Intersects(CFBitVector* this, CFBitVector* set); 
-
 extern method bool IsEmpty(CFBitVector* this); 
-
 extern method void Set(CFBitVector* this, int bitIndex, bool value); 
-
 extern method bool Get(CFBitVector* this, int bitIndex); 
-
 extern method void Clear(CFBitVector* this);
-
 extern method void Clear(CFBitVector* this, int bitIndex);  
-
 extern method char* ToString(CFBitVector* this);

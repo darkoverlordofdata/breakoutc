@@ -9,9 +9,19 @@
 #include "tglm.h"
 #include <GLFW/glfw3.h>
 #include <corefw/class.h>
+#include "cfw.h"
+#include <GLFW/glfw3.h>
 
 typedef struct DNAShader DNAShader;
 extern const CFClass* DNAShaderClass;
+
+/**
+ *  class DNAShader
+ */
+struct DNAShader {
+    CFObject obj;
+    GLuint Id;
+};
 
 extern method DNAShader* Use(DNAShader* this);
 

@@ -23,18 +23,17 @@
 typedef struct GameLevel GameLevel;
 extern const CFClass* GameLevelClass;
 
-/**
- * GameLevel
- */
+/// GameLevel holds all Tiles as part of a Breakout level and
+/// hosts functionality to Load/render levels from the harddisk.
+struct GameLevel {
+    CFObject obj;
+    CFArray* Bricks;
+};
+
 extern method GameLevel* New(GameLevel* this, GLchar *file, int levelWidth, int levelHeight);
-
 extern method GameLevel* Load(GameLevel* this, GLchar *file, int levelWidth, int levelHeight);
-
 extern method void Draw(GameLevel* this, DNAArrayRenderer* renderer);
-
 extern method bool IsCompleted(GameLevel* this);
-
 extern method void init(GameLevel* this, CFArray* tileData, GLuint levelWidth, GLuint levelHeight);
-
 extern method char* ToString(GameLevel* this);
 

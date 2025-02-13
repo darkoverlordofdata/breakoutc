@@ -29,5 +29,12 @@ typedef enum {
     LEFT
 } Direction;
 
+/** Defines a Collision Result Tuple */
+struct Collision {
+    bool IsTrue;
+    Direction Dir;
+    Vec2 Vec;
+};
+
 extern method void* New(Collision* this, bool first, Direction second, Vec2 third);
 extern method char* ToString(Collision* this);
