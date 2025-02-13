@@ -1,5 +1,5 @@
-# breakout from 
-## learnopengl with c99
+# breakout 
+
 
 using:
 * midar's corefw framework
@@ -16,14 +16,33 @@ git submodule add -f https://github.com/midar/corefw.git external/corefw
 sudo apt install libblocksruntime-dev
 sudo apt install libglfw3-dev
 ```
-
+# wip
 ## todo (i think this is finally it):
 
-* remove all macros
-* use CF style naming as in the spaceinvaders game
-* use Artemis lib from spaceinvaders game
-* use the bitvector, random, fs and uuid classese from this project
-* use generic functions {__attribute__((overloadable))} for collections (CFGet/CFPut, etc)
-* use foreach function with anonymous function for collections 
-* use dna lib from this proejct, rename to GK (GameKit)
-* use sdl2/opengles  rather than glfw3/glad/stb
+
+    - [x] remove all macros
+        - [~] method    "__attribute__((overloadable))"
+        - [ ] new       "new(T, args...) New((T*)cfw_create((CFClass*)T##Class), ## args)"
+    - [x] remove *-private.h headers
+
+    - [ ] use CF style naming as in the spaceinvaders game
+    - [ ] use Artemis lib from spaceinvaders game
+    - [ ] use the bitvector, random, fs and uuid classese from this project
+    - [ ] use generic functions {__attribute__((overloadable))} for collections (CFGet/CFPut, etc)
+    - [ ] use foreach function with anonymous function for collections 
+    - [ ] use dna lib from this proejct, rename to GK (GameKit)
+    - [ ] use sdl2/opengles  rather than glfw3/glad/stb
+
+
+## notes
+
+##### method
+methods are multi-methods using clangs overloadable attribute. since this only works within the same compilation unit, these are exposed as static inline functions in cfw.h
+since marking a function's charactaristics is commonly done using a macro and i used 'method' macro everywhere, i'll keep this
+
+##### new
+i do want to remove this one its is code smell
+
+##### -private.h
+another code smell also caused cognitive overload by doubling the number of header files
+
