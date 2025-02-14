@@ -1,5 +1,5 @@
 #pragma once
-#include "corefw/class.h"
+#include "class.h"
 #include "shader.h"
 #include "texture2d.h"
 

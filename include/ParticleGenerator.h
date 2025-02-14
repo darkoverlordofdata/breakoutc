@@ -15,7 +15,7 @@
 #include <glad/glad.h>
 #endif
 #include <GLFW/glfw3.h>
-#include <cfw.h>
+#include <corefw.h>
 #include <dna.h>
 #include "GameObject.h"
 #include "Particle.h"

@@ -1,9 +1,11 @@
 #pragma once
-#include <corefw/object.h>
-#include <corefw/string.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "object.h"
+#include "string.h"
+#include "file.h"
+#include "stream.h"
 
 struct CFWFS {
     CFWString* (*getPath)(const char* path);

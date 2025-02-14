@@ -7,7 +7,7 @@
 #include <glad/glad.h>
 #endif
 #include <GLFW/glfw3.h>
-#include <corefw/corefw.h>
+#include <corefw.h>
 
 #include "rect.h"
 #include "texture2d.h"

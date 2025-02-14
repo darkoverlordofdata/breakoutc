@@ -13,7 +13,6 @@ set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fblocks" )
 
 
 add_subdirectory ( libs/corefw )
-add_subdirectory ( libs/cfw )
 add_subdirectory ( libs/dna )
 # add_subdirectory ( libs/artemis )
 
@@ -31,7 +30,6 @@ add_executable( ${APP_NAME}
 
 include_directories( include )
 include_directories( libs/corefw/include )
-include_directories( libs/cfw/include )
 include_directories( libs/dna/include )
 # include_directories( libs/artemis/include )
 include_directories( external/stb )

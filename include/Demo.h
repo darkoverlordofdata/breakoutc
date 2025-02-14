@@ -15,7 +15,7 @@
 #include <glad/glad.h>
 #endif
 #include <GLFW/glfw3.h>
-#include <corefw/corefw.h>
+#include <corefw.h>
 #include <dna.h>
 
 #ifdef __EMSCRIPTEN__

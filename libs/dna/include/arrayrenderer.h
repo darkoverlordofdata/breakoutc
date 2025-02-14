@@ -11,7 +11,7 @@
 #include "texture2d.h"
 #include "tglm.h"
 #include <GLFW/glfw3.h>
-#include <corefw/corefw.h>
+#include <corefw.h>
 
 typedef struct DNAArrayRenderer DNAArrayRenderer;
 extern const CFWClass* DNAArrayRendererClass;

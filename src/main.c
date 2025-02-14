@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <dna.h>
 #include "Demo.h"
-#include "cfw.h"
 
 int main(int argc, char *argv[])
 {

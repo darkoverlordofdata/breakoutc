@@ -37,6 +37,37 @@ struct CFWArray {
 	size_t size;
 };
 
+__attribute__((overloadable)) void Clear(CFWArray* this)
+{
+
+	for (int i = 0; i < this->size; i++)
+		cfw_unref(this->data[i]);
+
+	if (this->data != NULL)
+		free(this->data);
+    this->size = 0;
+}
+
+__attribute__((overloadable)) void* Get(CFWArray* this, int i)
+{
+    return cfw_array_get(this, i);
+}
+
+__attribute__((overloadable)) void Add(CFWArray* this, void* item)
+{
+    cfw_array_push(this, item);
+}
+
+__attribute__((overloadable)) void Put(CFWArray* this, int index, void* object)
+{
+    cfw_array_set(this, index, object);
+}
+
+__attribute__((overloadable)) int Length(CFWArray* this)
+{
+    return cfw_array_size(this);
+}
+
 static bool
 ctor(void *ptr, va_list args)
 {

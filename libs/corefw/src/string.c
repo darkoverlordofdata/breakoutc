@@ -39,6 +39,34 @@ struct CFWString {
 	size_t len;
 };
 
+__attribute__((overloadable)) void* New(CFWString* this)
+{
+    return cfw_new(cfw_string, NULL);
+}
+
+__attribute__((overloadable)) void* New(CFWString* this, char* value)
+{
+    return cfw_new(cfw_string, value);    
+}
+
+__attribute__((overloadable)) char* cstr(CFWString* this)
+{
+    return cfw_string_c(this);
+}
+
+__attribute__((overloadable)) char* ToString(CFWString* this)
+{
+    return cfw_string_c(this);
+}
+
+
+__attribute__((overloadable)) int Length(CFWString* this)
+{
+    return cfw_string_length(this);
+}
+
+
+
 size_t
 cfw_strnlen(const char *s, size_t max)
 {
@@ -340,6 +368,43 @@ cfw_string_find_c(CFWString *str, const char *substr, cfw_range_t range)
 			return i;
 
 	return SIZE_MAX;
+}
+
+/**
+ * join strings
+ * 
+ * @param count of strings
+ * @param ... list of char*'s
+ * @returns all strings concantenated together.
+ */
+char* cfw_string_join(int count, ...)
+{
+    
+    int size = 0;
+    va_list args1;
+    va_start(args1, count);
+    va_list args2;
+    va_copy(args2, args1);  
+
+    /**
+     * Caclulate length of the result string
+     */
+    for (int i = 0; i < count; ++i) {
+        char* str = va_arg(args1, char*);
+        size += strlen(str);
+    }
+    va_end(args1);
+    char* result = (char*)calloc((size+1),  sizeof(char));
+
+    /**
+     * Now build the result string
+     */
+    for (int i = 0; i < count; ++i) {
+        char* str = va_arg(args2, char*);
+        strcat(result, str);
+    }
+    va_end(args2);
+    return result;
 }
 
 static CFWClass class = {

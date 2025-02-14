@@ -24,7 +24,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ******************************************************************/
 #pragma once
-#include "cfw.h"
+#include "class.h"
+#include "object.h"
 #include <limits.h>
 #include <stdbool.h>
 
@@ -45,8 +46,8 @@ extern const CFWClass* CFWUuidClass;
  };
  
  
-extern method void* New(CFWUuid* this);
+extern __attribute__((overloadable)) void* New(CFWUuid* this);
 
-extern method char* GetToStringFormat(char format);
-extern method char* ToString(CFWUuid* self, char format);
-extern method char* ToString(CFWUuid* self);
+extern __attribute__((overloadable)) char* GetToStringFormat(char format);
+extern __attribute__((overloadable)) char* ToString(CFWUuid* self, char format);
+extern __attribute__((overloadable)) char* ToString(CFWUuid* self);

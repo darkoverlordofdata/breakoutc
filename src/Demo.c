@@ -1,10 +1,9 @@
-#include "cfw.h"
 #include "Demo.h"
 #include "GameObject.h"
 #include "BallObject.h"
 #include "GameLevel.h"
 #include "Collision.h"
-#include "corefw/object.h"
+#include "object.h"
 
 static struct CFWClass class = {
     .name = "Demo",

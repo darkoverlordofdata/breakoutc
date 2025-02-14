@@ -4,7 +4,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/stat.h>
-#include "cfw.h"
 
 typedef CFWString* (*Builder)(const char* path);
 static Builder getPathBuilder();
@@ -13,7 +12,7 @@ static char* const getRoot();
 static CFWString* getPathRelativeRoot(const char* path);
 static CFWString* getPathRelativeBinary(const char* path);
 
-//#include <corefw/file-private.h>
+//#include <file-private.h>
 struct CFWFile {
 	CFWStream stream;
 	int fd;

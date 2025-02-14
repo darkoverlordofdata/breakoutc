@@ -12,10 +12,10 @@
 #define GL_GLEXT_PROTOTYPES
 #define EGL_EGLEXT_PROTOTYPES
 #else
+#include <corefw.h>
 #include <glad/glad.h>
 #endif
 #include <GLFW/glfw3.h>
-#include <cfw.h>
 #include <dna.h>
 
 typedef struct BallObject BallObject;

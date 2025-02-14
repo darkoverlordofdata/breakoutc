@@ -14,5 +14,9 @@ set(SOURCE
    ${CMAKE_CURRENT_SOURCE_DIR}/src/stream.c
    ${CMAKE_CURRENT_SOURCE_DIR}/src/string.c
    ${CMAKE_CURRENT_SOURCE_DIR}/src/tcpsocket.c
+   ${CMAKE_CURRENT_SOURCE_DIR}/src/uuid.c
+   ${CMAKE_CURRENT_SOURCE_DIR}/src/random.c
+   ${CMAKE_CURRENT_SOURCE_DIR}/src/bitvector.c
+   ${CMAKE_CURRENT_SOURCE_DIR}/src/cfwfs.c
    PARENT_SCOPE
 )

@@ -8,7 +8,7 @@
 #include <glad/glad.h>
 #endif
 #include "arrayrenderer.h"
-#include "cfw.h"
+#include <corefw.h>
 #include "dna.h"
 #include <GLFW/glfw3.h>
 

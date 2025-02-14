@@ -24,22 +24,26 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __COREFW_ARRAY_H__
-#define __COREFW_ARRAY_H__
+#ifndef __COREFW_CLASS_H__
+#define __COREFW_CLASS_H__
 
-#include "class.h"
+#include <stddef.h>
+#include <stdbool.h>
+#include <stdint.h>
+#include <stdarg.h>
 
-typedef struct CFWArray CFWArray;
-extern CFWClass *cfw_array;
-extern size_t cfw_array_size(CFWArray*);
-extern void* cfw_array_get(CFWArray*, size_t);
-extern bool cfw_array_set(CFWArray*, size_t, void*);
-extern bool cfw_array_push(CFWArray*, void*);
-extern void* cfw_array_last(CFWArray*);
-extern bool cfw_array_pop(CFWArray*);
-extern bool cfw_array_contains(CFWArray*, void*);
-extern bool cfw_array_contains_ptr(CFWArray*, void*);
-extern size_t cfw_array_find(CFWArray*, void*);
-extern size_t cfw_array_find_ptr(CFWArray*, void*);
+#define method __attribute__((overloadable))
+
+typedef struct CFWClass {
+	const char *name;
+	size_t size;
+	bool (*ctor)(void*, va_list);
+	void (*dtor)(void*);
+	bool (*equal)(void*, void*);
+	uint32_t (*hash)(void*);
+	void* (*copy)(void*);
+} CFWClass;
+
+extern const char* cfw_class_name(CFWClass*);
 
 #endif

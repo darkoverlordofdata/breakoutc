@@ -16,5 +16,7 @@
 #include "stream.h"
 #include "string.h"
 #include "tcpsocket.h"
-
+#include "bitvector.h"
+#include "random.h"
+#include "uuid.h"
 #endif

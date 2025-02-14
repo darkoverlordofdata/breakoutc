@@ -23,6 +23,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ******************************************************************/
+#include "random.h"
 #include "uuid.h"
 #include <limits.h>
 #include <stdbool.h>
@@ -34,7 +35,7 @@ static struct CFWClass class = {
 };
 const CFWClass* CFWUuidClass = &class;
 
-method void* New(CFWUuid* this)
+__attribute__((overloadable)) void* New(CFWUuid* this)
 {
     unsigned long d0 = NextLong();
     unsigned long d1 = NextLong();
@@ -57,7 +58,7 @@ method void* New(CFWUuid* this)
     return this;
 }
 
-method char* GetToStringFormat(char format)
+__attribute__((overloadable)) char* GetToStringFormat(char format)
 {
     switch (format) {
     case 'N':
@@ -73,7 +74,8 @@ method char* GetToStringFormat(char format)
     }
     return "%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x";
 }
-method char* ToString(CFWUuid* this, char format)
+
+__attribute__((overloadable)) char* ToString(CFWUuid* this, char format)
 {
     // if (this->to_string_cache[0] == 0)
     sprintf(this->to_string_cache,
@@ -85,7 +87,8 @@ method char* ToString(CFWUuid* this, char format)
 
     return this->to_string_cache;
 }
-method char* ToString(CFWUuid* this)
+
+__attribute__((overloadable)) char* ToString(CFWUuid* this)
 {
     return ToString(this, 'D');
 }

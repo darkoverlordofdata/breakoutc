@@ -8,8 +8,8 @@
 #endif
 #include "tglm.h"
 #include <GLFW/glfw3.h>
-#include <corefw/class.h>
-#include "cfw.h"
+#include "class.h"
+#include "object.h"
 #include <GLFW/glfw3.h>
 
 typedef struct DNAShader DNAShader;

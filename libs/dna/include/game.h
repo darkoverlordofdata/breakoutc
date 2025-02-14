@@ -7,8 +7,8 @@
 #include <glad/glad.h>
 #endif
 #include <GLFW/glfw3.h>
-#include <corefw/corefw.h>
-#include "cfw.h"
+#include <corefw.h>
+#include <corefw.h>
 
 typedef struct DNAGame DNAGame;
 struct DNAGameVtbl;

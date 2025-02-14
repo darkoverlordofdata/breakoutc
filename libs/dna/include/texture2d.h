@@ -1,8 +1,8 @@
 #pragma once
 #include "tglm.h"
 #include <GL/gl.h>
-#include <corefw/class.h>
-#include "cfw.h"
+#include <class.h>
+#include <corefw.h>
 #include <GLFW/glfw3.h>
 
 /**

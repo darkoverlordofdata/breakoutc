@@ -24,13 +24,34 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __COREFW_BOOL_H__
-#define __COREFW_BOOL_H__
+#ifndef __COREFW_STRING_H__
+#define __COREFW_STRING_H__
 
 #include "class.h"
+#include "range.h"
 
-typedef struct CFWBool CFWBool;
-extern CFWClass *cfw_bool;
-extern bool cfw_bool_value(CFWBool*);
+typedef struct CFWString CFWString;
+extern CFWClass *cfw_string;
+extern size_t cfw_strnlen(const char*, size_t);
+extern char* cfw_strdup(const char*);
+extern char* cfw_strndup(const char*, size_t);
+extern char* cfw_string_c(CFWString*);
+extern size_t cfw_string_length(CFWString*);
+extern bool cfw_string_set(CFWString*, const char*);
+extern void cfw_string_set_nocopy(CFWString*, char*, size_t);
+extern bool cfw_string_append(CFWString*, CFWString*);
+extern bool cfw_string_append_c(CFWString*, const char*);
+extern bool cfw_string_has_prefix(CFWString*, CFWString*);
+extern bool cfw_string_has_prefix_c(CFWString*, const char*);
+extern bool cfw_string_has_suffix(CFWString*, CFWString*);
+extern bool cfw_string_has_suffix_c(CFWString*, const char*);
+extern size_t cfw_string_find(CFWString*, CFWString*, cfw_range_t);
+extern size_t cfw_string_find_c(CFWString*, const char*, cfw_range_t);
+extern char* cfw_string_join(int count, ...);
 
+extern __attribute__((overloadable)) void* New(CFWString*);
+extern __attribute__((overloadable)) void* New(CFWString*, char*);
+extern __attribute__((overloadable)) char* cstr(CFWString* this);
+extern __attribute__((overloadable)) char* ToString(CFWString* this);
+extern __attribute__((overloadable)) int Length(CFWString* this);
 #endif

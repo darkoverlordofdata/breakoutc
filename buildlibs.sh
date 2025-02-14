@@ -16,19 +16,19 @@ cd external/corefw
 #   compile the static wren lib for emscripten   
 #
 emcc   -r -std=c11                      \
-       external/corefw/src/array.c		\
-       external/corefw/src/bool.c		\
-       external/corefw/src/box.c		\
-       external/corefw/src/class.c		\
-       external/corefw/src/double.c		\
-       external/corefw/src/file.c		\
-       external/corefw/src/int.c		\
-       external/corefw/src/map.c		\
-       external/corefw/src/object.c		\
-       external/corefw/src/range.c		\
-       external/corefw/src/refpool.c    \
-       external/corefw/src/stream.c		\
-       external/corefw/src/string.c		\
-       external/corefw/src/tcpsocket.c  \
+       external/src/array.c		\
+       external/src/bool.c		\
+       external/src/box.c		\
+       external/src/class.c		\
+       external/src/double.c		\
+       external/src/file.c		\
+       external/src/int.c		\
+       external/src/map.c		\
+       external/src/object.c		\
+       external/src/range.c		\
+       external/src/refpool.c    \
+       external/src/stream.c		\
+       external/src/string.c		\
+       external/src/tcpsocket.c  \
         -o libs/libcorefw.bc
 

@@ -9,7 +9,7 @@
 #include <glad/glad.h>
 #endif
 #include "dna.h"
-#include "cfw.h"
+#include <corefw.h>
 #include <GLFW/glfw3.h>
 
 static struct CFWClass class = {

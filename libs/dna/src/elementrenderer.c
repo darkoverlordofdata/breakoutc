@@ -11,7 +11,7 @@
 
 #include "dna.h"
 #include "elementrenderer.h"
-#include "cfw.h"
+#include <corefw.h>
 
 static void dtor(void* self);
 

@@ -17,7 +17,7 @@
 #include <glad/glad.h>
 #endif
 #include <GLFW/glfw3.h>
-#include <cfw.h>
+#include <corefw.h>
 #include <dna.h>
 
 typedef struct GameLevel GameLevel;

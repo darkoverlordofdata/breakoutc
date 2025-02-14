@@ -41,6 +41,7 @@
    email: m-mat @ math.sci.hiroshima-u.ac.jp (remove space)
 */
 
+#include <corefw.h>
 #include "random.h"
 #include <limits.h>
 #include <stdbool.h>

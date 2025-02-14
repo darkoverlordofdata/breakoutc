@@ -24,22 +24,25 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __COREFW_ARRAY_H__
-#define __COREFW_ARRAY_H__
-
+#ifndef __COREFW_TCPSOCKET_H__
+#define __COREFW_TCPSOCKET_H__
 #include "class.h"
 
-typedef struct CFWArray CFWArray;
-extern CFWClass *cfw_array;
-extern size_t cfw_array_size(CFWArray*);
-extern void* cfw_array_get(CFWArray*, size_t);
-extern bool cfw_array_set(CFWArray*, size_t, void*);
-extern bool cfw_array_push(CFWArray*, void*);
-extern void* cfw_array_last(CFWArray*);
-extern bool cfw_array_pop(CFWArray*);
-extern bool cfw_array_contains(CFWArray*, void*);
-extern bool cfw_array_contains_ptr(CFWArray*, void*);
-extern size_t cfw_array_find(CFWArray*, void*);
-extern size_t cfw_array_find_ptr(CFWArray*, void*);
+typedef struct CFWTCPSocket CFWTCPSocket;
+
+typedef /* ... */ socklen_t;
+struct addrinfo {
+    int              ai_flags;
+    int              ai_family;
+    int              ai_socktype;
+    int              ai_protocol;
+    socklen_t        ai_addrlen;
+    struct sockaddr *ai_addr;
+    char            *ai_canonname;
+    struct addrinfo *ai_next;
+};
+
+extern CFWClass *cfw_tcpsocket;
+extern bool cfw_tcpsocket_connect(CFWTCPSocket*, const char*, uint16_t);
 
 #endif

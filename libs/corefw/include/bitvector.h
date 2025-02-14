@@ -27,7 +27,9 @@ SOFTWARE.
 #include <limits.h>
 #include <stdbool.h>
 #include <assert.h>
-#include "cfw.h"
+#include "class.h"
+#include "object.h"
+// #include "cfw.h"
 
 /**
  *  MACRO Min
@@ -64,13 +66,13 @@ extern const CFWClass *CFWBitVectorClass;
 };
 
 
-extern method void* New(CFWBitVector* this);
-extern method void* New(CFWBitVector* this, int nbits);
-extern method int NextSetBit(CFWBitVector* this, int fromIndex); 
-extern method bool Intersects(CFWBitVector* this, CFWBitVector* set); 
-extern method bool IsEmpty(CFWBitVector* this); 
-extern method void Set(CFWBitVector* this, int bitIndex, bool value); 
-extern method bool Get(CFWBitVector* this, int bitIndex); 
-extern method void Clear(CFWBitVector* this);
-extern method void Clear(CFWBitVector* this, int bitIndex);  
-extern method char* ToString(CFWBitVector* this);
+extern __attribute__((overloadable)) void* New(CFWBitVector* this);
+extern __attribute__((overloadable)) void* New(CFWBitVector* this, int nbits);
+extern __attribute__((overloadable)) int NextSetBit(CFWBitVector* this, int fromIndex); 
+extern __attribute__((overloadable)) bool Intersects(CFWBitVector* this, CFWBitVector* set); 
+extern __attribute__((overloadable)) bool IsEmpty(CFWBitVector* this); 
+extern __attribute__((overloadable)) void Set(CFWBitVector* this, int bitIndex, bool value); 
+extern __attribute__((overloadable)) bool Get(CFWBitVector* this, int bitIndex); 
+extern __attribute__((overloadable)) void Clear(CFWBitVector* this);
+extern __attribute__((overloadable)) void Clear(CFWBitVector* this, int bitIndex);  
+extern __attribute__((overloadable)) char* ToString(CFWBitVector* this);

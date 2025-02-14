@@ -9,7 +9,7 @@
 #endif
 #include <GLFW/glfw3.h>
 #define STB_IMAGE_IMPLEMENTATION
-#include "cfw.h"
+#include "cfwfs.h"
 #include "dna.h"
 #include "shader.h"
 #include "texture2d.h"

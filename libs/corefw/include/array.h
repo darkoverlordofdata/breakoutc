@@ -24,13 +24,27 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __COREFW_DOUBLE_H__
-#define __COREFW_DOUBLE_H__
+#ifndef __COREFW_ARRAY_H__
+#define __COREFW_ARRAY_H__
 
 #include "class.h"
 
-typedef struct CFWDouble CFWDouble;
-extern CFWClass *cfw_double;
-extern double cfw_double_value(CFWDouble*);
+typedef struct CFWArray CFWArray;
+extern CFWClass *cfw_array;
+extern size_t cfw_array_size(CFWArray*);
+extern void* cfw_array_get(CFWArray*, size_t);
+extern bool cfw_array_set(CFWArray*, size_t, void*);
+extern bool cfw_array_push(CFWArray*, void*);
+extern void* cfw_array_last(CFWArray*);
+extern bool cfw_array_pop(CFWArray*);
+extern bool cfw_array_contains(CFWArray*, void*);
+extern bool cfw_array_contains_ptr(CFWArray*, void*);
+extern size_t cfw_array_find(CFWArray*, void*);
+extern size_t cfw_array_find_ptr(CFWArray*, void*);
 
+extern __attribute__((overloadable)) void Clear(CFWArray*);
+extern __attribute__((overloadable)) void* Get(CFWArray*, int);
+extern __attribute__((overloadable)) void Add(CFWArray*, void*);
+extern __attribute__((overloadable)) void Put(CFWArray*, int, void*);
+extern __attribute__((overloadable)) int Length(CFWArray*);
 #endif
