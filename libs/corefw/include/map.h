@@ -47,9 +47,9 @@ extern bool cfw_map_set_c(CFWMap*, const char*, void*);
 extern void cfw_map_iter(CFWMap*, cfw_map_iter_t*);
 extern void cfw_map_iter_next(cfw_map_iter_t*);
 
-extern __attribute__((overloadable)) void* Get(CFWMap* this, char* key);
-extern __attribute__((overloadable)) bool Remove(CFWMap* this, char* key);
-extern __attribute__((overloadable)) void Put(CFWMap* this, char* key, void* object);
-extern __attribute__((overloadable)) void ForEach(CFWMap* this, void(*func)(void* key, void* item));
+extern method void* Get(CFWMap* this, char* key);
+extern method bool Remove(CFWMap* this, char* key);
+extern method void Put(CFWMap* this, char* key, void* object);
+extern method void ForEach(CFWMap* this, void(*func)(void* key, void* item));
 
 #endif

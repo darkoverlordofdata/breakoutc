@@ -46,8 +46,8 @@ extern const CFWClass* CFWUuidClass;
  };
  
  
-extern __attribute__((overloadable)) void* New(CFWUuid* this);
+extern method void* New(CFWUuid* this);
 
-extern __attribute__((overloadable)) char* GetToStringFormat(char format);
-extern __attribute__((overloadable)) char* ToString(CFWUuid* self, char format);
-extern __attribute__((overloadable)) char* ToString(CFWUuid* self);
+extern method char* GetToStringFormat(char format);
+extern method char* ToString(CFWUuid* self, char format);
+extern method char* ToString(CFWUuid* self);

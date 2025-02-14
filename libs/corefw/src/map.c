@@ -44,23 +44,23 @@ struct CFWMap {
 };
 
 
-__attribute__((overloadable)) void* Get(CFWMap* this, char* key)
+method void* Get(CFWMap* this, char* key)
 {
     return cfw_map_get(this, key);
 }
 
-__attribute__((overloadable)) bool Remove(CFWMap* this, char* key)
+method bool Remove(CFWMap* this, char* key)
 {
     return cfw_map_set(this, key, NULL);
 }
 
-__attribute__((overloadable)) void Put(CFWMap* this, char* key, void* object)
+method void Put(CFWMap* this, char* key, void* object)
 {
     cfw_map_set(this, key, object);
 }
 
 
-__attribute__((overloadable)) void ForEach(CFWMap* this, void(*func)(void* key, void* item))
+method void ForEach(CFWMap* this, void(*func)(void* key, void* item))
 {
    cfw_map_iter_t iter;
 

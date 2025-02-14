@@ -42,9 +42,9 @@ extern bool cfw_array_contains_ptr(CFWArray*, void*);
 extern size_t cfw_array_find(CFWArray*, void*);
 extern size_t cfw_array_find_ptr(CFWArray*, void*);
 
-extern __attribute__((overloadable)) void Clear(CFWArray*);
-extern __attribute__((overloadable)) void* Get(CFWArray*, int);
-extern __attribute__((overloadable)) void Add(CFWArray*, void*);
-extern __attribute__((overloadable)) void Put(CFWArray*, int, void*);
-extern __attribute__((overloadable)) int Length(CFWArray*);
+extern method void Clear(CFWArray*);
+extern method void* Get(CFWArray*, int);
+extern method void Add(CFWArray*, void*);
+extern method void Put(CFWArray*, int, void*);
+extern method int Length(CFWArray*);
 #endif

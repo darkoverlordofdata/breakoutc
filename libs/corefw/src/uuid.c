@@ -35,7 +35,7 @@ static struct CFWClass class = {
 };
 const CFWClass* CFWUuidClass = &class;
 
-__attribute__((overloadable)) void* New(CFWUuid* this)
+method void* New(CFWUuid* this)
 {
     unsigned long d0 = NextLong();
     unsigned long d1 = NextLong();
@@ -58,7 +58,7 @@ __attribute__((overloadable)) void* New(CFWUuid* this)
     return this;
 }
 
-__attribute__((overloadable)) char* GetToStringFormat(char format)
+method char* GetToStringFormat(char format)
 {
     switch (format) {
     case 'N':
@@ -75,7 +75,7 @@ __attribute__((overloadable)) char* GetToStringFormat(char format)
     return "%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x";
 }
 
-__attribute__((overloadable)) char* ToString(CFWUuid* this, char format)
+method char* ToString(CFWUuid* this, char format)
 {
     // if (this->to_string_cache[0] == 0)
     sprintf(this->to_string_cache,
@@ -88,7 +88,7 @@ __attribute__((overloadable)) char* ToString(CFWUuid* this, char format)
     return this->to_string_cache;
 }
 
-__attribute__((overloadable)) char* ToString(CFWUuid* this)
+method char* ToString(CFWUuid* this)
 {
     return ToString(this, 'D');
 }

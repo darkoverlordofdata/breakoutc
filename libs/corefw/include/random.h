@@ -70,10 +70,10 @@ struct CFWRandom {
 
 // static CFWRandom* CFWRandomInstance = NULL;
 
-extern __attribute__((overloadable)) void* New(CFWRandom* this);
-extern __attribute__((overloadable)) void* New(CFWRandom* this, unsigned long seed);
-extern __attribute__((overloadable)) void* New(CFWRandom* this, unsigned long seed[], int length);
+extern method void* New(CFWRandom* this);
+extern method void* New(CFWRandom* this, unsigned long seed);
+extern method void* New(CFWRandom* this, unsigned long seed[], int length);
 
-extern __attribute__((overloadable)) unsigned long NextLong(void);
-extern __attribute__((overloadable)) double NextDouble(void);
+extern method unsigned long NextLong(void);
+extern method double NextDouble(void);
 

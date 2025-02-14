@@ -49,9 +49,9 @@ extern size_t cfw_string_find(CFWString*, CFWString*, cfw_range_t);
 extern size_t cfw_string_find_c(CFWString*, const char*, cfw_range_t);
 extern char* cfw_string_join(int count, ...);
 
-extern __attribute__((overloadable)) void* New(CFWString*);
-extern __attribute__((overloadable)) void* New(CFWString*, char*);
-extern __attribute__((overloadable)) char* cstr(CFWString* this);
-extern __attribute__((overloadable)) char* ToString(CFWString* this);
-extern __attribute__((overloadable)) int Length(CFWString* this);
+extern method void* New(CFWString*);
+extern method void* New(CFWString*, char*);
+extern method char* cstr(CFWString* this);
+extern method char* ToString(CFWString* this);
+extern method int Length(CFWString* this);
 #endif

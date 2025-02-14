@@ -39,28 +39,28 @@ struct CFWString {
 	size_t len;
 };
 
-__attribute__((overloadable)) void* New(CFWString* this)
+method void* New(CFWString* this)
 {
     return cfw_new(cfw_string, NULL);
 }
 
-__attribute__((overloadable)) void* New(CFWString* this, char* value)
+method void* New(CFWString* this, char* value)
 {
     return cfw_new(cfw_string, value);    
 }
 
-__attribute__((overloadable)) char* cstr(CFWString* this)
+method char* cstr(CFWString* this)
 {
     return cfw_string_c(this);
 }
 
-__attribute__((overloadable)) char* ToString(CFWString* this)
+method char* ToString(CFWString* this)
 {
     return cfw_string_c(this);
 }
 
 
-__attribute__((overloadable)) int Length(CFWString* this)
+method int Length(CFWString* this)
 {
     return cfw_string_length(this);
 }
