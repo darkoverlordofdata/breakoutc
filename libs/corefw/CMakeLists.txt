@@ -1,0 +1,18 @@
+set(SOURCE
+   ${SOURCE}
+   ${CMAKE_CURRENT_SOURCE_DIR}/src/array.c
+   ${CMAKE_CURRENT_SOURCE_DIR}/src/bool.c
+   ${CMAKE_CURRENT_SOURCE_DIR}/src/box.c
+   ${CMAKE_CURRENT_SOURCE_DIR}/src/class.c
+   ${CMAKE_CURRENT_SOURCE_DIR}/src/double.c
+   ${CMAKE_CURRENT_SOURCE_DIR}/src/file.c
+   ${CMAKE_CURRENT_SOURCE_DIR}/src/int.c
+   ${CMAKE_CURRENT_SOURCE_DIR}/src/map.c
+   ${CMAKE_CURRENT_SOURCE_DIR}/src/object.c
+   ${CMAKE_CURRENT_SOURCE_DIR}/src/range.c
+   ${CMAKE_CURRENT_SOURCE_DIR}/src/refpool.c
+   ${CMAKE_CURRENT_SOURCE_DIR}/src/stream.c
+   ${CMAKE_CURRENT_SOURCE_DIR}/src/string.c
+   ${CMAKE_CURRENT_SOURCE_DIR}/src/tcpsocket.c
+   PARENT_SCOPE
+)

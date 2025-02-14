@@ -27,6 +27,7 @@ sudo apt install libglfw3-dev
 - [x] remove *-private.h headers
 
 - [ ] upgrade corefw
+    - [x] move library internally
     - [ ] use CF style naming as in the spaceinvaders game
     - [ ] use the bitvector, random, fs and uuid classese from this project
     - [ ] use generic functions {__attribute__((overloadable))} for collections (CFGet/CFPut, etc)

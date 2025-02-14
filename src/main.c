@@ -6,7 +6,7 @@
 int main(int argc, char *argv[])
 {
 
-	CFRefPool *pool = cfw_new(cfw_refpool);
+	CFWRefPool *pool = cfw_new(cfw_refpool);
 
 	Demo *demo = NewDemo("Demo", 720, 480);
 

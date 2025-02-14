@@ -12,11 +12,11 @@
 #include "stb_image.h"
 #include <GLFW/glfw3.h>
 
-static struct CFClass class = {
+static struct CFWClass class = {
     .name = "DNATexture2D",
     .size = sizeof(DNATexture2D),
 };
-const CFClass* DNATexture2DClass = &class;
+const CFWClass* DNATexture2DClass = &class;
 
 /**
  *  DNATexture2D Constructor
@@ -27,7 +27,7 @@ const CFClass* DNATexture2DClass = &class;
  */
 method void* New(DNATexture2D* this, GLuint internalFormat, GLuint imageFormat, char* path)
 {
-    // DNATexture2D* this = cfw_new((CFClass*)DNATexture2DClass);
+    // DNATexture2D* this = cfw_new((CFWClass*)DNATexture2DClass);
     this->path = cfw_strdup(path);
     this->Width = 0;
     this->Height = 0;

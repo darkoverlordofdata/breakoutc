@@ -4,16 +4,16 @@
 #include "texture2d.h"
 
 typedef struct DNAResourceManager DNAResourceManager;
-extern const CFClass* DNAResourceManagerClass;
+extern const CFWClass* DNAResourceManagerClass;
 
 /**
  *  class DNAResourceManager
  */
  struct DNAResourceManager {
-    CFObject obj;
-    CFMap* Shaders;
-    CFMap* Textures;
-    CFMap* Fonts;
+    CFWObject obj;
+    CFWMap* Shaders;
+    CFWMap* Textures;
+    CFWMap* Fonts;
 };
 
 extern method void* New(DNAResourceManager* this);

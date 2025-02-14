@@ -27,12 +27,12 @@
  */
 static void dtor(void* self);
 
-const static CFClass class = {      
+const static CFWClass class = {      
     .name = "DNAGame",             
     .size = sizeof(DNAGame), 
     .dtor = dtor     
 };                                  
-const CFClass* DNAGameClass = &class;
+const CFWClass* DNAGameClass = &class;
 
 
 static void dtor(void* self)

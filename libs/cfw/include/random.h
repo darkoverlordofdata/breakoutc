@@ -58,20 +58,20 @@
 // static unsigned long mt[MT19937_N]; /* the array for the state vector  */
 // static int mti=MT19937_N+1; /* mti==MT19937_N+1 means mt[MT19937_N] is not initialized */
 
-typedef struct CFRandom CFRandom;
-extern const CFClass *CFRandomClass;
+typedef struct CFWRandom CFWRandom;
+extern const CFWClass *CFWRandomClass;
 
-struct CFRandom {
-   CFObject obj;
+struct CFWRandom {
+   CFWObject obj;
    int mti;
    unsigned long mt[MT19937_N];
 };
 
-// static CFRandom* CFRandomInstance = NULL;
+// static CFWRandom* CFWRandomInstance = NULL;
 
-extern method void* New(CFRandom* this);
-extern method void* New(CFRandom* this, unsigned long seed);
-extern method void* New(CFRandom* this, unsigned long seed[], int length);
+extern method void* New(CFWRandom* this);
+extern method void* New(CFWRandom* this, unsigned long seed);
+extern method void* New(CFWRandom* this, unsigned long seed[], int length);
 
 extern method unsigned long NextLong(void);
 extern method double NextDouble(void);

@@ -5,12 +5,12 @@
 #include <stdlib.h>
 #include <string.h>
 
-struct CFFS {
-    CFString* (*getPath)(const char* path);
+struct CFWFS {
+    CFWString* (*getPath)(const char* path);
     char* const (*getRoot)();
-    CFString* (*getPathRelativeRoot)(const char* path);
-    CFString* (*getPathRelativeBinary)(const char* path);
-    CFString* (*readTextFile)(char* path);
+    CFWString* (*getPathRelativeRoot)(const char* path);
+    CFWString* (*getPathRelativeBinary)(const char* path);
+    CFWString* (*readTextFile)(char* path);
 };
 
-extern struct CFFS CFFS;
+extern struct CFWFS CFWFS;

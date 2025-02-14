@@ -24,12 +24,12 @@
 
 static void dtor(void* self);
 
-const static CFClass class = {      
+const static CFWClass class = {      
     .name = "DNAResourceManager",             
     .size = sizeof(DNAResourceManager), 
     .dtor = dtor     
 };                                  
-const CFClass* DNAResourceManagerClass = &class;
+const CFWClass* DNAResourceManagerClass = &class;
 
 
 void Init(DNAResourceManager* this);
@@ -50,7 +50,7 @@ static void dtor(void* self)
 
     cfw_map_iter(this->Shaders, &iter);
     while (iter.key != NULL) {
-        if (cfw_is(iter.obj, (CFClass*)DNAShaderClass))
+        if (cfw_is(iter.obj, (CFWClass*)DNAShaderClass))
             cfw_unref(iter.obj);
         cfw_map_iter_next(&iter);
     }
@@ -58,7 +58,7 @@ static void dtor(void* self)
 
     cfw_map_iter(this->Textures, &iter);
     while (iter.key != NULL) {
-        if (cfw_is(iter.obj, (CFClass*)DNATexture2DClass))
+        if (cfw_is(iter.obj, (CFWClass*)DNATexture2DClass))
             cfw_unref(iter.obj);
         cfw_map_iter_next(&iter);
     }
@@ -164,8 +164,8 @@ DNAShader* LoadShaderFromFile(
     const GLchar* vShaderFile,
     const GLchar* fShaderFile)
 {
-    CFString* vShader = CFFS.readTextFile((char*)vShaderFile);
-    CFString* fShader = CFFS.readTextFile((char*)fShaderFile);
+    CFWString* vShader = CFWFS.readTextFile((char*)vShaderFile);
+    CFWString* fShader = CFWFS.readTextFile((char*)fShaderFile);
     
     return New((DNAShader*)cfw_create(DNAShaderClass), vShader, fShader);
 }

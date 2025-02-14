@@ -20,11 +20,11 @@ static const Vec3 COLOR3 = { 0.8f, 0.8f, 0.4f };
 static const Vec3 COLOR4 = { 1.0f, 0.5f, 0.0f };
 static const Vec3 COLOR5 = { 1.0f, 1.0f, 1.0f };
 
-static struct CFClass class = {
+static struct CFWClass class = {
     .name = "GameLevel",
     .size = sizeof(GameLevel),
 };
-const CFClass* GameLevelClass = &class;
+const CFWClass* GameLevelClass = &class;
 
 /**
  * GameLevel
@@ -62,7 +62,7 @@ method GameLevel* Load(
 
     FILE* fstream = fopen(file, "r");
 
-    // CFFile* handle = cfw_new(cfw_file, file, "r");
+    // CFWFile* handle = cfw_new(cfw_file, file, "r");
     // if (!handle) {
     //     printf("Unable to open %s\n", file);
     //     return this;
@@ -70,15 +70,15 @@ method GameLevel* Load(
 
     // printf("===============================================\n");
     // while (!cfw_stream_at_end(handle)) {
-    //     CFStream* line = cfw_stream_read_line(handle);
+    //     CFWStream* line = cfw_stream_read_line(handle);
     //     printf("%s\n", cfw_string_c(line));
     // }
     // cfw_stream_close(handle);
     // printf("===============================================\n");
 
 
-    CFArray* tileData = cfw_create(cfw_array, NULL);
-    CFArray* row = cfw_create(cfw_array, NULL);
+    CFWArray* tileData = cfw_create(cfw_array, NULL);
+    CFWArray* row = cfw_create(cfw_array, NULL);
     int i;
     char c;
     if (fstream) {
@@ -141,20 +141,20 @@ method bool IsCompleted(GameLevel* this)
  */
 method void init(
     GameLevel* this,
-    CFArray* tileData,
+    CFWArray* tileData,
     GLuint levelWidth,
     GLuint levelHeight)
 {
     // Calculate dimensions
     GLuint height = Length(tileData);
-    CFArray* row = Get(tileData, 0);
+    CFWArray* row = Get(tileData, 0);
     GLuint width = Length(row); // Note we can index vector at [0] since this static inline is only called if height > 0
     GLfloat unit_width = levelWidth / (GLfloat)width, unit_height = levelHeight / height;
     // Initialize level tiles based on tileData
     for (GLuint y = 0; y < height; ++y) {
         for (GLuint x = 0; x < width; ++x) {
             // Check block type from level data (2D level array)
-            CFArray* row = Get(tileData, y);
+            CFWArray* row = Get(tileData, y);
             int blockType = cfw_int_value((Get(row, x)));
 
             Vec2 pos = { unit_width * x, unit_height * y };

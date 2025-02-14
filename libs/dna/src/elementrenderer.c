@@ -15,12 +15,12 @@
 
 static void dtor(void* self);
 
-const static CFClass class = {      
+const static CFWClass class = {      
     .name = "DNAElementRenderer",             
     .size = sizeof(DNAElementRenderer), 
     .dtor = dtor     
 };                                  
-const CFClass* DNAElementRendererClass = &class;
+const CFWClass* DNAElementRendererClass = &class;
 
 static void dtor(void* self)
 {

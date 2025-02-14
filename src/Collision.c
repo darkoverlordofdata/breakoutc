@@ -9,11 +9,11 @@
 #include "Collision.h"
 #include "Demo.h"
 
-static struct CFClass class = {
+static struct CFWClass class = {
     .name = "Collision",
     .size = sizeof(Collision),
 };
-const CFClass* CollisionClass = &class;
+const CFWClass* CollisionClass = &class;
 
 /**
  * Collision Result Tuple

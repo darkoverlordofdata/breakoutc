@@ -9,11 +9,11 @@
 #include "GameObject.h"
 #include "ParticleGenerator.h"
 
-static struct CFClass class = {
+static struct CFWClass class = {
     .name = "Particle",
     .size = sizeof(Particle),
 };
-const CFClass* ParticleClass = &class;
+const CFWClass* ParticleClass = &class;
 
 /**
  * Particle Result Tuple

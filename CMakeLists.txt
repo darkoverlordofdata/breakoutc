@@ -12,6 +12,7 @@ set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -w -std=c18 -O3" )
 set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fblocks" )
 
 
+add_subdirectory ( libs/corefw )
 add_subdirectory ( libs/cfw )
 add_subdirectory ( libs/dna )
 # add_subdirectory ( libs/artemis )
@@ -29,15 +30,14 @@ add_executable( ${APP_NAME}
 
 
 include_directories( include )
-# include_directories( include/breakout )
-include_directories( include/demo )
+include_directories( libs/corefw/include )
 include_directories( libs/cfw/include )
 include_directories( libs/dna/include )
 # include_directories( libs/artemis/include )
 include_directories( external/stb )
  
 # add_subdirectory(tests)
-target_link_libraries ( ${APP_NAME} dl m BlocksRuntime corefw glfw GL )
+target_link_libraries ( ${APP_NAME} dl m BlocksRuntime glfw GL )
 
 add_custom_command ( TARGET ${APP_NAME} PRE_BUILD
                       COMMAND ${CMAKE_COMMAND} -E copy_directory

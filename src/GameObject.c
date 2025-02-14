@@ -15,11 +15,11 @@ static const Vec2 GAME_OBJECT_SIZE = { 1.0f, 1.0f };
 static const Vec2 GAME_OBJECT_VELOCITY = { 0.0f, 0.0f };
 static const Vec3 GAME_OBJECT_COLOR = { 1.0f, 1.0f, 1.0f };
 
-static struct CFClass class = {
+static struct CFWClass class = {
     .name = "GameObject",
     .size = sizeof(GameObject),
 };
-const CFClass* GameObjectClass = &class;
+const CFWClass* GameObjectClass = &class;
 
 /**
  * Constructor

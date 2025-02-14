@@ -6,16 +6,16 @@
 #include <sys/stat.h>
 #include "cfw.h"
 
-typedef CFString* (*Builder)(const char* path);
+typedef CFWString* (*Builder)(const char* path);
 static Builder getPathBuilder();
-static CFString* getPath(const char* path);
+static CFWString* getPath(const char* path);
 static char* const getRoot();
-static CFString* getPathRelativeRoot(const char* path);
-static CFString* getPathRelativeBinary(const char* path);
+static CFWString* getPathRelativeRoot(const char* path);
+static CFWString* getPathRelativeBinary(const char* path);
 
 //#include <corefw/file-private.h>
-struct CFFile {
-	CFStream stream;
+struct CFWFile {
+	CFWStream stream;
 	int fd;
 	bool at_end;
 };
@@ -26,7 +26,7 @@ struct CFFile {
  * @param path
  * @returns the path
  */
-static CFString* getPath(const char* path)
+static CFWString* getPath(const char* path)
 {
     Builder pathBuilder = getPathBuilder();
     return (*pathBuilder)(path);
@@ -65,9 +65,9 @@ static Builder getPathBuilder()
  * 
  * @param path
  */
-static CFString* getPathRelativeRoot(const char* path)
+static CFWString* getPathRelativeRoot(const char* path)
 {
-    CFString* res = cfw_create(cfw_string, getRoot());
+    CFWString* res = cfw_create(cfw_string, getRoot());
     cfw_string_append_c(res, "/");
     cfw_string_append_c(res, path);
     return res;
@@ -78,9 +78,9 @@ static CFString* getPathRelativeRoot(const char* path)
  * 
  * @param path
  */
-static CFString* getPathRelativeBinary(const char* path)
+static CFWString* getPathRelativeBinary(const char* path)
 {
-    CFString* res = cfw_create(cfw_string, "../../../");
+    CFWString* res = cfw_create(cfw_string, "../../../");
     cfw_string_append_c(res, path);
     return res;
 }
@@ -92,11 +92,11 @@ static CFString* getPathRelativeBinary(const char* path)
  * @returns string with file contents
  * 
  */
-CFString* readTextFile(char* path)
+CFWString* readTextFile(char* path)
 {
     struct stat statbuf;
 
-    CFFile* handle = cfw_new(cfw_file, path, "r");
+    CFWFile* handle = cfw_new(cfw_file, path, "r");
     if (!handle) {
         printf("Unable to open %s\n", path);
         return cfw_create(cfw_string, "");
@@ -111,15 +111,15 @@ CFString* readTextFile(char* path)
     char* content = (char*)calloc(1, len + 1);
     cfw_stream_read(handle, content, len);
     cfw_stream_close(handle);
-    CFString* result = cfw_create(cfw_string, content);
+    CFWString* result = cfw_create(cfw_string, content);
     free(content);
     return result;
 }
 
 /**
- * CFFS object
+ * CFWFS object
  */
-struct CFFS CFFS = {
+struct CFWFS CFWFS = {
     .getPath = getPath,
     .getRoot = getRoot,
     .getPathRelativeRoot = getPathRelativeRoot,

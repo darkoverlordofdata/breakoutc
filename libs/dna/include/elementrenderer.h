@@ -15,13 +15,13 @@
 #include "dna.h"
 
 typedef struct DNAElementRenderer DNAElementRenderer;
-extern const CFClass* DNAElementRendererClass;
+extern const CFWClass* DNAElementRendererClass;
 
 /**
  *  class DNAElementRenderer
  */
 struct DNAElementRenderer {
-    CFObject obj;
+    CFWObject obj;
     struct DNAShader* shader;
     GLuint VBO;
     GLuint VAO;

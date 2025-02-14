@@ -58,44 +58,44 @@
 // static unsigned long mt[MT19937_N]; /* the array for the state vector  */
 // static int mti=MT19937_N+1; /* mti==MT19937_N+1 means mt[MT19937_N] is not initialized */
 
-static CFRandom* CFRandomInstance = NULL;
+static CFWRandom* CFWRandomInstance = NULL;
 
-static inline void init_genrand(CFRandom* this, unsigned long s);
-static inline void init_by_array(CFRandom* this, unsigned long init_key[], int key_length);
-static inline unsigned long genrand_int32(CFRandom* this);
-static inline double genrand_real1(CFRandom* this);
+static inline void init_genrand(CFWRandom* this, unsigned long s);
+static inline void init_by_array(CFWRandom* this, unsigned long init_key[], int key_length);
+static inline unsigned long genrand_int32(CFWRandom* this);
+static inline double genrand_real1(CFWRandom* this);
 
-static struct CFClass class = {
-    .name = "CFRandom",
-    .size = sizeof(CFRandom),
+static struct CFWClass class = {
+    .name = "CFWRandom",
+    .size = sizeof(CFWRandom),
 };
-const CFClass* CFRandomClass = &class;
+const CFWClass* CFWRandomClass = &class;
 
 method unsigned long NextLong(void)
 {
-    if (CFRandomInstance == NULL) {
+    if (CFWRandomInstance == NULL) {
         unsigned long seed = time(NULL);
-        CFRandomInstance = New((CFRandom*)cfw_create(CFRandomClass), seed);
+        CFWRandomInstance = New((CFWRandom*)cfw_create(CFWRandomClass), seed);
     }
 
-    return genrand_int32(CFRandomInstance);
+    return genrand_int32(CFWRandomInstance);
 }
 
 method double NextDouble(void)
 {
-    if (CFRandomInstance == NULL) {
+    if (CFWRandomInstance == NULL) {
         unsigned long seed = time(NULL);
-        CFRandomInstance = New((CFRandom*)cfw_create(CFRandomClass), seed);
+        CFWRandomInstance = New((CFWRandom*)cfw_create(CFWRandomClass), seed);
     }
-    return genrand_real1(CFRandomInstance);
+    return genrand_real1(CFWRandomInstance);
 }
 
-method void* New(CFRandom* this)
+method void* New(CFWRandom* this)
 {
     return New(this, time(NULL));
 }
 
-method void* New(CFRandom* this, unsigned long seed)
+method void* New(CFWRandom* this, unsigned long seed)
 {
     memset(this->mt, 0, (MT19937_N * sizeof(unsigned long)));
     this->mti = MT19937_N + 1;
@@ -103,7 +103,7 @@ method void* New(CFRandom* this, unsigned long seed)
     return this;
 }
 
-method void* New(CFRandom* this, unsigned long seed[], int length)
+method void* New(CFWRandom* this, unsigned long seed[], int length)
 {
     memset(this->mt, 0, (MT19937_N * sizeof(unsigned long)));
     this->mti = MT19937_N + 1;
@@ -112,7 +112,7 @@ method void* New(CFRandom* this, unsigned long seed[], int length)
 }
 
 /* initializes mt[MT19937_N] with a seed */
-static inline void init_genrand(CFRandom* this, unsigned long s)
+static inline void init_genrand(CFWRandom* this, unsigned long s)
 {
     this->mt[0] = s & 0xffffffffUL;
     for (this->mti = 1; this->mti < MT19937_N; this->mti++) {
@@ -130,7 +130,7 @@ static inline void init_genrand(CFRandom* this, unsigned long s)
 /* init_key is the array for initializing keys */
 /* key_length is its length */
 /* slight change for C++, 2004/2/26 */
-static inline void init_by_array(CFRandom* this, unsigned long init_key[], int key_length)
+static inline void init_by_array(CFWRandom* this, unsigned long init_key[], int key_length)
 {
     int i, j, k;
     init_genrand(this, 19650218UL);
@@ -165,7 +165,7 @@ static inline void init_by_array(CFRandom* this, unsigned long init_key[], int k
 }
 
 /* generates a random number on [0,0xffffffff]-interval */
-static inline unsigned long genrand_int32(CFRandom* this)
+static inline unsigned long genrand_int32(CFWRandom* this)
 {
     unsigned long y;
     static unsigned long mag01[2] = { 0x0UL, MT19937_MATRIX_A };
@@ -203,34 +203,34 @@ static inline unsigned long genrand_int32(CFRandom* this)
 }
 
 /* generates a random number on [0,0x7fffffff]-interval */
-static inline long genrand_int31(CFRandom* this)
+static inline long genrand_int31(CFWRandom* this)
 {
     return (long)(genrand_int32(this) >> 1);
 }
 
 /* generates a random number on [0,1]-real-interval */
-static inline double genrand_real1(CFRandom* this)
+static inline double genrand_real1(CFWRandom* this)
 {
     return genrand_int32(this) * (1.0 / 4294967295.0);
     /* divided by 2^32-1 */
 }
 
 /* generates a random number on [0,1)-real-interval */
-static inline double genrand_real2(CFRandom* this)
+static inline double genrand_real2(CFWRandom* this)
 {
     return genrand_int32(this) * (1.0 / 4294967296.0);
     /* divided by 2^32 */
 }
 
 /* generates a random number on (0,1)-real-interval */
-static inline double genrand_real3(CFRandom* this)
+static inline double genrand_real3(CFWRandom* this)
 {
     return (((double)genrand_int32(this)) + 0.5) * (1.0 / 4294967296.0);
     /* divided by 2^32 */
 }
 
 /* generates a random number on [0,1) with 53-bit resolution*/
-static inline double genrand_res53(CFRandom* this)
+static inline double genrand_res53(CFWRandom* this)
 {
     unsigned long a = genrand_int32(this) >> 5, b = genrand_int32(this) >> 6;
     return (a * 67108864.0 + b) * (1.0 / 9007199254740992.0);

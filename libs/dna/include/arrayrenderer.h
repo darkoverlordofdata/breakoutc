@@ -14,13 +14,13 @@
 #include <corefw/corefw.h>
 
 typedef struct DNAArrayRenderer DNAArrayRenderer;
-extern const CFClass* DNAArrayRendererClass;
+extern const CFWClass* DNAArrayRendererClass;
 
 /**
  *  class DNAArrayRenderer
  */
 struct DNAArrayRenderer {
-    CFObject obj;
+    CFWObject obj;
     struct DNAShader* shader;
     GLuint VBO;
     GLuint VAO;

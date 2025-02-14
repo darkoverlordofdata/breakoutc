@@ -4,7 +4,7 @@
  */
 #include <corefw/corefw.h>
 
-// #define new(T, args...) New((T*)cfw_create((CFClass*)T##Class), ## args)
+// #define new(T, args...) New((T*)cfw_create((CFWClass*)T##Class), ## args)
 #define method __attribute__((overloadable))
 
 #include "cfwfs.h"
@@ -14,13 +14,13 @@
 #include "cfw.h"
 
 
-struct CFArray {
-	CFObject obj;
+struct CFWArray {
+	CFWObject obj;
 	void **data;
 	size_t size;
 };
 
-static inline method void Clear(CFArray* this)
+static inline method void Clear(CFWArray* this)
 {
 
 	for (int i = 0; i < this->size; i++)
@@ -31,47 +31,47 @@ static inline method void Clear(CFArray* this)
     this->size = 0;
 }
 
-static inline method void* New(CFString* this)
+static inline method void* New(CFWString* this)
 {
     return cfw_new(cfw_string, NULL);
 }
-static inline method void* New(CFString* this, char* value)
+static inline method void* New(CFWString* this, char* value)
 {
     return cfw_new(cfw_string, value);    
 }
 
-static inline method void* Get(CFArray* this, int i)
+static inline method void* Get(CFWArray* this, int i)
 {
     return cfw_array_get(this, i);
 }
 
-static inline method void* Get(CFMap* this, char* key)
+static inline method void* Get(CFWMap* this, char* key)
 {
     return cfw_map_get(this, key);
 }
 
-static inline method void Add(CFArray* this, void* item)
+static inline method void Add(CFWArray* this, void* item)
 {
     cfw_array_push(this, item);
 }
 
-static inline method bool Remove(CFMap* this, char* key)
+static inline method bool Remove(CFWMap* this, char* key)
 {
     return cfw_map_set(this, key, NULL);
 }
 
-static inline method void Put(CFMap* this, char* key, void* object)
+static inline method void Put(CFWMap* this, char* key, void* object)
 {
     cfw_map_set(this, key, object);
 }
 
-static inline method void Put(CFArray* this, int index, void* object)
+static inline method void Put(CFWArray* this, int index, void* object)
 {
     cfw_array_set(this, index, object);
 }
 
-// static inline method void ForEach(CFMap* this, void(*func)(void* item))
-static inline method void ForEach(CFMap* this, void(*func)(void* key, void* item))
+// static inline method void ForEach(CFWMap* this, void(*func)(void* item))
+static inline method void ForEach(CFWMap* this, void(*func)(void* key, void* item))
 {
    cfw_map_iter_t iter;
 
@@ -81,7 +81,7 @@ static inline method void ForEach(CFMap* this, void(*func)(void* key, void* item
         cfw_map_iter_next(&iter);
     }
 }
-static inline method void ForEach(CFMap* this, void(^func)(void* key, void* item))
+static inline method void ForEach(CFWMap* this, void(^func)(void* key, void* item))
 {
     cfw_map_iter_t iter;
 
@@ -92,22 +92,22 @@ static inline method void ForEach(CFMap* this, void(^func)(void* key, void* item
     }
 }
 
-static inline method char* cstr(CFString* this)
+static inline method char* cstr(CFWString* this)
 {
     return cfw_string_c(this);
 }
 
-static inline method char* ToString(CFString* this)
+static inline method char* ToString(CFWString* this)
 {
     return cfw_string_c(this);
 }
 
-static inline method int Length(CFArray* this)
+static inline method int Length(CFWArray* this)
 {
     return cfw_array_size(this);
 }
 
-static inline method int Length(CFString* this)
+static inline method int Length(CFWString* this)
 {
     return cfw_string_length(this);
 }

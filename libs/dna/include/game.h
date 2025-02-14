@@ -12,7 +12,7 @@
 
 typedef struct DNAGame DNAGame;
 struct DNAGameVtbl;
-extern const CFClass* DNAGameClass;
+extern const CFWClass* DNAGameClass;
 
 extern DNAGame* DNAGame_instance;
 
@@ -25,7 +25,7 @@ struct DNAGameVtbl {
 };
 
 struct DNAGame {
-    CFObject obj;
+    CFWObject obj;
     void* subclass;
     struct DNAGameVtbl const* override;
     GLFWwindow* window;

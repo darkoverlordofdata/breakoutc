@@ -28,16 +28,16 @@ SOFTWARE.
 #include <limits.h>
 #include <stdbool.h>
 
-typedef struct CFUuid CFUuid;
-extern const CFClass* CFUuidClass;
+typedef struct CFWUuid CFWUuid;
+extern const CFWClass* CFWUuidClass;
 
 /**
  * Generate an RFC 4122 compliant type 4 uuid
  * 
  */
- struct CFUuid
+ struct CFWUuid
  {
-     CFObject obj;
+     CFWObject obj;
      /* uuid data */
      unsigned char uuid[16];
      /* cached string of uuid */
@@ -45,8 +45,8 @@ extern const CFClass* CFUuidClass;
  };
  
  
-extern method void* New(CFUuid* this);
+extern method void* New(CFWUuid* this);
 
 extern method char* GetToStringFormat(char format);
-extern method char* ToString(CFUuid* self, char format);
-extern method char* ToString(CFUuid* self);
+extern method char* ToString(CFWUuid* self, char format);
+extern method char* ToString(CFWUuid* self);

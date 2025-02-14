@@ -6,23 +6,19 @@
 #include "Collision.h"
 #include "corefw/object.h"
 
-static struct CFClass class = {
+static struct CFWClass class = {
     .name = "Demo",
     .size = sizeof(Demo),
 };
-const CFClass* DemoClass = &class;
+const CFWClass* DemoClass = &class;
 typedef void (*DemoProc)(Demo* this);
 
 
-// Initial size of the player paddle
-static const Vec2 PLAYER_SIZE = { 100, 20 };
-// Initial velocity of the player paddle
-static const GLfloat PLAYER_VELOCITY = 500.0f;
-// Initial velocity of the Ball
-static const Vec2 INITIAL_BALL_VELOCITY = { 100.0f, -350.0f };
-// Radius of the ball object
-static const GLfloat BALL_RADIUS = 12.5f;
 
+static const Vec2 PLAYER_SIZE = { 100, 20 };                        // Initial size of the player paddle
+static const GLfloat PLAYER_VELOCITY = 500.0f;                      // Initial velocity of the player paddle
+static const Vec2 INITIAL_BALL_VELOCITY = { 100.0f, -350.0f };      // Initial velocity of the Ball
+static const GLfloat BALL_RADIUS = 12.5f;                           // Radius of the ball object
 static const Vec2 ZERO = { 0, 0 };
 static const Vec3 WHITE = { 1, 1, 1 };
 
@@ -112,9 +108,12 @@ method void Update(Demo* this)
 
     DoCollisions(this);
     // // Check loss condition
-    if (Ball->Position.x >= this->height) // Did ball reach bottom edge?
+    if (Ball->Position.x > this->height) // Did ball reach bottom edge?
     {
-        ResetLevel(this);
+        --this->Lives;
+        if (this->Lives <= 0) {
+            ResetLevel(this);
+        }   
         ResetPlayer(this);
     }
 
@@ -189,6 +188,7 @@ method void ResetLevel(Demo* this)
         GameLevel* level = Get(this->Levels, 3);
         Load(level, "Resources/levels/four.lvl", this->width, this->height * 0.5f);
     }
+    this->Lives = 3;
 }
 
 /**
@@ -238,7 +238,8 @@ static inline Direction ArrayDirection(Vec2 target)
  * @param two second game object to check
  * 
  */
-static inline GLboolean CheckCollision2(Demo* this, GameObject* one, GameObject* two) // AABB - AABB collision
+static 
+GLboolean CheckCollision2(Demo* this, GameObject* one, GameObject* two) // AABB - AABB collision
 {
     // Collision x-axis?
     bool collisionX = one->Position.x + one->Size.x >= two->Position.x && two->Position.x + two->Size.x >= one->Position.x;
@@ -255,7 +256,8 @@ static inline GLboolean CheckCollision2(Demo* this, GameObject* one, GameObject*
  * @param two second game object to check
  * 
  */
-static inline Collision* CheckCollision(
+static 
+Collision* CheckCollision(
     Demo* this,
     BallObject* one,
     GameObject* two) // AABB - Circle collision
@@ -288,7 +290,7 @@ static inline Collision* CheckCollision(
 method void DoCollisions(Demo* this)
 {
     GameLevel* level = Get(this->Levels, this->Level);
-    CFArray* bricks = level->Bricks;
+    CFWArray* bricks = level->Bricks;
 
     for (int i = 0; i < Length(bricks); i++) {
         GameObject* box = (GameObject*)Get(bricks, i);

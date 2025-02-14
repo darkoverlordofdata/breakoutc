@@ -51,26 +51,26 @@ SOFTWARE.
         (_a > _b) ? _a : _b; \
     })
 
-typedef struct CFBitVector CFBitVector;
-extern const CFClass *CFBitVectorClass;
+typedef struct CFWBitVector CFWBitVector;
+extern const CFWClass *CFWBitVectorClass;
 
 /**
- * CFBitVector instance variables
+ * CFWBitVector instance variables
  */
- struct CFBitVector {
-    CFObject obj;
+ struct CFWBitVector {
+    CFWObject obj;
     int length;
     unsigned int* words;
 };
 
 
-extern method void* New(CFBitVector* this);
-extern method void* New(CFBitVector* this, int nbits);
-extern method int NextSetBit(CFBitVector* this, int fromIndex); 
-extern method bool Intersects(CFBitVector* this, CFBitVector* set); 
-extern method bool IsEmpty(CFBitVector* this); 
-extern method void Set(CFBitVector* this, int bitIndex, bool value); 
-extern method bool Get(CFBitVector* this, int bitIndex); 
-extern method void Clear(CFBitVector* this);
-extern method void Clear(CFBitVector* this, int bitIndex);  
-extern method char* ToString(CFBitVector* this);
+extern method void* New(CFWBitVector* this);
+extern method void* New(CFWBitVector* this, int nbits);
+extern method int NextSetBit(CFWBitVector* this, int fromIndex); 
+extern method bool Intersects(CFWBitVector* this, CFWBitVector* set); 
+extern method bool IsEmpty(CFWBitVector* this); 
+extern method void Set(CFWBitVector* this, int bitIndex, bool value); 
+extern method bool Get(CFWBitVector* this, int bitIndex); 
+extern method void Clear(CFWBitVector* this);
+extern method void Clear(CFWBitVector* this, int bitIndex);  
+extern method char* ToString(CFWBitVector* this);

@@ -28,13 +28,13 @@ SOFTWARE.
 #include <stdbool.h>
 #include <string.h>
 
-static struct CFClass class = {
-    .name = "CFUuid",
-    .size = sizeof(CFUuid),
+static struct CFWClass class = {
+    .name = "CFWUuid",
+    .size = sizeof(CFWUuid),
 };
-const CFClass* CFUuidClass = &class;
+const CFWClass* CFWUuidClass = &class;
 
-method void* New(CFUuid* this)
+method void* New(CFWUuid* this)
 {
     unsigned long d0 = NextLong();
     unsigned long d1 = NextLong();
@@ -73,7 +73,7 @@ method char* GetToStringFormat(char format)
     }
     return "%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x";
 }
-method char* ToString(CFUuid* this, char format)
+method char* ToString(CFWUuid* this, char format)
 {
     // if (this->to_string_cache[0] == 0)
     sprintf(this->to_string_cache,
@@ -85,7 +85,7 @@ method char* ToString(CFUuid* this, char format)
 
     return this->to_string_cache;
 }
-method char* ToString(CFUuid* this)
+method char* ToString(CFWUuid* this)
 {
     return ToString(this, 'D');
 }

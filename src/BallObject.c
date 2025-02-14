@@ -9,11 +9,11 @@
 #include "BallObject.h"
 #include "GameObject.h"
 
-static struct CFClass class = {
+static struct CFWClass class = {
     .name = "BallObject",
     .size = sizeof(BallObject),
 };
-const CFClass* BallObjectClass = &class;
+const CFWClass* BallObjectClass = &class;
 
 /**
  * BallObject
