@@ -12,7 +12,7 @@
 
 typedef struct __DNAGame* DNAGameRef;
 struct DNAGameVtbl;
-extern const CFClassRef DNAGameClass;
+extern const CFClassRef DNAGame;
 
 extern DNAGameRef DNAGame_instance;
 
@@ -79,5 +79,5 @@ extern method void Draw(DNAGameRef const this);
 
 static inline DNAGameRef NewDNAGame(char* cstr, int width, int height, void* subclass, struct DNAGameVtbl* vptr)
 {
-    return New((DNAGameRef)CFCreate(DNAGameClass), cstr, width, height, subclass, vptr);
+    return New((DNAGameRef)CFCreate(DNAGame), cstr, width, height, subclass, vptr);
 }

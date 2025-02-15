@@ -19,7 +19,7 @@ const static struct __CFClass class = {
     .size = sizeof(struct __DNAArrayRenderer), 
     .dtor = dtor     
 };                                  
-const CFClassRef DNAArrayRendererClass = &class;
+const CFClassRef DNAArrayRenderer = &class;
 
 static void dtor(void* self)
 {

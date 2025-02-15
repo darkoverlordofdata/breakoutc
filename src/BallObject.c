@@ -32,7 +32,9 @@ method void* New(
 {
     Radius = Radius != 0 ? Radius : 12.5f;
 
-    New((GameObjectRef)this, "ball", Position, (Vec2) { Radius * 2, Radius * 2 }, Sprite, (Vec3) { 1, 1, 1 });
+    GameObjectRef super = this;
+    New(super, "ball", Position, (Vec2) { Radius * 2, Radius * 2 }, Sprite, (Vec3) { 1, 1, 1 });
+
     this->Velocity = Velocity;
     this->Radius = Radius;
     return this;

@@ -77,7 +77,7 @@ struct __Demo {
 };
 
 
-extern DNAResourceManager* ResourceManager;
+extern DNAResourceManagerRef ResourceManager;
 
 
 extern void* New(DemoRef this, char* title, int width, int height);

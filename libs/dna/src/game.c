@@ -32,7 +32,7 @@ const static struct __CFClass class = {
     .size = sizeof(struct __DNAGame), 
     .dtor = dtor     
 };                                  
-const CFClassRef DNAGameClass = &class;
+const CFClassRef DNAGame = &class;
 
 
 static void dtor(void* self)

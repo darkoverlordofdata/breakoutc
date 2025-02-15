@@ -16,7 +16,7 @@ static struct __CFClass class = {
     .name = "DNATexture2D",
     .size = sizeof(struct __DNATexture2D),
 };
-const CFClassRef DNATexture2DClass = &class;
+const CFClassRef DNATexture2D = &class;
 
 /**
  *  DNATexture2D Constructor
@@ -27,7 +27,7 @@ const CFClassRef DNATexture2DClass = &class;
  */
 method void* New(DNATexture2DRef this, GLuint internalFormat, GLuint imageFormat, char* path)
 {
-    // DNATexture2DRef this = CFNew((CFClassRef)DNATexture2DClass);
+    // DNATexture2DRef this = CFNew((CFClassRef)DNATexture2D);
     this->path = CFStrDup(path);
     this->Width = 0;
     this->Height = 0;

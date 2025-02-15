@@ -16,7 +16,7 @@ static struct __CFClass class = {
     .name = "DNAShader",
     .size = sizeof(struct __DNAShader),
 };
-const CFClassRef DNAShaderClass = &class;
+const CFClassRef DNAShader = &class;
 
 method void* New(DNAShaderRef this, CFStringRef vShader, CFStringRef fShader)
 {

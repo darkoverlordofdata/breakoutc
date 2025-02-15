@@ -8,12 +8,11 @@
 #endif
 #include "tglm.h"
 #include <GLFW/glfw3.h>
-#include "class.h"
-#include "object.h"
+#include "corefw.h"
 #include <GLFW/glfw3.h>
 
 typedef struct __DNAShader* DNAShaderRef;
-extern const CFClassRef DNAShaderClass;
+extern const CFClassRef DNAShader;
 
 /**
  *  class DNAShader
@@ -136,5 +135,5 @@ extern method void SetMatrix(
 
 static inline DNAShaderRef NewDNAShader(CFStringRef vShader, CFStringRef fShader)
 {
-    return New((DNAShaderRef)CFCreate(DNAShaderClass), vShader, fShader);
+    return New((DNAShaderRef)CFCreate(DNAShader), vShader, fShader);
 }

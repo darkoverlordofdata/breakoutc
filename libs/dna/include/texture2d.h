@@ -9,7 +9,7 @@
  * class DNATexture2D
  */
 typedef struct __DNATexture2D* DNATexture2DRef;
-extern const CFClassRef DNATexture2DClass;
+extern const CFClassRef DNATexture2D;
 
 
 /**
@@ -42,5 +42,5 @@ extern method char* ToString(const DNATexture2DRef this);
 
 static inline DNATexture2DRef NewDNATexture2D(GLuint internalFormat, GLuint imageFormat, char* path)
 {
-    return New((DNATexture2DRef)CFCreate(DNATexture2DClass), internalFormat, imageFormat, path);
+    return New((DNATexture2DRef)CFCreate(DNATexture2D), internalFormat, imageFormat, path);
 }

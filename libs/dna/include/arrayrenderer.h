@@ -14,7 +14,7 @@
 #include <corefw.h>
 
 typedef struct __DNAArrayRenderer* DNAArrayRendererRef;
-extern const CFClassRef DNAArrayRendererClass;
+extern const CFClassRef DNAArrayRenderer;
 
 /**
  *  class DNAArrayRenderer
@@ -33,5 +33,5 @@ extern method void Draw(DNAArrayRendererRef this, DNATexture2DRef texture, Vec2 
 
 static inline DNAArrayRendererRef NewDNAArrayRenderer(DNAShaderRef shader)
 {
-    return New((DNAArrayRendererRef)CFCreate(DNAArrayRendererClass), shader);
+    return New((DNAArrayRendererRef)CFCreate(DNAArrayRenderer), shader);
 }

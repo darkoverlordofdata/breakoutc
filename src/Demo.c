@@ -22,7 +22,7 @@ static const Vec2 ZERO = { 0, 0 };
 static const Vec3 WHITE = { 1, 1, 1 };
 
 // Game-related State data
-DNAResourceManager* ResourceManager;
+DNAResourceManagerRef ResourceManager;
 static DNAArrayRendererRef Renderer;
 static GameObjectRef Player;
 static BallObjectRef Ball;
@@ -42,7 +42,8 @@ void* New(DemoRef this, char* title, int width, int height)
         .Draw =         (DNAGameProc)((DemoProc)Draw),
     };
 
-    New((DNAGameRef)this, title, width, height, this, &overrides);
+    DNAGameRef super = this;
+    New(super, title, width, height, this, &overrides);
 
     this->Levels = CFNew(CFArray, NULL);
     this->Level = 0;
@@ -84,7 +85,7 @@ method void LoadContent(DemoRef this)
     LoadTexture(ResourceManager, "Resources/textures/background.jpg", false, "background");
     // Set render-specific controls
 
-    Renderer = New((DNAArrayRendererRef)CFCreate(DNAArrayRendererClass), GetShader(ResourceManager, "sprite"));
+    Renderer = New((DNAArrayRendererRef)CFCreate(DNAArrayRenderer), GetShader(ResourceManager, "sprite"));
 
     // Load levels
     Add(this->Levels, NewGameLevel("Resources/levels/one.lvl", this->width, this->height * 0.5));

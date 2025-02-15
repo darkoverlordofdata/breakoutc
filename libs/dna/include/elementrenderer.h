@@ -15,7 +15,7 @@
 #include "dna.h"
 
 typedef struct __DNAElementRenderer* DNAElementRendererRef;
-extern const CFClassRef DNAElementRendererClass;
+extern const CFClassRef DNAElementRenderer;
 
 /**
  *  class DNAElementRenderer
@@ -35,6 +35,6 @@ extern method void Draw(DNAElementRendererRef this, DNATexture2DRef texture, Vec
 
 static inline DNAElementRendererRef NewDNAElementRenderer(DNAShaderRef shader)
 {
-    return New((DNAElementRendererRef)CFCreate(DNAElementRendererClass), shader);
+    return New((DNAElementRendererRef)CFCreate(DNAElementRenderer), shader);
 }
 
