@@ -20,29 +20,29 @@
 #include "GameObject.h"
 #include "Particle.h"
 
-typedef struct ParticleGenerator ParticleGenerator;
+typedef struct __ParticleGenerator* ParticleGeneratorRef;
 extern const CFClassRef ParticleGeneratorClass;
 // ParticleGenerator acts as a container for rendering a large number of
 // particles by repeatedly spawning and updating particles and killing
 // them after a given amount of time.
-struct ParticleGenerator {
+struct __ParticleGenerator {
     struct __CFObject obj;
-    Particle* particles;
+    ParticleRef particles;
     GLuint amount;
-    DNAShader* shader;
-    DNATexture2D* texture;
+    DNAShaderRef shader;
+    DNATexture2DRef texture;
     GLuint VAO;
 };
 
-extern method void* New(ParticleGenerator* this, DNAShader* shader, DNATexture2D* texture, int amount);
-extern method void Update(ParticleGenerator* this, GLfloat dt, GameObject* object, GLuint newParticles, Vec2 offset);
-extern method void Draw(ParticleGenerator* this);
-extern method void init(ParticleGenerator* this);
-extern method GLuint firstUnused(ParticleGenerator* this);
-extern method void respawn(ParticleGenerator* this, Particle* particle, GameObject* object, Vec2 offset);
-extern method char* ToString(ParticleGenerator* this);
+extern method void* New(ParticleGeneratorRef this, DNAShaderRef shader, DNATexture2DRef texture, int amount);
+extern method void Update(ParticleGeneratorRef this, GLfloat dt, GameObjectRef object, GLuint newParticles, Vec2 offset);
+extern method void Draw(ParticleGeneratorRef this);
+extern method void init(ParticleGeneratorRef this);
+extern method GLuint firstUnused(ParticleGeneratorRef this);
+extern method void respawn(ParticleGeneratorRef this, ParticleRef particle, GameObjectRef object, Vec2 offset);
+extern method char* ToString(ParticleGeneratorRef this);
 
-static inline ParticleGenerator* NewParticleGenerator(DNAShader* shader, DNATexture2D* texture, int amount)
+static inline ParticleGeneratorRef NewParticleGenerator(DNAShaderRef shader, DNATexture2DRef texture, int amount)
 {
-    return New((ParticleGenerator*)CFCreate(ParticleGeneratorClass), shader, texture, amount);
+    return New((ParticleGeneratorRef)CFCreate(ParticleGeneratorClass), shader, texture, amount);
 }

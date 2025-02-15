@@ -14,7 +14,7 @@
 
 static struct __CFClass class = {
     .name = "DNATexture2D",
-    .size = sizeof(DNATexture2D),
+    .size = sizeof(struct __DNATexture2D),
 };
 const CFClassRef DNATexture2DClass = &class;
 
@@ -25,9 +25,9 @@ const CFClassRef DNATexture2DClass = &class;
  * @param imageFormat
  * @param path to image
  */
-method void* New(DNATexture2D* this, GLuint internalFormat, GLuint imageFormat, char* path)
+method void* New(DNATexture2DRef this, GLuint internalFormat, GLuint imageFormat, char* path)
 {
-    // DNATexture2D* this = CFNew((CFClassRef)DNATexture2DClass);
+    // DNATexture2DRef this = CFNew((CFClassRef)DNATexture2DClass);
     this->path = CFStrDup(path);
     this->Width = 0;
     this->Height = 0;
@@ -50,7 +50,7 @@ method void* New(DNATexture2D* this, GLuint internalFormat, GLuint imageFormat, 
  * 
  */
 method void Generate(
-    DNATexture2D* this,
+    DNATexture2DRef this,
     GLuint width,
     GLuint height,
     unsigned char* data)
@@ -74,12 +74,12 @@ method void Generate(
  * 
  * binds the texture to GL
  */
-method void Bind(const DNATexture2D* this)
+method void Bind(const DNATexture2DRef this)
 {
     glBindTexture(GL_TEXTURE_2D, this->Id);
 }
 
-method char* ToString(const DNATexture2D* this)
+method char* ToString(const DNATexture2DRef this)
 {
     char* s = calloc(1024, 1);
     return s;

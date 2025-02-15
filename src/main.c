@@ -7,7 +7,7 @@ int main(int argc, char *argv[])
 
 	CFRefPoolRef pool = CFNew(CFRefPool);
 
-	Demo *demo = NewDemo("Demo", 720, 480);
+	DemoRef demo = NewDemo("Demo", 720, 480);
 
 	Run(demo);
 

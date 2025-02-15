@@ -10,11 +10,11 @@
 #include <corefw.h>
 #include <corefw.h>
 
-typedef struct DNAGame DNAGame;
+typedef struct __DNAGame* DNAGameRef;
 struct DNAGameVtbl;
 extern const CFClassRef DNAGameClass;
 
-extern DNAGame* DNAGame_instance;
+extern DNAGameRef DNAGame_instance;
 
 typedef void (*DNAGameProc)(void* self);
 struct DNAGameVtbl {
@@ -24,7 +24,7 @@ struct DNAGameVtbl {
     void (*Draw)(void* self);
 };
 
-struct DNAGame {
+struct __DNAGame {
     struct __CFObject obj;
     void* subclass;
     struct DNAGameVtbl const* override;
@@ -64,20 +64,20 @@ struct DNAGame {
 };
 
 
-extern method void* New(DNAGame* this, char* cstr, int width, int height, void* subclass, struct DNAGameVtbl* vptr);
+extern method void* New(DNAGameRef this, char* cstr, int width, int height, void* subclass, struct DNAGameVtbl* vptr);
 
-extern method void HandleEvents(DNAGame* const this);
-extern method char* ToString(DNAGame* this);
-extern method void Start(DNAGame* const this);
-extern method void Tick(DNAGame* const this);
-extern method void RunLoop(DNAGame* const this);
-extern method void Run(DNAGame* const this);
-extern method void Initialize(DNAGame* const this);
-extern method void LoadContent(DNAGame* const this);
-extern method void Update(DNAGame* const this);
-extern method void Draw(DNAGame* const this);
+extern method void HandleEvents(DNAGameRef const this);
+extern method char* ToString(DNAGameRef this);
+extern method void Start(DNAGameRef const this);
+extern method void Tick(DNAGameRef const this);
+extern method void RunLoop(DNAGameRef const this);
+extern method void Run(DNAGameRef const this);
+extern method void Initialize(DNAGameRef const this);
+extern method void LoadContent(DNAGameRef const this);
+extern method void Update(DNAGameRef const this);
+extern method void Draw(DNAGameRef const this);
 
-static inline DNAGame* NewDNAGame(char* cstr, int width, int height, void* subclass, struct DNAGameVtbl* vptr)
+static inline DNAGameRef NewDNAGame(char* cstr, int width, int height, void* subclass, struct DNAGameVtbl* vptr)
 {
-    return New((DNAGame*)CFCreate(DNAGameClass), cstr, width, height, subclass, vptr);
+    return New((DNAGameRef)CFCreate(DNAGameClass), cstr, width, height, subclass, vptr);
 }

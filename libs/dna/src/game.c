@@ -29,7 +29,7 @@ static void dtor(void* self);
 
 const static struct __CFClass class = {      
     .name = "DNAGame",             
-    .size = sizeof(DNAGame), 
+    .size = sizeof(struct __DNAGame), 
     .dtor = dtor     
 };                                  
 const CFClassRef DNAGameClass = &class;
@@ -37,7 +37,7 @@ const CFClassRef DNAGameClass = &class;
 
 static void dtor(void* self)
 {
-    DNAGame* this = self;
+    DNAGameRef this = self;
 
     free(this->title);
     free(this->keys);
@@ -49,7 +49,7 @@ static void dtor(void* self)
 #define TicksPerSecond TicksPerMillisecond * 1000.0 // 10,000,000
 #define SecondsPerTick 1.0 / (TicksPerSecond) // 0.0001
 
-DNAGame* DNAGame_instance;
+DNAGameRef DNAGame_instance;
 
 void DNAGame_key_callback(GLFWwindow* window, int key, int scancode, int action, int mode)
 {
@@ -84,7 +84,7 @@ static uint64_t GetTicks()
     return ((ts * 1000000L) + us) * 10;
 }
 
-method void* New(DNAGame* this, char* cstr, int width, int height, void* subclass, struct DNAGameVtbl* vptr)
+method void* New(DNAGameRef this, char* cstr, int width, int height, void* subclass, struct DNAGameVtbl* vptr)
 {
     this->subclass = subclass;
     this->override = vptr;
@@ -149,14 +149,14 @@ method void* New(DNAGame* this, char* cstr, int width, int height, void* subclas
     return this;
 }
 
-method char* ToString(DNAGame* this)
+method char* ToString(DNAGameRef this)
 {
     return this->title;
 }
 /**
  * DNAGame::Start
  */
-method void Start(DNAGame* const this)
+method void Start(DNAGameRef const this)
 {
     this->isRunning = true;
 }
@@ -164,7 +164,7 @@ method void Start(DNAGame* const this)
 /**
  * DNAGame::HandleEvents
  */
-method void HandleEvents(DNAGame* const this)
+method void HandleEvents(DNAGameRef const this)
 {
     if (glfwGetKey(this->window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
         glfwSetWindowShouldClose(this->window, true);
@@ -205,7 +205,7 @@ method void HandleEvents(DNAGame* const this)
 /**
  * DNAGame::Tick
  */
-method void Tick(DNAGame* const this)
+method void Tick(DNAGameRef const this)
 {
     while (true) {
         // Advance the accumulated elapsed time.
@@ -297,7 +297,7 @@ method void Tick(DNAGame* const this)
 /**
  * DNAGame::RunLoop
  */
-method void RunLoop(DNAGame* const this)
+method void RunLoop(DNAGameRef const this)
 {
     HandleEvents(this);
     // if (this->keys[SDLK_ESCAPE]) {
@@ -309,7 +309,7 @@ method void RunLoop(DNAGame* const this)
 /**
  * DNAGame::Run
  */
-method void Run(DNAGame* const this)
+method void Run(DNAGameRef const this)
 {
     Initialize(this);
     LoadContent(this);
@@ -332,7 +332,7 @@ method void Run(DNAGame* const this)
 /**
  * DNAGame::Draw
  */
-method void Draw(DNAGame* const this)
+method void Draw(DNAGameRef const this)
 {
     this->override->Draw(this->subclass);
 }
@@ -340,7 +340,7 @@ method void Draw(DNAGame* const this)
 /**
  * DNAGame::LoadContent
  */
-method void LoadContent(DNAGame* const this)
+method void LoadContent(DNAGameRef const this)
 {
     this->override->LoadContent(this->subclass);
 }
@@ -348,7 +348,7 @@ method void LoadContent(DNAGame* const this)
 /**
  * DNAGame::Initialize
  */
-method void Initialize(DNAGame* const this)
+method void Initialize(DNAGameRef const this)
 {
     this->override->Initialize(this->subclass);
 }
@@ -356,7 +356,7 @@ method void Initialize(DNAGame* const this)
 /**
  * DNAGame::Update
  */
-method void Update(DNAGame* const this)
+method void Update(DNAGameRef const this)
 {
     this->override->Update(this->subclass);
 }

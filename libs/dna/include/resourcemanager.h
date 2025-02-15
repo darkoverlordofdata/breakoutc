@@ -18,23 +18,23 @@ extern const CFClassRef DNAResourceManagerClass;
 
 extern method void* New(DNAResourceManager* this);
 
-extern method DNAShader* LoadShader(
+extern method DNAShaderRef LoadShader(
     const DNAResourceManager* this,
     const GLchar* vShaderFile,
     const GLchar* fShaderFile,
     const char* name);
 
-extern method DNAShader* GetShader(
+extern method DNAShaderRef GetShader(
     const DNAResourceManager* this,
     const char* name);
 
-extern method DNATexture2D* LoadTexture(
+extern method DNATexture2DRef LoadTexture(
     const DNAResourceManager* this,
     const GLchar* file,
     GLboolean alpha,
     const char* name);
 
-extern method DNATexture2D* GetTexture(
+extern method DNATexture2DRef GetTexture(
     const DNAResourceManager* this,
     const char* name);
 

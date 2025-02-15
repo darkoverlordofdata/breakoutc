@@ -22,7 +22,7 @@
 #include <emscripten.h>
 #endif
 
-typedef struct Demo Demo;
+typedef struct __Demo* DemoRef;
 extern const CFClassRef DemoClass;
 struct DemoVtbl;
 typedef enum {
@@ -32,7 +32,7 @@ typedef enum {
 } GameState;
 
 
-struct Demo {
+struct __Demo {
     struct __CFObject obj;
     void* subclass;
     struct DNAGameVtbl const* override;
@@ -80,22 +80,22 @@ struct Demo {
 extern DNAResourceManager* ResourceManager;
 
 
-extern void* New(Demo* this, char* title, int width, int height);
-extern method void Initialize(Demo* this);
-extern method void LoadContent(Demo* this);
-extern method void Update(Demo* this);
-extern method void Draw(Demo* this);
-extern method void Run(Demo* this);
-extern method void SetKey(Demo* this, int key, bool value);
-extern method void SetState(Demo* this, GameState state);
-extern method void Start(Demo* this);
-extern method void ResetLevel(Demo* this);
-extern method void ResetPlayer(Demo* this);
-extern method void Dispose(Demo* this);
-extern method void DoCollisions(Demo* this);
+extern void* New(DemoRef this, char* title, int width, int height);
+extern method void Initialize(DemoRef this);
+extern method void LoadContent(DemoRef this);
+extern method void Update(DemoRef this);
+extern method void Draw(DemoRef this);
+extern method void Run(DemoRef this);
+extern method void SetKey(DemoRef this, int key, bool value);
+extern method void SetState(DemoRef this, GameState state);
+extern method void Start(DemoRef this);
+extern method void ResetLevel(DemoRef this);
+extern method void ResetPlayer(DemoRef this);
+extern method void Dispose(DemoRef this);
+extern method void DoCollisions(DemoRef this);
 
-static inline Demo* NewDemo(char* title, int width, int height)
+static inline DemoRef NewDemo(char* title, int width, int height)
 {
-    return New((Demo*)CFCreate(DemoClass), title, width, height);
+    return New((DemoRef)CFCreate(DemoClass), title, width, height);
 }
 

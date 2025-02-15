@@ -18,11 +18,11 @@
 #include <corefw.h>
 #include <dna.h>
 
-typedef struct Particle Particle;
+typedef struct __Particle* ParticleRef;
 extern const CFClassRef ParticleClass;
 
 // Represents a single particle and its state
-struct Particle {
+struct __Particle {
     struct __CFObject obj;
     Vec2 Position;
     Vec2 Velocity;
@@ -30,5 +30,5 @@ struct Particle {
     GLfloat Life;
 };
 
-extern method void* New(Particle* this, DNAShader* shader, DNATexture2D* texture, int amount);
-extern method char* ToString(Particle* this);
+extern method void* New(ParticleRef this, DNAShaderRef shader, DNATexture2DRef texture, int amount);
+extern method char* ToString(ParticleRef this);

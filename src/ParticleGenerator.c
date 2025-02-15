@@ -11,7 +11,7 @@
 
 static struct __CFClass class = {
     .name = "ParticleGenerator",
-    .size = sizeof(ParticleGenerator),
+    .size = sizeof(struct __ParticleGenerator),
 };
 const CFClassRef ParticleGeneratorClass = &class;
 
@@ -24,9 +24,9 @@ const CFClassRef ParticleGeneratorClass = &class;
  * 
  */
 method void* New(
-    ParticleGenerator* this,
-    DNAShader* shader,
-    DNATexture2D* texture,
+    ParticleGeneratorRef this,
+    DNAShaderRef shader,
+    DNATexture2DRef texture,
     int amount)
 {
     this->shader = shader;
@@ -45,9 +45,9 @@ method void* New(
  * 
  */
 method void Update(
-    ParticleGenerator* this,
+    ParticleGeneratorRef this,
     GLfloat dt,
-    GameObject* object,
+    GameObjectRef object,
     GLuint newParticles,
     Vec2 offset)
 {
@@ -71,13 +71,13 @@ method void Update(
  * Render all particles
  * 
  */
-method void Draw(ParticleGenerator* this)
+method void Draw(ParticleGeneratorRef this)
 {
     // Use additive blending to give it a 'glow' effect
     glBlendFunc(GL_SRC_ALPHA, GL_ONE);
     Use(this->shader);
     for (int i = 0; i < this->amount; i++) {
-        Particle* particle = &this->particles[i];
+        ParticleRef particle = &this->particles[i];
         if (particle->Life > 0.0f) {
             SetVector2v(this->shader, "offset", &particle->Position);
             SetVector4v(this->shader, "color", &particle->Color);
@@ -94,7 +94,7 @@ method void Draw(ParticleGenerator* this)
 /**
  * initialize generator
  */
-method void init(ParticleGenerator* this)
+method void init(ParticleGeneratorRef this)
 {
     // Set up mesh and attribute properties
     GLuint VBO;
@@ -118,12 +118,12 @@ method void init(ParticleGenerator* this)
     glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(GLfloat), (GLvoid*)0);
     glBindVertexArray(0);
 
-    this->particles = (Particle*)malloc(sizeof(Particle) * this->amount);
+    this->particles = (ParticleRef)malloc(sizeof(struct __Particle) * this->amount);
 }
 
 // Stores the index of the last particle used (for quick access to next dead particle)
 static GLuint lastUsedParticle = 0;
-method GLuint firstUnused(ParticleGenerator* this)
+method GLuint firstUnused(ParticleGeneratorRef this)
 {
     // First search from last used particle, this will usually return almost instantly
     for (GLuint i = lastUsedParticle; i < this->amount; ++i) {
@@ -145,9 +145,9 @@ method GLuint firstUnused(ParticleGenerator* this)
 }
 
 method void respawn(
-    ParticleGenerator* this,
-    Particle* particle,
-    GameObject* object,
+    ParticleGeneratorRef this,
+    ParticleRef particle,
+    GameObjectRef object,
     Vec2 offset)
 {
     GLfloat random = ((rand() % 100) - 50) / 10.0f;
@@ -161,7 +161,7 @@ method void respawn(
 /**
  * ToString
  */
-method char* ToString(const ParticleGenerator* const this)
+method char* ToString(const ParticleGeneratorRef const this)
 {
     return "ParticleGenerator";
 }

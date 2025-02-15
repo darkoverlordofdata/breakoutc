@@ -16,7 +16,7 @@ static const Vec3 GAME_OBJECT_COLOR = { 1.0f, 1.0f, 1.0f };
 
 static struct __CFClass class = {
     .name = "GameObject",
-    .size = sizeof(GameObject),
+    .size = sizeof(struct __GameObject),
 };
 const CFClassRef GameObjectClass = &class;
 
@@ -28,12 +28,12 @@ const CFClassRef GameObjectClass = &class;
  * @param Sprite to display
  * @param Color tiniting color
  */
-method GameObject* New(
-    GameObject* this,
+method GameObjectRef New(
+    GameObjectRef this,
     char* name,
     Vec2 Position,
     Vec2 Size,
-    DNATexture2D* Sprite,
+    DNATexture2DRef Sprite,
     Vec3 Color)
 {
     this->IsSolid = false;
@@ -54,8 +54,8 @@ method GameObject* New(
  * @param renderer to draw sprite with
  */
 method void Draw(
-    GameObject* this,
-    DNAArrayRenderer* renderer)
+    GameObjectRef this,
+    DNAArrayRendererRef renderer)
 {
     DNARect bounds = { this->Position.x, this->Position.y,
         this->Size.x, this->Size.y };
@@ -66,7 +66,7 @@ method void Draw(
 /**
  * ToString
  */
-method char* ToString(GameObject* this)
+method char* ToString(GameObjectRef this)
 {
     return "GameObject";
 }

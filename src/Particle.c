@@ -11,7 +11,7 @@
 
 static struct __CFClass class = {
     .name = "Particle",
-    .size = sizeof(Particle),
+    .size = sizeof(struct __Particle),
 };
 const CFClassRef ParticleClass = &class;
 
@@ -22,7 +22,7 @@ const CFClassRef ParticleClass = &class;
  * @param dir direction from
  * @param Vec2 difference point
  */
-method void* New(Particle* this, Vec2 position, Vec2 velocity, Vec4 color, GLfloat life)
+method void* New(ParticleRef this, Vec2 position, Vec2 velocity, Vec4 color, GLfloat life)
 {
     this->Color = color;
     this->Life = life;

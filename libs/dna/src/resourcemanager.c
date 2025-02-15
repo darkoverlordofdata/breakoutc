@@ -34,11 +34,11 @@ const CFClassRef DNAResourceManagerClass = &class;
 
 void Init(DNAResourceManager* this);
 
-DNAShader* LoadShaderFromFile(
+DNAShaderRef LoadShaderFromFile(
     const DNAResourceManager* this,
     const GLchar* vShaderFile,
     const GLchar* fShaderFile);
-DNATexture2D* LoadTextureFromFile(
+DNATexture2DRef LoadTextureFromFile(
     const DNAResourceManager* this,
     const GLchar* file,
     GLboolean alpha);
@@ -83,7 +83,7 @@ method void* New(DNAResourceManager* this)
  * @param name to cache as
  * @returns loaded, compiled and linked shader program
  */
-method DNAShader* LoadShader(
+method DNAShaderRef LoadShader(
     const DNAResourceManager* this,
     const GLchar* vShaderFile,
     const GLchar* fShaderFile,
@@ -102,7 +102,7 @@ method DNAShader* LoadShader(
  * @returns loaded, compiled and linked shader program
  * 
  */
-method DNAShader* GetShader(
+method DNAShaderRef GetShader(
     const DNAResourceManager* this,
     const char* name)
 {
@@ -118,7 +118,7 @@ method DNAShader* GetShader(
  * @returns Texture
  * 
  */
-method DNATexture2D* LoadTexture(
+method DNATexture2DRef LoadTexture(
     const DNAResourceManager* this,
     const GLchar* file,
     GLboolean alpha,
@@ -135,7 +135,7 @@ method DNATexture2D* LoadTexture(
  * @returns Texture
  * 
  */
-method DNATexture2D* GetTexture(
+method DNATexture2DRef GetTexture(
     const DNAResourceManager* this,
     const char* name)
 {
@@ -159,7 +159,7 @@ void Clear(DNAResourceManager* this)
  */
 
 
-DNAShader* LoadShaderFromFile(
+DNAShaderRef LoadShaderFromFile(
     const DNAResourceManager* this,
     const GLchar* vShaderFile,
     const GLchar* fShaderFile)
@@ -167,7 +167,7 @@ DNAShader* LoadShaderFromFile(
     CFStringRef vShader = CFFS.readTextFile((char*)vShaderFile);
     CFStringRef fShader = CFFS.readTextFile((char*)fShaderFile);
     
-    return New((DNAShader*)CFCreate(DNAShaderClass), vShader, fShader);
+    return New((DNAShaderRef)CFCreate(DNAShaderClass), vShader, fShader);
 }
 
 /**
@@ -178,7 +178,7 @@ DNAShader* LoadShaderFromFile(
  * @returns Texture
  * 
  */
-DNATexture2D* LoadTextureFromFile(
+DNATexture2DRef LoadTextureFromFile(
     const DNAResourceManager* this,
     const GLchar* file,
     GLboolean alpha)
@@ -186,7 +186,7 @@ DNATexture2D* LoadTextureFromFile(
     int format = alpha ? GL_RGBA : GL_RGB;
     int stbiFlag = alpha ? STBI_rgb_alpha : STBI_rgb;
 
-    DNATexture2D* texture = New((DNATexture2D*)CFCreate(DNATexture2DClass), format, format, (char*)file);
+    DNATexture2DRef texture = New((DNATexture2DRef)CFCreate(DNATexture2DClass), format, format, (char*)file);
 
     stbi_set_flip_vertically_on_load(true); // tell stb_image.h to flip loaded texture's on the y-axis.
     int width, height, nrChannels;

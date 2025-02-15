@@ -20,24 +20,24 @@
 #include <corefw.h>
 #include <dna.h>
 
-typedef struct GameLevel GameLevel;
+typedef struct __GameLevel* GameLevelRef;
 extern const CFClassRef GameLevelClass;
 
 /// GameLevel holds all Tiles as part of a Breakout level and
 /// hosts functionality to Load/render levels from the harddisk.
-struct GameLevel {
+struct __GameLevel {
     struct __CFObject obj;
     CFArrayRef Bricks;
 };
 
-extern method GameLevel* New(GameLevel* this, GLchar *file, int levelWidth, int levelHeight);
-extern method GameLevel* Load(GameLevel* this, GLchar *file, int levelWidth, int levelHeight);
-extern method void Draw(GameLevel* this, DNAArrayRenderer* renderer);
-extern method bool IsCompleted(GameLevel* this);
-extern method void init(GameLevel* this, CFArrayRef tileData, GLuint levelWidth, GLuint levelHeight);
-extern method char* ToString(GameLevel* this);
+extern method GameLevelRef New(GameLevelRef this, GLchar *file, int levelWidth, int levelHeight);
+extern method GameLevelRef Load(GameLevelRef this, GLchar *file, int levelWidth, int levelHeight);
+extern method void Draw(GameLevelRef this, DNAArrayRendererRef renderer);
+extern method bool IsCompleted(GameLevelRef this);
+extern method void init(GameLevelRef this, CFArrayRef tileData, GLuint levelWidth, GLuint levelHeight);
+extern method char* ToString(GameLevelRef this);
 
-static inline GameLevel* NewGameLevel(GLchar *file, int levelWidth, int levelHeight)
+static inline GameLevelRef NewGameLevel(GLchar *file, int levelWidth, int levelHeight)
 {
-    return New((GameLevel*)CFCreate(GameLevelClass), file, levelWidth, levelHeight);
+    return New((GameLevelRef)CFCreate(GameLevelClass), file, levelWidth, levelHeight);
 }

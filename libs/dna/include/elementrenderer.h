@@ -14,27 +14,27 @@
 #include "tglm.h"
 #include "dna.h"
 
-typedef struct DNAElementRenderer DNAElementRenderer;
+typedef struct __DNAElementRenderer* DNAElementRendererRef;
 extern const CFClassRef DNAElementRendererClass;
 
 /**
  *  class DNAElementRenderer
  */
-struct DNAElementRenderer {
+struct __DNAElementRenderer {
     struct __CFObject obj;
-    struct DNAShader* shader;
+    struct __DNAShaderRef* shader;
     GLuint VBO;
     GLuint VAO;
     GLuint EBO;
 };
 
-extern method void* New(DNAElementRenderer* this, DNAShader* shader);
+extern method void* New(DNAElementRendererRef this, DNAShaderRef shader);
 
-extern method void Draw(DNAElementRenderer* this, DNATexture2D* texture, DNARect bounds, GLfloat rotate, Vec3 color);
-extern method void Draw(DNAElementRenderer* this, DNATexture2D* texture, Vec2 position, Vec2 size, GLfloat rotate, Vec3 color);
+extern method void Draw(DNAElementRendererRef this, DNATexture2DRef texture, DNARect bounds, GLfloat rotate, Vec3 color);
+extern method void Draw(DNAElementRendererRef this, DNATexture2DRef texture, Vec2 position, Vec2 size, GLfloat rotate, Vec3 color);
 
-static inline DNAElementRenderer* NewDNAElementRenderer(DNAShader* shader)
+static inline DNAElementRendererRef NewDNAElementRenderer(DNAShaderRef shader)
 {
-    return New((DNAElementRenderer*)CFCreate(DNAElementRendererClass), shader);
+    return New((DNAElementRendererRef)CFCreate(DNAElementRendererClass), shader);
 }
 

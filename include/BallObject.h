@@ -18,14 +18,14 @@
 #include <GLFW/glfw3.h>
 #include <dna.h>
 
-typedef struct BallObject BallObject;
-extern const CFClassRef BallObjectClass;
+typedef struct __BallObject* BallObjectRef;
+extern const CFClassRef BallObject;
 
 // BallObject holds the state of the Ball object inheriting
 // relevant state data from GameObject. Contains some extra
 // functionality specific to Breakout's ball object that
 // were too specific for within GameObject alone.
-struct BallObject { // extend GameObject
+struct __BallObject { // extend GameObject
     struct __CFObject obj;
     Vec2 Position;
     Vec2 Size;
@@ -34,7 +34,7 @@ struct BallObject { // extend GameObject
     GLfloat Rotation;
     GLboolean IsSolid;
     GLboolean Destroyed;
-    DNATexture2D* Sprite;
+    DNATexture2DRef Sprite;
     char* Name;
 
     /* new BallObject fields */
@@ -43,13 +43,13 @@ struct BallObject { // extend GameObject
 };
 
 
-extern method void* New(BallObject* this, Vec2 Position, float Radius, Vec2 Velocity, DNATexture2D* Sprite);
-extern method void Draw(BallObject* this, DNAArrayRenderer* renderer);
-extern method void Move(BallObject* this, GLfloat dt, GLuint window_width);
-extern method void Reset(BallObject* this, Vec2 position, Vec2 velocity);
-extern method char* ToString(BallObject*  this);
+extern method void* New(BallObjectRef this, Vec2 Position, float Radius, Vec2 Velocity, DNATexture2DRef Sprite);
+extern method void Draw(BallObjectRef this, DNAArrayRendererRef renderer);
+extern method void Move(BallObjectRef this, GLfloat dt, GLuint window_width);
+extern method void Reset(BallObjectRef this, Vec2 position, Vec2 velocity);
+extern method char* ToString(BallObjectRef  this);
 
-static inline BallObject* NewBallObject(Vec2 Position, float Radius, Vec2 Velocity, DNATexture2D* Sprite)
+static inline BallObjectRef NewBallObject(Vec2 Position, float Radius, Vec2 Velocity, DNATexture2DRef Sprite)
 {
-    return New((BallObject*)CFCreate(BallObjectClass), Position, Radius, Velocity, Sprite);
+    return New((BallObjectRef)CFCreate(BallObject), Position, Radius, Velocity, Sprite);
 }

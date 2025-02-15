@@ -7,10 +7,10 @@
 
 static struct __CFClass class = {
     .name = "Demo",
-    .size = sizeof(Demo),
+    .size = sizeof(struct __Demo),
 };
 const CFClassRef DemoClass = &class;
-typedef void (*DemoProc)(Demo* this);
+typedef void (*DemoProc)(DemoRef this);
 
 
 
@@ -23,9 +23,9 @@ static const Vec3 WHITE = { 1, 1, 1 };
 
 // Game-related State data
 DNAResourceManager* ResourceManager;
-static DNAArrayRenderer* Renderer;
-static GameObject* Player;
-static BallObject* Ball;
+static DNAArrayRendererRef Renderer;
+static GameObjectRef Player;
+static BallObjectRef Ball;
 
 
 ////////////////////////////////////////////////////////////////////////
@@ -33,7 +33,7 @@ static BallObject* Ball;
 ///// methods
 ////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////
-void* New(Demo* this, char* title, int width, int height)
+void* New(DemoRef this, char* title, int width, int height)
 {
     static struct DNAGameVtbl overrides = {
         .Initialize =   (DNAGameProc)(DemoProc)(Initialize),
@@ -42,7 +42,7 @@ void* New(Demo* this, char* title, int width, int height)
         .Draw =         (DNAGameProc)((DemoProc)Draw),
     };
 
-    New((DNAGame*)this, title, width, height, this, &overrides);
+    New((DNAGameRef)this, title, width, height, this, &overrides);
 
     this->Levels = CFNew(CFArray, NULL);
     this->Level = 0;
@@ -54,12 +54,12 @@ void* New(Demo* this, char* title, int width, int height)
     return (void*)this;
 }
 
-method void Initialize(Demo* this)
+method void Initialize(DemoRef this)
 {
 }
 
 
-method void LoadContent(Demo* this)
+method void LoadContent(DemoRef this)
 {
     // Load shaders
 #ifdef __EMSCRIPTEN__
@@ -70,7 +70,7 @@ method void LoadContent(Demo* this)
 
     // Configure shaders
     Mat projection = glm_ortho(0, (GLfloat)this->width, (GLfloat)this->height, 0, -1, 1);
-    DNAShader* shader = GetShader(ResourceManager, "sprite");
+    DNAShaderRef shader = GetShader(ResourceManager, "sprite");
     Use(shader);
     SetInteger(shader, "sprite", 0);
     SetMatrix(shader, "projection", &projection);
@@ -84,7 +84,7 @@ method void LoadContent(Demo* this)
     LoadTexture(ResourceManager, "Resources/textures/background.jpg", false, "background");
     // Set render-specific controls
 
-    Renderer = New((DNAArrayRenderer*)CFCreate(DNAArrayRendererClass), GetShader(ResourceManager, "sprite"));
+    Renderer = New((DNAArrayRendererRef)CFCreate(DNAArrayRendererClass), GetShader(ResourceManager, "sprite"));
 
     // Load levels
     Add(this->Levels, NewGameLevel("Resources/levels/one.lvl", this->width, this->height * 0.5));
@@ -99,7 +99,7 @@ method void LoadContent(Demo* this)
     Ball = NewBallObject(ballPos, BALL_RADIUS, INITIAL_BALL_VELOCITY, GetTexture(ResourceManager, "face"));
 }
 
-method void Update(Demo* this)
+method void Update(DemoRef this)
 {
     // Update objects
     Move(Ball, this->delta, this->width);
@@ -139,7 +139,7 @@ method void Update(Demo* this)
 
 }
 
-method void Draw(Demo* this)
+method void Draw(DemoRef this)
 {
     float bgd_r = 0.392156f;
     float bgd_g = 0.584313f;
@@ -152,7 +152,7 @@ method void Draw(Demo* this)
         // Draw background
         DNARect bounds = { 0, 0, this->width, this->height };
         Draw(Renderer, GetTexture(ResourceManager, "background"), &bounds, 0.0f, WHITE);
-        GameLevel* level = (GameLevel*)Get(this->Levels, this->Level);
+        GameLevelRef level = (GameLevelRef)Get(this->Levels, this->Level);
         Draw(level, Renderer);
         Draw(Player, Renderer);
         Draw(Ball, Renderer);
@@ -163,28 +163,28 @@ method void Draw(Demo* this)
     glfwPollEvents();
 }
 
-method void Run(Demo* this)
+method void Run(DemoRef this)
 {
-    Run((DNAGame*)this);
+    Run((DNAGameRef)this);
 }
 
 /**
  * ResetLevel
  * 
  */
-method void ResetLevel(Demo* this)
+method void ResetLevel(DemoRef this)
 {
     if (this->Level == 0) {
-        GameLevel* level = Get(this->Levels, 0);
+        GameLevelRef level = Get(this->Levels, 0);
         Load(level, "Resources/levels/one.lvl", this->width, this->height * 0.5f);
     } else if (this->Level == 1) {
-        GameLevel* level = Get(this->Levels, 1);
+        GameLevelRef level = Get(this->Levels, 1);
         Load(level, "Resources/levels/two.lvl", this->width, this->height * 0.5f);
     } else if (this->Level == 2) {
-        GameLevel* level = Get(this->Levels, 2);
+        GameLevelRef level = Get(this->Levels, 2);
         Load(level, "Resources/levels/three.lvl", this->width, this->height * 0.5f);
     } else if (this->Level == 3) {
-        GameLevel* level = Get(this->Levels, 3);
+        GameLevelRef level = Get(this->Levels, 3);
         Load(level, "Resources/levels/four.lvl", this->width, this->height * 0.5f);
     }
     this->Lives = 3;
@@ -194,7 +194,7 @@ method void ResetLevel(Demo* this)
  * ResetPlayer
  * 
  */
-method void ResetPlayer(Demo* this)
+method void ResetPlayer(DemoRef this)
 {
     Player->Size = PLAYER_SIZE;
     Player->Position = (Vec2) { this->width / 2 - PLAYER_SIZE.x / 2, this->height - PLAYER_SIZE.y };
@@ -238,7 +238,7 @@ static inline Direction ArrayDirection(Vec2 target)
  * 
  */
 static 
-GLboolean CheckCollision2(Demo* this, GameObject* one, GameObject* two) // AABB - AABB collision
+GLboolean CheckCollision2(DemoRef this, GameObjectRef one, GameObjectRef two) // AABB - AABB collision
 {
     // Collision x-axis?
     bool collisionX = one->Position.x + one->Size.x >= two->Position.x && two->Position.x + two->Size.x >= one->Position.x;
@@ -256,10 +256,10 @@ GLboolean CheckCollision2(Demo* this, GameObject* one, GameObject* two) // AABB 
  * 
  */
 static 
-Collision* CheckCollision(
-    Demo* this,
-    BallObject* one,
-    GameObject* two) // AABB - Circle collision
+CollisionRef CheckCollision(
+    DemoRef this,
+    BallObjectRef one,
+    GameObjectRef two) // AABB - Circle collision
 {
     // Get center point circle first
     Vec2 center = { one->Position + one->Radius };
@@ -286,17 +286,17 @@ Collision* CheckCollision(
  * DoCollisions
  * 
  */
-method void DoCollisions(Demo* this)
+method void DoCollisions(DemoRef this)
 {
-    GameLevel* level = Get(this->Levels, this->Level);
+    GameLevelRef level = Get(this->Levels, this->Level);
     CFArrayRef bricks = level->Bricks;
 
     for (int i = 0; i < Length(bricks); i++) {
-        GameObject* box = (GameObject*)Get(bricks, i);
+        GameObjectRef box = (GameObjectRef)Get(bricks, i);
         // TGameObject box = bricks->data[i];
 
         if (!box->Destroyed) {
-            Collision* collision = CheckCollision(this, Ball, box);
+            CollisionRef collision = CheckCollision(this, Ball, box);
             if (collision->IsTrue) // If collision is true
             {
                 // Destroy block if not solid
@@ -329,7 +329,7 @@ method void DoCollisions(Demo* this)
         }
     }
     // Also check collisions for player pad (unless stuck)
-    Collision* result = CheckCollision(this, Ball, Player);
+    CollisionRef result = CheckCollision(this, Ball, Player);
     if (!Ball->Stuck && result->Dir) {
         // Check where it hit the board, and change velocity based on where it hit the board
         GLfloat centerBoard = Player->Position.x + Player->Size.x / 2;

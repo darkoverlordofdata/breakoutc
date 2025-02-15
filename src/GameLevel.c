@@ -22,15 +22,15 @@ static const Vec3 COLOR5 = { 1.0f, 1.0f, 1.0f };
 
 static struct __CFClass class = {
     .name = "GameLevel",
-    .size = sizeof(GameLevel),
+    .size = sizeof(struct __GameLevel),
 };
 const CFClassRef GameLevelClass = &class;
 
 /**
  * GameLevel
  */
-method GameLevel* New(
-    GameLevel* this,
+method GameLevelRef New(
+    GameLevelRef this,
     GLchar* file,
     int levelWidth,
     int levelHeight)
@@ -48,8 +48,8 @@ method GameLevel* New(
  * @param levelHeight of level in tiles
  * 
  */
-method GameLevel* Load(
-    GameLevel* this,
+method GameLevelRef Load(
+    GameLevelRef this,
     GLchar* file,
     int levelWidth,
     int levelHeight)
@@ -58,7 +58,7 @@ method GameLevel* Load(
     Clear(this->Bricks);
     // Load from file
     GLuint tileCode;
-    GameLevel* level;
+    GameLevelRef level;
 
     FILE* fstream = fopen(file, "r");
 
@@ -105,11 +105,11 @@ method GameLevel* Load(
  * 
  */
 method void Draw(
-    GameLevel* this,
-    DNAArrayRenderer* renderer)
+    GameLevelRef this,
+    DNAArrayRendererRef renderer)
 {
     for (int i = 0; i < Length(this->Bricks); i++) {
-        GameObject* tile = Get(this->Bricks, i);
+        GameObjectRef tile = Get(this->Bricks, i);
         if (!tile->Destroyed)
             Draw(tile, renderer);
     }
@@ -121,10 +121,10 @@ method void Draw(
  * @returns true when complete
  * 
  */
-method bool IsCompleted(GameLevel* this)
+method bool IsCompleted(GameLevelRef this)
 {
     for (int i = 0; i < Length(this->Bricks); i++) {
-        GameObject* tile = Get(this->Bricks, i);
+        GameObjectRef tile = Get(this->Bricks, i);
         if (tile->IsSolid && !tile->Destroyed)
             return false;
     }
@@ -140,7 +140,7 @@ method bool IsCompleted(GameLevel* this)
  *  
  */
 method void init(
-    GameLevel* this,
+    GameLevelRef this,
     CFArrayRef tileData,
     GLuint levelWidth,
     GLuint levelHeight)
@@ -182,14 +182,14 @@ method void init(
 
             if (blockType == 1) // Solid
             {
-                DNATexture2D* tex = GetTexture(ResourceManager, "block_solid");
-                GameObject* obj = New((GameObject*)CFCreate(GameObjectClass), "tile", pos, size, tex, color);
+                DNATexture2DRef tex = GetTexture(ResourceManager, "block_solid");
+                GameObjectRef obj = New((GameObjectRef)CFCreate(GameObjectClass), "tile", pos, size, tex, color);
                 obj->IsSolid = true;
                 Add(this->Bricks, obj);
             } else if (blockType > 1) // Non-solid; now determine its color based on level data
             {
-                DNATexture2D* tex = GetTexture(ResourceManager, "block");
-                GameObject* obj = New((GameObject*)CFCreate(GameObjectClass), "tile", pos, size, tex, color);
+                DNATexture2DRef tex = GetTexture(ResourceManager, "block");
+                GameObjectRef obj = New((GameObjectRef)CFCreate(GameObjectClass), "tile", pos, size, tex, color);
                 Add(this->Bricks, obj);
             }
         }
@@ -199,7 +199,7 @@ method void init(
 /**
  * ToString
  */
-method char* ToString(GameLevel* this)
+method char* ToString(GameLevelRef this)
 {
     return "GameLevel";
 }

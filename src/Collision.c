@@ -11,7 +11,7 @@
 
 static struct __CFClass class = {
     .name = "Collision",
-    .size = sizeof(Collision),
+    .size = sizeof(struct __Collision),
 };
 const CFClassRef CollisionClass = &class;
 
@@ -22,7 +22,7 @@ const CFClassRef CollisionClass = &class;
  * @param dir direction from
  * @param Vec2 difference point
  */
-method void* New(Collision* this, bool isTrue, Direction dir, Vec2 vec)
+method void* New(CollisionRef this, bool isTrue, Direction dir, Vec2 vec)
 {
     this->IsTrue = isTrue;
     this->Dir = dir;

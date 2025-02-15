@@ -18,13 +18,13 @@
 #include <corefw.h>
 #include <dna.h>
 
-typedef struct GameObject GameObject;
+typedef struct __GameObject* GameObjectRef;
 extern const CFClassRef GameObjectClass;
 
 // Container object for holding all state relevant for a single
 // game object entity. Each object in the game likely needs the
 // minimal of state as described within GameObject.
-struct GameObject {
+struct __GameObject {
     struct __CFObject obj;
     Vec2 Position;
     Vec2 Size;
@@ -33,16 +33,16 @@ struct GameObject {
     GLfloat Rotation;
     GLboolean IsSolid;
     GLboolean Destroyed;
-    DNATexture2D* Sprite;
+    DNATexture2DRef Sprite;
     char* Name;
 };
 
-extern method GameObject* New(GameObject* this, char* name, Vec2 Position, Vec2 Size, DNATexture2D* Sprite, Vec3 Color);
-extern method void Draw(GameObject* this, DNAArrayRenderer* renderer);
-extern method char* ToString(GameObject* this);
+extern method GameObjectRef New(GameObjectRef this, char* name, Vec2 Position, Vec2 Size, DNATexture2DRef Sprite, Vec3 Color);
+extern method void Draw(GameObjectRef this, DNAArrayRendererRef renderer);
+extern method char* ToString(GameObjectRef this);
 
-static inline GameObject* NewGameObject(char* name, Vec2 Position, Vec2 Size, DNATexture2D* Sprite, Vec3 Color)
+static inline GameObjectRef NewGameObject(char* name, Vec2 Position, Vec2 Size, DNATexture2DRef Sprite, Vec3 Color)
 {
-    return New((GameObject*)CFCreate(GameObjectClass), name, Position, Size, Sprite, Color);
+    return New((GameObjectRef)CFCreate(GameObjectClass), name, Position, Size, Sprite, Color);
 }
 

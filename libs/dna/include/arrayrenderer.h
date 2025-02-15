@@ -13,25 +13,25 @@
 #include <GLFW/glfw3.h>
 #include <corefw.h>
 
-typedef struct DNAArrayRenderer DNAArrayRenderer;
+typedef struct __DNAArrayRenderer* DNAArrayRendererRef;
 extern const CFClassRef DNAArrayRendererClass;
 
 /**
  *  class DNAArrayRenderer
  */
-struct DNAArrayRenderer {
+struct __DNAArrayRenderer {
     struct __CFObject obj;
-    struct DNAShader* shader;
+    struct __DNAShader* shader;
     GLuint VBO;
     GLuint VAO;
 };
 
-extern method void* New(DNAArrayRenderer* this, DNAShader* shader);
+extern method void* New(DNAArrayRendererRef this, DNAShaderRef shader);
 
-extern method void Draw(DNAArrayRenderer* this, DNATexture2D* texture, DNARect* bounds, GLfloat rotate, Vec3 color);
-extern method void Draw(DNAArrayRenderer* this, DNATexture2D* texture, Vec2 position, Vec2 size, GLfloat rotate, Vec3 color);
+extern method void Draw(DNAArrayRendererRef this, DNATexture2DRef texture, DNARect* bounds, GLfloat rotate, Vec3 color);
+extern method void Draw(DNAArrayRendererRef this, DNATexture2DRef texture, Vec2 position, Vec2 size, GLfloat rotate, Vec3 color);
 
-static inline DNAArrayRenderer* NewDNAArrayRenderer(DNAShader* shader)
+static inline DNAArrayRendererRef NewDNAArrayRenderer(DNAShaderRef shader)
 {
-    return New((DNAArrayRenderer*)CFCreate(DNAArrayRendererClass), shader);
+    return New((DNAArrayRendererRef)CFCreate(DNAArrayRendererClass), shader);
 }

@@ -14,11 +14,11 @@
 
 static struct __CFClass class = {
     .name = "DNAShader",
-    .size = sizeof(DNAShader),
+    .size = sizeof(struct __DNAShader),
 };
 const CFClassRef DNAShaderClass = &class;
 
-method void* New(DNAShader* this, CFStringRef vShader, CFStringRef fShader)
+method void* New(DNAShaderRef this, CFStringRef vShader, CFStringRef fShader)
 {
     Compile(this, CFStringC(vShader), CFStringC(fShader));
     return this;
@@ -26,7 +26,7 @@ method void* New(DNAShader* this, CFStringRef vShader, CFStringRef fShader)
 /**
  * Use shader
  */
-method DNAShader* Use(DNAShader* this)
+method DNAShaderRef Use(DNAShaderRef this)
 {
     glUseProgram(this->Id);
     return this;
@@ -38,7 +38,7 @@ method DNAShader* Use(DNAShader* this)
  * Checks if compilation or linking failed and if so, print the error logs
  */
 void CheckCompileErrors(
-    DNAShader* this,
+    DNAShaderRef this,
     GLuint object,
     char* type)
 {
@@ -69,7 +69,7 @@ void CheckCompileErrors(
  * 
  */
 method void Compile(
-    DNAShader* this,
+    DNAShaderRef this,
     const GLchar* vShaderSrc,
     const GLchar* fShaderSrc)
 {
@@ -97,7 +97,7 @@ method void Compile(
 }
 
 method void SetFloat(
-    DNAShader* this,
+    DNAShaderRef this,
     const GLchar* name,
     const GLfloat value,
     const GLboolean useShader)
@@ -108,7 +108,7 @@ method void SetFloat(
 }
 
 method void SetFloat(
-    DNAShader* this,
+    DNAShaderRef this,
     const GLchar* name,
     const GLfloat value)
 {
@@ -116,7 +116,7 @@ method void SetFloat(
 }
 
 method void SetInteger(
-    DNAShader* this,
+    DNAShaderRef this,
     const GLchar* name,
     GLint value,
     GLboolean useShader)
@@ -127,7 +127,7 @@ method void SetInteger(
 }
 
 method void SetInteger(
-    DNAShader* this,
+    DNAShaderRef this,
     const GLchar* name,
     GLint value)
 {
@@ -135,7 +135,7 @@ method void SetInteger(
 }
 
 method void SetVector2(
-    DNAShader* this,
+    DNAShaderRef this,
     const GLchar* name,
     GLfloat x,
     GLfloat y,
@@ -147,7 +147,7 @@ method void SetVector2(
 }
 
 method void SetVector2(
-    DNAShader* this,
+    DNAShaderRef this,
     const GLchar* name,
     GLfloat x,
     GLfloat y)
@@ -156,7 +156,7 @@ method void SetVector2(
 }
 
 method void SetVector2v(
-    DNAShader* this,
+    DNAShaderRef this,
     const GLchar* name,
     const Vec2* vector,
     GLboolean useShader)
@@ -167,7 +167,7 @@ method void SetVector2v(
 }
 
 method void SetVector2v(
-    DNAShader* this,
+    DNAShaderRef this,
     const GLchar* name,
     const Vec2* vector)
 {
@@ -175,7 +175,7 @@ method void SetVector2v(
 }
 
 method void SetVector3(
-    DNAShader* this,
+    DNAShaderRef this,
     const GLchar* name,
     GLfloat x,
     GLfloat y,
@@ -188,7 +188,7 @@ method void SetVector3(
 }
 
 method void SetVector3(
-    DNAShader* this,
+    DNAShaderRef this,
     const GLchar* name,
     GLfloat x,
     GLfloat y,
@@ -198,7 +198,7 @@ method void SetVector3(
 }
 
 method void SetVector3v(
-    DNAShader* this,
+    DNAShaderRef this,
     const GLchar* name,
     const Vec3* vector,
     GLboolean useShader)
@@ -209,7 +209,7 @@ method void SetVector3v(
 }
 
 method void SetVector3v(
-    DNAShader* this,
+    DNAShaderRef this,
     const GLchar* name,
     const Vec3* vector)
 {
@@ -217,7 +217,7 @@ method void SetVector3v(
 }
 
 method void SetVector4(
-    DNAShader* this,
+    DNAShaderRef this,
     const GLchar* name,
     GLfloat x,
     GLfloat y,
@@ -231,7 +231,7 @@ method void SetVector4(
 }
 
 method void SetVector4(
-    DNAShader* this,
+    DNAShaderRef this,
     const GLchar* name,
     GLfloat x,
     GLfloat y,
@@ -242,7 +242,7 @@ method void SetVector4(
 }
 
 method void SetVector4v(
-    DNAShader* this,
+    DNAShaderRef this,
     const GLchar* name,
     const Vec4* vector,
     GLboolean useShader)
@@ -253,7 +253,7 @@ method void SetVector4v(
 }
 
 method void SetVector4v(
-    DNAShader* this,
+    DNAShaderRef this,
     const GLchar* name,
     const Vec4* vector)
 {
@@ -261,7 +261,7 @@ method void SetVector4v(
 }
 
 method void SetMatrix(
-    DNAShader* this,
+    DNAShaderRef this,
     const GLchar* name,
     const Mat* matrix,
     GLboolean useShader)
@@ -272,7 +272,7 @@ method void SetMatrix(
 }
 
 method void SetMatrix(
-    DNAShader* this,
+    DNAShaderRef this,
     const GLchar* name,
     const Mat* matrix)
 {

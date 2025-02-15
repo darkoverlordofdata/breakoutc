@@ -16,14 +16,14 @@ static void dtor(void* self);
 
 const static struct __CFClass class = {      
     .name = "DNAArrayRenderer",             
-    .size = sizeof(DNAArrayRenderer), 
+    .size = sizeof(struct __DNAArrayRenderer), 
     .dtor = dtor     
 };                                  
 const CFClassRef DNAArrayRendererClass = &class;
 
 static void dtor(void* self)
 {
-    DNAArrayRenderer* this = self;
+    DNAArrayRendererRef this = self;
     glDeleteVertexArrays(1, &this->VAO);
     glDeleteBuffers(1, &this->VBO);
 }
@@ -34,7 +34,7 @@ static void dtor(void* self)
  * @param shader to use for rendering
  * 
  */
- method void* New(DNAArrayRenderer* this, DNAShader* shader)
+ method void* New(DNAArrayRendererRef this, DNAShaderRef shader)
 {
     this->shader = shader;
     // set up vertex data (and buffer(s)) and configure vertex attributes
@@ -75,8 +75,8 @@ static void dtor(void* self)
  * 
  */
 method void Draw(
-    DNAArrayRenderer* this,
-    DNATexture2D* texture,
+    DNAArrayRendererRef this,
+    DNATexture2DRef texture,
     DNARect* bounds,
     GLfloat rotate,
     Vec3 color)
@@ -123,8 +123,8 @@ method void Draw(
  * 
  */
 method void Draw(
-    DNAArrayRenderer* this,
-    DNATexture2D* texture,
+    DNAArrayRendererRef this,
+    DNATexture2DRef texture,
     Vec2 position, 
     Vec2 size, 
     GLfloat rotate,

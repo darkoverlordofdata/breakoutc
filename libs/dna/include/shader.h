@@ -12,65 +12,65 @@
 #include "object.h"
 #include <GLFW/glfw3.h>
 
-typedef struct DNAShader DNAShader;
+typedef struct __DNAShader* DNAShaderRef;
 extern const CFClassRef DNAShaderClass;
 
 /**
  *  class DNAShader
  */
-struct DNAShader {
+struct __DNAShader {
     struct __CFObject obj;
     GLuint Id;
 };
 
-extern method DNAShader* Use(DNAShader* this);
+extern method DNAShaderRef Use(DNAShaderRef this);
 
-extern method void* New(DNAShader* this, CFStringRef vShader, CFStringRef fShader);
-extern method GLuint GetId(DNAShader* this);
-extern method void Compile(DNAShader* this, const GLchar* vertexSource, const GLchar* fragmentSource);
+extern method void* New(DNAShaderRef this, CFStringRef vShader, CFStringRef fShader);
+extern method GLuint GetId(DNAShaderRef this);
+extern method void Compile(DNAShaderRef this, const GLchar* vertexSource, const GLchar* fragmentSource);
 extern method void SetFloat(
-    DNAShader* this,
+    DNAShaderRef this,
     const GLchar* name,
     const GLfloat value,
     const GLboolean useShader);
 
 extern method void SetInteger(
-    DNAShader* this,
+    DNAShaderRef this,
     const GLchar* name,
     GLint value,
     GLboolean useShader);
 
 extern method void SetInteger(
-    DNAShader* this,
+    DNAShaderRef this,
     const GLchar* name,
     GLint value);
 
 extern method void SetVector2(
-    DNAShader* this,
+    DNAShaderRef this,
     const GLchar* name,
     GLfloat x,
     GLfloat y,
     GLboolean useShader);
 
 extern method void SetVector2(
-    DNAShader* this,
+    DNAShaderRef this,
     const GLchar* name,
     GLfloat x,
     GLfloat y);
 
 extern method void SetVector2v(
-    DNAShader* this,
+    DNAShaderRef this,
     const GLchar* name,
     const Vec2* vector,
     GLboolean useShader);
 
 extern method void SetVector2v(
-    DNAShader* this,
+    DNAShaderRef this,
     const GLchar* name,
     const Vec2* vector);
 
 extern method void SetVector3(
-    DNAShader* this,
+    DNAShaderRef this,
     const GLchar* name,
     GLfloat x,
     GLfloat y,
@@ -78,25 +78,25 @@ extern method void SetVector3(
     GLboolean useShader);
 
 extern method void SetVector3(
-    DNAShader* this,
+    DNAShaderRef this,
     const GLchar* name,
     GLfloat x,
     GLfloat y,
     GLfloat z);
 
 extern method void SetVector3v(
-    DNAShader* this,
+    DNAShaderRef this,
     const GLchar* name,
     const Vec3* vector,
     GLboolean useShader);
 
 extern method void SetVector3v(
-    DNAShader* this,
+    DNAShaderRef this,
     const GLchar* name,
     const Vec3* vector);
 
 extern method void SetVector4(
-    DNAShader* this,
+    DNAShaderRef this,
     const GLchar* name,
     GLfloat x,
     GLfloat y,
@@ -105,7 +105,7 @@ extern method void SetVector4(
     GLboolean useShader);
 
 extern method void SetVector4(
-    DNAShader* this,
+    DNAShaderRef this,
     const GLchar* name,
     GLfloat x,
     GLfloat y,
@@ -113,28 +113,28 @@ extern method void SetVector4(
     GLfloat w);
 
 extern method void SetVector4v(
-    DNAShader* this,
+    DNAShaderRef this,
     const GLchar* name,
     const Vec4* vector,
     GLboolean useShader);
 
 extern method void SetVector4v(
-    DNAShader* this,
+    DNAShaderRef this,
     const GLchar* name,
     const Vec4* vector);
 
 extern method void SetMatrix(
-    DNAShader* this,
+    DNAShaderRef this,
     const GLchar* name,
     const Mat* matrix,
     GLboolean useShader);
 
 extern method void SetMatrix(
-    DNAShader* this,
+    DNAShaderRef this,
     const GLchar* name,
     const Mat* matrix);
 
-static inline DNAShader* NewDNAShader(CFStringRef vShader, CFStringRef fShader)
+static inline DNAShaderRef NewDNAShader(CFStringRef vShader, CFStringRef fShader)
 {
-    return New((DNAShader*)CFCreate(DNAShaderClass), vShader, fShader);
+    return New((DNAShaderRef)CFCreate(DNAShaderClass), vShader, fShader);
 }
