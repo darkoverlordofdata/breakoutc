@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2012, Jonathan Schleifer <js@webkeks.org>
+ * Copyright (c) 2018 Dark Overlord of Data <darkoverlordofdata@gmail.com>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -27,7 +28,7 @@
 #include "class.h"
 
 const char*
-cfw_class_name(CFWClass *cls)
+CFClassName(CFClassRef cls)
 {
 	return cls->name;
 }

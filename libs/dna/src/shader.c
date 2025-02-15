@@ -12,15 +12,15 @@
 #include <corefw.h>
 #include <GLFW/glfw3.h>
 
-static struct CFWClass class = {
+static struct __CFClass class = {
     .name = "DNAShader",
     .size = sizeof(DNAShader),
 };
-const CFWClass* DNAShaderClass = &class;
+const CFClassRef DNAShaderClass = &class;
 
-method void* New(DNAShader* this, CFWString* vShader, CFWString* fShader)
+method void* New(DNAShader* this, CFStringRef vShader, CFStringRef fShader)
 {
-    Compile(this, cfw_string_c(vShader), cfw_string_c(fShader));
+    Compile(this, CFStringC(vShader), CFStringC(fShader));
     return this;
 }
 /**

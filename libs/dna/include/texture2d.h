@@ -9,14 +9,14 @@
  * class DNATexture2D
  */
 typedef struct DNATexture2D DNATexture2D;
-extern const CFWClass* DNATexture2DClass;
+extern const CFClassRef DNATexture2DClass;
 
 
 /**
  *  object DNATexture2D
  */
 struct DNATexture2D {
-    CFWObject obj; // CoreFW interface
+    struct __CFObject obj; // CoreFW interface
     GLuint Id; // Holds the ID of the texture object, used for all texture operations to reference to self particlar texture
     GLuint Width, Height; // Width and height of loaded image in pixels
     GLuint InternalFormat; // Format of texture object
@@ -42,5 +42,5 @@ extern method char* ToString(const DNATexture2D* this);
 
 static inline DNATexture2D* NewDNATexture2D(GLuint internalFormat, GLuint imageFormat, char* path)
 {
-    return New((DNATexture2D*)cfw_create(DNATexture2DClass), internalFormat, imageFormat, path);
+    return New((DNATexture2D*)CFCreate(DNATexture2DClass), internalFormat, imageFormat, path);
 }

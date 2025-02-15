@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2012, Jonathan Schleifer <js@webkeks.org>
+ * Copyright (c) 2018 Dark Overlord of Data <darkoverlordofdata@gmail.com>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -34,7 +35,7 @@
 static bool
 ctor(void *ptr, va_list args)
 {
-	CFWStream *stream = ptr;
+	CFStreamRef stream = ptr;
 
 	stream->ops = NULL;
 	stream->cache = NULL;
@@ -46,13 +47,13 @@ ctor(void *ptr, va_list args)
 static void
 dtor(void *ptr)
 {
-	cfw_stream_close(ptr);
+	CFStreamClose(ptr);
 }
 
 ssize_t
-cfw_stream_read(void *ptr, void *buf, size_t len)
+CFStreamRead(void *ptr, void *buf, size_t len)
 {
-	CFWStream *stream = ptr;
+	CFStreamRef stream = ptr;
 	ssize_t ret;
 
 	if (stream == NULL || stream->ops == NULL)
@@ -91,11 +92,11 @@ cfw_stream_read(void *ptr, void *buf, size_t len)
 	}
 }
 
-CFWString*
-cfw_stream_read_line(void *ptr)
+CFStringRef
+CFStreamReadLine(void *ptr)
 {
-	CFWStream *stream = ptr;
-	CFWString *ret;
+	CFStreamRef stream = ptr;
+	CFStringRef ret;
 	char *buf, *ret_str, *new_cache;
 	ssize_t buf_len;
 	size_t i, ret_len;
@@ -109,16 +110,16 @@ cfw_stream_read_line(void *ptr)
 				if (i > 0 && stream->cache[i - 1] == '\r')
 					ret_len--;
 
-				ret_str = cfw_strndup(stream->cache, ret_len);
+				ret_str = CFStrnDup(stream->cache, ret_len);
 				if (ret_str == NULL)
 					return NULL;
 
-				ret = cfw_create(cfw_string, (void*)NULL);
+				ret = CFCreate(CFString, (void*)NULL);
 				if (ret == NULL) {
 					free(ret_str);
 					return NULL;
 				}
-				cfw_string_set_nocopy(ret, ret_str, ret_len);
+				CFStringSetNoCopy(ret, ret_str, ret_len);
 
 				if (stream->cache_len > i + 1) {
 					if ((new_cache = malloc(
@@ -127,7 +128,7 @@ cfw_stream_read_line(void *ptr)
 					memcpy(new_cache, stream->cache + i + 1,
 					    stream->cache_len - i - 1);
 				} else
-					new_cache = cfw_strdup("");
+					new_cache = CFStrDup("");
 
 				free(stream->cache);
 				stream->cache = new_cache;
@@ -155,16 +156,16 @@ cfw_stream_read_line(void *ptr)
 			if (ret_len > 0 && stream->cache[ret_len - 1] == '\r')
 				ret_len--;
 
-			ret_str = cfw_strndup(stream->cache, ret_len);
+			ret_str = CFStrnDup(stream->cache, ret_len);
 			if (ret_str == NULL)
 				return NULL;
 
-			ret = cfw_create(cfw_string, (void*)NULL);
+			ret = CFCreate(CFString, (void*)NULL);
 			if (ret == NULL) {
 				free(ret_str);
 				return NULL;
 			}
-			cfw_string_set_nocopy(ret, ret_str, ret_len);
+			CFStringSetNoCopy(ret, ret_str, ret_len);
 
 			free(stream->cache);
 			stream->cache = NULL;
@@ -199,13 +200,13 @@ cfw_stream_read_line(void *ptr)
 					ret_len--;
 				ret_str[ret_len] = '\0';
 
-				ret = cfw_create(cfw_string, (void*)NULL);
+				ret = CFCreate(CFString, (void*)NULL);
 				if (ret == NULL) {
 					free(buf);
 					free(ret_str);
 					return NULL;
 				}
-				cfw_string_set_nocopy(ret, ret_str, ret_len);
+				CFStringSetNoCopy(ret, ret_str, ret_len);
 
 				if (buf_len > i + 1) {
 					new_cache = malloc(buf_len - i - 1);
@@ -216,7 +217,7 @@ cfw_stream_read_line(void *ptr)
 					memcpy(new_cache, buf + i + 1,
 					    buf_len - i - 1);
 				} else
-					new_cache = cfw_strdup("");
+					new_cache = CFStrDup("");
 
 				free(stream->cache);
 				stream->cache = new_cache;
@@ -238,7 +239,7 @@ cfw_stream_read_line(void *ptr)
 			memcpy(new_cache + stream->cache_len, buf, buf_len);
 		} else {
 			free(stream->cache);
-			new_cache = cfw_strdup("");
+			new_cache = CFStrDup("");
 		}
 
 		stream->cache = new_cache;
@@ -247,9 +248,9 @@ cfw_stream_read_line(void *ptr)
 }
 
 bool
-cfw_stream_write(void *ptr, const void *buf, size_t len)
+CFStreamWrite(void *ptr, const void *buf, size_t len)
 {
-	CFWStream *stream = ptr;
+	CFStreamRef stream = ptr;
 
 	if (stream == NULL || stream->ops == NULL)
 		return false;
@@ -258,13 +259,13 @@ cfw_stream_write(void *ptr, const void *buf, size_t len)
 }
 
 bool
-cfw_stream_write_string(void *ptr, const char *str)
+CFStreamWriteString(void *ptr, const char *str)
 {
-	return cfw_stream_write(ptr, str, strlen(str));
+	return CFStreamWrite(ptr, str, strlen(str));
 }
 
 bool
-cfw_stream_write_line(void *ptr, const char *str)
+CFStreamWriteLine(void *ptr, const char *str)
 {
 	char *tmp;
 	size_t len;
@@ -278,7 +279,7 @@ cfw_stream_write_line(void *ptr, const char *str)
 	tmp[len] = '\n';
 	tmp[len + 1] = '\0';
 
-	if (!cfw_stream_write(ptr, tmp, len + 1)) {
+	if (!CFStreamWrite(ptr, tmp, len + 1)) {
 		free(tmp);
 		return false;
 	}
@@ -288,9 +289,9 @@ cfw_stream_write_line(void *ptr, const char *str)
 }
 
 bool
-cfw_stream_at_end(void *ptr)
+CFStreamAtEnd(void *ptr)
 {
-	CFWStream *stream = ptr;
+	CFStreamRef stream = ptr;
 
 	if (stream == NULL || stream->ops == NULL)
 		return true;
@@ -302,9 +303,9 @@ cfw_stream_at_end(void *ptr)
 }
 
 void
-cfw_stream_close(void *ptr)
+CFStreamClose(void *ptr)
 {
-	CFWStream *stream = ptr;
+	CFStreamRef stream = ptr;
 
 	if (stream == NULL || stream->ops == NULL)
 		return;
@@ -312,10 +313,10 @@ cfw_stream_close(void *ptr)
 	stream->ops->close(stream);
 }
 
-static CFWClass class = {
-	.name = "CFWStream",
-	.size = sizeof(CFWStream),
+static struct __CFClass class = {
+	.name = "CFStream",
+	.size = sizeof(struct __CFStream),
 	.ctor = ctor,
 	.dtor = dtor
 };
-CFWClass *cfw_stream = &class;
+CFClassRef CFStream = &class;

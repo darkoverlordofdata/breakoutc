@@ -21,23 +21,23 @@
 #include <dna.h>
 
 typedef struct GameLevel GameLevel;
-extern const CFWClass* GameLevelClass;
+extern const CFClassRef GameLevelClass;
 
 /// GameLevel holds all Tiles as part of a Breakout level and
 /// hosts functionality to Load/render levels from the harddisk.
 struct GameLevel {
-    CFWObject obj;
-    CFWArray* Bricks;
+    struct __CFObject obj;
+    CFArrayRef Bricks;
 };
 
 extern method GameLevel* New(GameLevel* this, GLchar *file, int levelWidth, int levelHeight);
 extern method GameLevel* Load(GameLevel* this, GLchar *file, int levelWidth, int levelHeight);
 extern method void Draw(GameLevel* this, DNAArrayRenderer* renderer);
 extern method bool IsCompleted(GameLevel* this);
-extern method void init(GameLevel* this, CFWArray* tileData, GLuint levelWidth, GLuint levelHeight);
+extern method void init(GameLevel* this, CFArrayRef tileData, GLuint levelWidth, GLuint levelHeight);
 extern method char* ToString(GameLevel* this);
 
 static inline GameLevel* NewGameLevel(GLchar *file, int levelWidth, int levelHeight)
 {
-    return New((GameLevel*)cfw_create(GameLevelClass), file, levelWidth, levelHeight);
+    return New((GameLevel*)CFCreate(GameLevelClass), file, levelWidth, levelHeight);
 }

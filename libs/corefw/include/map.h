@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2012, Jonathan Schleifer <js@webkeks.org>
+ * Copyright (c) 2018 Dark Overlord of Data <darkoverlordofdata@gmail.com>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -23,33 +24,29 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-
-#ifndef __COREFW_MAP_H__
-#define __COREFW_MAP_H__
-
+#pragma once
 #include "class.h"
 
-typedef struct CFWMap CFWMap;
+typedef struct __CFMap* CFMapRef;
 
-typedef struct cfw_map_iter_t {
+typedef struct CFMapIter_t {
 	void *key, *obj;
 	/* private */
-	CFWMap *_map;
+	CFMapRef _map;
 	uint32_t _pos;
-} cfw_map_iter_t;
+} CFMapIter_t;
 
-extern CFWClass *cfw_map;
-extern size_t cfw_map_size(CFWMap*);
-extern void* cfw_map_get(CFWMap*, void*);
-extern void* cfw_map_get_c(CFWMap*, const char*);
-extern bool cfw_map_set(CFWMap*, void*, void*);
-extern bool cfw_map_set_c(CFWMap*, const char*, void*);
-extern void cfw_map_iter(CFWMap*, cfw_map_iter_t*);
-extern void cfw_map_iter_next(cfw_map_iter_t*);
+extern CFClassRef CFMap;
+extern size_t CFMapSize(CFMapRef);
+extern void* CFMapGet(CFMapRef, void*);
+extern void* CFMapGetC(CFMapRef, const char*);
+extern bool CFMapSet(CFMapRef, void*, void*);
+extern bool CFMapSetC(CFMapRef, const char*, void*);
+extern void CFMapIter(CFMapRef, CFMapIter_t*);
+extern void CFMapIterNext(CFMapIter_t*);
 
-extern method void* Get(CFWMap* this, char* key);
-extern method bool Remove(CFWMap* this, char* key);
-extern method void Put(CFWMap* this, char* key, void* object);
-extern method void ForEach(CFWMap* this, void(*func)(void* key, void* item));
+extern method void* Get(CFMapRef this, char* key);
+extern method bool Remove(CFMapRef this, char* key);
+extern method void Put(CFMapRef this, char* key, void* object);
+extern method void ForEach(CFMapRef this, void(*func)(void* key, void* item));
 
-#endif

@@ -13,19 +13,19 @@
 #include <GLFW/glfw3.h>
 
 typedef struct DNAShader DNAShader;
-extern const CFWClass* DNAShaderClass;
+extern const CFClassRef DNAShaderClass;
 
 /**
  *  class DNAShader
  */
 struct DNAShader {
-    CFWObject obj;
+    struct __CFObject obj;
     GLuint Id;
 };
 
 extern method DNAShader* Use(DNAShader* this);
 
-extern method void* New(DNAShader* this, CFWString* vShader, CFWString* fShader);
+extern method void* New(DNAShader* this, CFStringRef vShader, CFStringRef fShader);
 extern method GLuint GetId(DNAShader* this);
 extern method void Compile(DNAShader* this, const GLchar* vertexSource, const GLchar* fragmentSource);
 extern method void SetFloat(
@@ -134,7 +134,7 @@ extern method void SetMatrix(
     const GLchar* name,
     const Mat* matrix);
 
-static inline DNAShader* NewDNAShader(CFWString* vShader, CFWString* fShader)
+static inline DNAShader* NewDNAShader(CFStringRef vShader, CFStringRef fShader)
 {
-    return New((DNAShader*)cfw_create(DNAShaderClass), vShader, fShader);
+    return New((DNAShader*)CFCreate(DNAShaderClass), vShader, fShader);
 }

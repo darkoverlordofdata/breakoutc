@@ -1,6 +1,4 @@
-#ifndef __COREFW_COREFW_H__
-#define __COREFW_COREFW_H__
-
+#pragma once
 #include "class.h"
 #include "object.h"
 #include "array.h"
@@ -19,4 +17,3 @@
 #include "bitvector.h"
 #include "random.h"
 #include "uuid.h"
-#endif

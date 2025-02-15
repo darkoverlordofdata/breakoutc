@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2012, Jonathan Schleifer <js@webkeks.org>
+ * Copyright (c) 2018 Dark Overlord of Data <darkoverlordofdata@gmail.com>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -27,15 +28,15 @@
 #include "object.h"
 #include "bool.h"
 
-struct CFWBool {
-	CFWObject obj;
+struct __CFBool {
+	struct __CFObject obj;
 	bool value;
 };
 
 static bool
 ctor(void *ptr, va_list args)
 {
-	CFWBool *boolean = ptr;
+	CFBoolRef boolean = ptr;
 
 	boolean->value = va_arg(args, int);
 
@@ -45,10 +46,10 @@ ctor(void *ptr, va_list args)
 static bool
 equal(void *ptr1, void *ptr2)
 {
-	CFWObject *obj2 = ptr2;
-	CFWBool *boolean1, *boolean2;
+	CFObjectRef obj2 = ptr2;
+	CFBoolRef boolean1, boolean2;
 
-	if (obj2->cls != cfw_bool)
+	if (obj2->cls != CFBool)
 		return false;
 
 	boolean1 = ptr1;
@@ -60,7 +61,7 @@ equal(void *ptr1, void *ptr2)
 static uint32_t
 hash(void *ptr)
 {
-	CFWBool *boolean = ptr;
+	CFBoolRef boolean = ptr;
 
 	return (uint32_t)boolean->value;
 }
@@ -68,21 +69,21 @@ hash(void *ptr)
 static void*
 copy(void *ptr)
 {
-	return cfw_ref(ptr);
+	return CFRef(ptr);
 }
 
 bool
-cfw_bool_value(CFWBool *boolean)
+CFBoolValue(CFBoolRef boolean)
 {
 	return boolean->value;
 }
 
-static CFWClass class = {
-	.name = "CFWBool",
-	.size = sizeof(CFWBool),
+static struct __CFClass class = {
+	.name = "CFBool",
+	.size = sizeof(struct __CFBool),
 	.ctor = ctor,
 	.equal = equal,
 	.hash = hash,
 	.copy = copy
 };
-CFWClass *cfw_bool = &class;
+CFClassRef CFBool = &class;

@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2012, Jonathan Schleifer <js@webkeks.org>
+ * Copyright (c) 2018 Dark Overlord of Data <darkoverlordofdata@gmail.com>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -23,18 +24,14 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-
-#ifndef __COREFW_FILE_H__
-#define __COREFW_FILE_H__
-
+#pragma once
 #include "class.h"
 
-typedef struct CFWFile CFWFile;
+typedef struct __CFFile*  CFFileRef;
 
-extern CFWClass *cfw_file;
+extern CFClassRef CFFile;
 
-extern CFWFile *cfw_stdin;
-extern CFWFile *cfw_stdout;
-extern CFWFile *cfw_stderr;
+extern CFFileRef CFStdIn;
+extern CFFileRef CFStdOut;
+extern CFFileRef CFStdErr;
 
-#endif

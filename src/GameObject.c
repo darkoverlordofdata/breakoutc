@@ -14,11 +14,11 @@ static const Vec2 GAME_OBJECT_SIZE = { 1.0f, 1.0f };
 static const Vec2 GAME_OBJECT_VELOCITY = { 0.0f, 0.0f };
 static const Vec3 GAME_OBJECT_COLOR = { 1.0f, 1.0f, 1.0f };
 
-static struct CFWClass class = {
+static struct __CFClass class = {
     .name = "GameObject",
     .size = sizeof(GameObject),
 };
-const CFWClass* GameObjectClass = &class;
+const CFClassRef GameObjectClass = &class;
 
 /**
  * Constructor
@@ -43,7 +43,7 @@ method GameObject* New(
     this->Rotation = 0;
     this->Sprite = Sprite;
     this->Color = Color;
-    this->Name = cfw_strdup(name);
+    this->Name = CFStrDup(name);
 
     return this;
 }

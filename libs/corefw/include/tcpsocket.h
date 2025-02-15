@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2012, Jonathan Schleifer <js@webkeks.org>
+ * Copyright (c) 2018 Dark Overlord of Data <darkoverlordofdata@gmail.com>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -23,12 +24,10 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-
-#ifndef __COREFW_TCPSOCKET_H__
-#define __COREFW_TCPSOCKET_H__
+#pragma once
 #include "class.h"
 
-typedef struct CFWTCPSocket CFWTCPSocket;
+typedef struct __CFTCPSocket* CFTCPSocketRef;
 
 typedef /* ... */ socklen_t;
 struct addrinfo {
@@ -42,7 +41,5 @@ struct addrinfo {
     struct addrinfo *ai_next;
 };
 
-extern CFWClass *cfw_tcpsocket;
-extern bool cfw_tcpsocket_connect(CFWTCPSocket*, const char*, uint16_t);
-
-#endif
+extern CFClassRef CFTcpSocket;
+extern bool CFTCPSocketConnect(CFTCPSocketRef, const char*, uint16_t);

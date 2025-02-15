@@ -12,7 +12,7 @@
 
 typedef struct DNAGame DNAGame;
 struct DNAGameVtbl;
-extern const CFWClass* DNAGameClass;
+extern const CFClassRef DNAGameClass;
 
 extern DNAGame* DNAGame_instance;
 
@@ -25,7 +25,7 @@ struct DNAGameVtbl {
 };
 
 struct DNAGame {
-    CFWObject obj;
+    struct __CFObject obj;
     void* subclass;
     struct DNAGameVtbl const* override;
     GLFWwindow* window;
@@ -79,5 +79,5 @@ extern method void Draw(DNAGame* const this);
 
 static inline DNAGame* NewDNAGame(char* cstr, int width, int height, void* subclass, struct DNAGameVtbl* vptr)
 {
-    return New((DNAGame*)cfw_create(DNAGameClass), cstr, width, height, subclass, vptr);
+    return New((DNAGame*)CFCreate(DNAGameClass), cstr, width, height, subclass, vptr);
 }

@@ -20,16 +20,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/stat.h>
-
+ 
 
 static void dtor(void* self);
 
-const static CFWClass class = {      
+const static struct __CFClass class = {      
     .name = "DNAResourceManager",             
     .size = sizeof(DNAResourceManager), 
     .dtor = dtor     
 };                                  
-const CFWClass* DNAResourceManagerClass = &class;
+const CFClassRef DNAResourceManagerClass = &class;
 
 
 void Init(DNAResourceManager* this);
@@ -46,29 +46,29 @@ DNATexture2D* LoadTextureFromFile(
 static void dtor(void* self)
 {
     DNAResourceManager* this = self;
-    cfw_map_iter_t iter;
+    CFMapIter_t iter;
 
-    cfw_map_iter(this->Shaders, &iter);
+    CFMapIter(this->Shaders, &iter);
     while (iter.key != NULL) {
-        if (cfw_is(iter.obj, (CFWClass*)DNAShaderClass))
-            cfw_unref(iter.obj);
-        cfw_map_iter_next(&iter);
+        if (CFIs(iter.obj, (CFClassRef)DNAShaderClass))
+            CFUnref(iter.obj);
+        CFMapIterNext(&iter);
     }
-    cfw_unref(this->Shaders);
+    CFUnref(this->Shaders);
 
-    cfw_map_iter(this->Textures, &iter);
+    CFMapIter(this->Textures, &iter);
     while (iter.key != NULL) {
-        if (cfw_is(iter.obj, (CFWClass*)DNATexture2DClass))
-            cfw_unref(iter.obj);
-        cfw_map_iter_next(&iter);
+        if (CFIs(iter.obj, (CFClassRef)DNATexture2DClass))
+            CFUnref(iter.obj);
+        CFMapIterNext(&iter);
     }
-    cfw_unref(this->Textures);
+    CFUnref(this->Textures);
 }
 
 void Init(DNAResourceManager* this)
 {
-    this->Shaders = cfw_new(cfw_map, NULL);
-    this->Textures = cfw_new(cfw_map, NULL);
+    this->Shaders = CFNew(CFMap, NULL);
+    this->Textures = CFNew(CFMap, NULL);
 }
 method void* New(DNAResourceManager* this)
 {
@@ -91,8 +91,8 @@ method DNAShader* LoadShader(
 {
     assert(this != NULL);
 
-    cfw_map_set_c(this->Shaders, name, LoadShaderFromFile(this, vShaderFile, fShaderFile));
-    return cfw_map_get_c(this->Shaders, name);
+    CFMapSetC(this->Shaders, name, LoadShaderFromFile(this, vShaderFile, fShaderFile));
+    return CFMapGetC(this->Shaders, name);
 }
 
 /**
@@ -106,7 +106,7 @@ method DNAShader* GetShader(
     const DNAResourceManager* this,
     const char* name)
 {
-    return cfw_map_get_c(this->Shaders, name);
+    return CFMapGetC(this->Shaders, name);
 }
 
 /**
@@ -124,8 +124,8 @@ method DNATexture2D* LoadTexture(
     GLboolean alpha,
     const char* name)
 {
-    cfw_map_set_c(this->Textures, name, LoadTextureFromFile(this, file, alpha));
-    return cfw_map_get_c(this->Textures, name);
+    CFMapSetC(this->Textures, name, LoadTextureFromFile(this, file, alpha));
+    return CFMapGetC(this->Textures, name);
 }
 
 /**
@@ -139,7 +139,7 @@ method DNATexture2D* GetTexture(
     const DNAResourceManager* this,
     const char* name)
 {
-    return cfw_map_get_c(this->Textures, name);
+    return CFMapGetC(this->Textures, name);
 }
 
 void Clear(DNAResourceManager* this)
@@ -164,10 +164,10 @@ DNAShader* LoadShaderFromFile(
     const GLchar* vShaderFile,
     const GLchar* fShaderFile)
 {
-    CFWString* vShader = CFWFS.readTextFile((char*)vShaderFile);
-    CFWString* fShader = CFWFS.readTextFile((char*)fShaderFile);
+    CFStringRef vShader = CFFS.readTextFile((char*)vShaderFile);
+    CFStringRef fShader = CFFS.readTextFile((char*)fShaderFile);
     
-    return New((DNAShader*)cfw_create(DNAShaderClass), vShader, fShader);
+    return New((DNAShader*)CFCreate(DNAShaderClass), vShader, fShader);
 }
 
 /**
@@ -186,7 +186,7 @@ DNATexture2D* LoadTextureFromFile(
     int format = alpha ? GL_RGBA : GL_RGB;
     int stbiFlag = alpha ? STBI_rgb_alpha : STBI_rgb;
 
-    DNATexture2D* texture = New((DNATexture2D*)cfw_create(DNATexture2DClass), format, format, (char*)file);
+    DNATexture2D* texture = New((DNATexture2D*)CFCreate(DNATexture2DClass), format, format, (char*)file);
 
     stbi_set_flip_vertically_on_load(true); // tell stb_image.h to flip loaded texture's on the y-axis.
     int width, height, nrChannels;

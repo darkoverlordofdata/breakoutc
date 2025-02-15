@@ -19,11 +19,11 @@
 #include <dna.h>
 
 typedef struct Particle Particle;
-extern const CFWClass* ParticleClass;
+extern const CFClassRef ParticleClass;
 
 // Represents a single particle and its state
 struct Particle {
-    CFWObject obj;
+    struct __CFObject obj;
     Vec2 Position;
     Vec2 Velocity;
     Vec4 Color;

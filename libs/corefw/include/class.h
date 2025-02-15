@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2012, Jonathan Schleifer <js@webkeks.org>
+ * Copyright (c) 2018 Dark Overlord of Data <darkoverlordofdata@gmail.com>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -23,10 +24,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-
-#ifndef __COREFW_CLASS_H__
-#define __COREFW_CLASS_H__
-
+#pragma once
 #include <stddef.h>
 #include <stdbool.h>
 #include <stdint.h>
@@ -34,7 +32,9 @@
 
 #define method __attribute__((overloadable))
 
-typedef struct CFWClass {
+typedef struct __CFClass* CFClassRef;
+
+typedef struct __CFClass {
 	const char *name;
 	size_t size;
 	bool (*ctor)(void*, va_list);
@@ -42,8 +42,7 @@ typedef struct CFWClass {
 	bool (*equal)(void*, void*);
 	uint32_t (*hash)(void*);
 	void* (*copy)(void*);
-} CFWClass;
+} ;
 
-extern const char* cfw_class_name(CFWClass*);
+extern const char* CFClassName(CFClassRef);
 
-#endif

@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2012, Jonathan Schleifer <js@webkeks.org>
+ * Copyright (c) 2018 Dark Overlord of Data <darkoverlordofdata@gmail.com>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -23,35 +24,34 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-
-#ifndef __COREFW_STRING_H__
-#define __COREFW_STRING_H__
+#pragma once
 
 #include "class.h"
 #include "range.h"
 
-typedef struct CFWString CFWString;
-extern CFWClass *cfw_string;
-extern size_t cfw_strnlen(const char*, size_t);
-extern char* cfw_strdup(const char*);
-extern char* cfw_strndup(const char*, size_t);
-extern char* cfw_string_c(CFWString*);
-extern size_t cfw_string_length(CFWString*);
-extern bool cfw_string_set(CFWString*, const char*);
-extern void cfw_string_set_nocopy(CFWString*, char*, size_t);
-extern bool cfw_string_append(CFWString*, CFWString*);
-extern bool cfw_string_append_c(CFWString*, const char*);
-extern bool cfw_string_has_prefix(CFWString*, CFWString*);
-extern bool cfw_string_has_prefix_c(CFWString*, const char*);
-extern bool cfw_string_has_suffix(CFWString*, CFWString*);
-extern bool cfw_string_has_suffix_c(CFWString*, const char*);
-extern size_t cfw_string_find(CFWString*, CFWString*, cfw_range_t);
-extern size_t cfw_string_find_c(CFWString*, const char*, cfw_range_t);
-extern char* cfw_string_join(int count, ...);
+typedef struct __CFString* CFStringRef;
 
-extern method void* New(CFWString*);
-extern method void* New(CFWString*, char*);
-extern method char* cstr(CFWString* this);
-extern method char* ToString(CFWString* this);
-extern method int Length(CFWString* this);
-#endif
+extern CFClassRef CFString;
+extern size_t CFStrnLen(const char*, size_t);
+extern char* CFStrDup(const char*);
+extern char* CFStrnDup(const char*, size_t);
+extern char* CFStringC(CFStringRef);
+extern size_t CFStringLength(CFStringRef);
+extern bool CFStringSet(CFStringRef, const char*);
+extern void CFStringSetNoCopy(CFStringRef, char*, size_t);
+extern bool CFStringAppend(CFStringRef, CFStringRef);
+extern bool CFStringAppendC(CFStringRef, const char*);
+extern bool CFStringHasPrefix(CFStringRef, CFStringRef);
+extern bool CFStringHasPrefixC(CFStringRef, const char*);
+extern bool CFStringHasSuffix(CFStringRef, CFStringRef);
+extern bool CFStringHasSuffixC(CFStringRef, const char*);
+extern size_t CFStringFind(CFStringRef, CFStringRef, CFRange_t);
+extern size_t CFStringFindC(CFStringRef, const char*, CFRange_t);
+extern char* CFStringJoin(int count, ...);
+
+extern method void* New(CFStringRef);
+extern method void* New(CFStringRef, char*);
+extern method char* cstr(CFStringRef this);
+extern method char* ToString(CFStringRef this);
+extern method int Length(CFStringRef this);
+

@@ -27,15 +27,15 @@ SOFTWARE.
 #include "bitvector.h"
 #include "stdlib.h"
 
-static struct CFWClass class = {
-    .name = "CFWBitVector",
-    .size = sizeof(CFWBitVector),
+static struct __CFClass class = {
+    .name = "CFBitVector",
+    .size = sizeof(struct __CFBitVector),
 };
-const CFWClass* CFWBitVectorClass = &class;
+const CFClassRef CFBitVector = &class;
 
 
 /*
- * CFWBitVectors are packed into arrays of "words."  Currently a word
+ * CFBitVectors are packed into arrays of "words."  Currently a word
  * consists of 32 bits, requiring 5 address bits.
  */
 const int ADDRESS_BITS_PER_WORD = 5;
@@ -76,12 +76,12 @@ unsigned int numberOfTrailingZeros(unsigned int i)
 
 /**
  * Constructor
- * create a new CFWBitVector
+ * create a new CFBitVector
  * 
  * @param value of bool
  * 
  */
-method void* New(CFWBitVector* this, int nbits)
+method void* New(CFBitVectorRef this, int nbits)
 {
     this->length = 0;
     if (nbits > 0) {
@@ -94,12 +94,12 @@ method void* New(CFWBitVector* this, int nbits)
     return this;
 }
 
-method void* New(CFWBitVector* this)
+method void* New(CFBitVectorRef this)
 {
     return New(this, 16);
 }
 
-method int NextSetBit(CFWBitVector* this, int fromIndex)
+method int NextSetBit(CFBitVectorRef this, int fromIndex)
 {
     int u = fromIndex >> ADDRESS_BITS_PER_WORD;
     int wordsInUse = this->length;
@@ -114,7 +114,7 @@ method int NextSetBit(CFWBitVector* this, int fromIndex)
     }
 }
 
-method bool Intersects(CFWBitVector* this, CFWBitVector* set)
+method bool Intersects(CFBitVectorRef this, CFBitVectorRef set)
 {
     int wordsInUse = this->length;
 
@@ -124,12 +124,12 @@ method bool Intersects(CFWBitVector* this, CFWBitVector* set)
     return false;
 }
 
-method bool IsEmpty(CFWBitVector* this)
+method bool IsEmpty(CFBitVectorRef this)
 {
     return this->length == 0;
 }
 
-method void Set(CFWBitVector* this, int bitIndex, bool value)
+method void Set(CFBitVectorRef this, int bitIndex, bool value)
 {
     int wordIndex = bitIndex >> ADDRESS_BITS_PER_WORD;
     int wordsInUse = this->length;
@@ -137,13 +137,13 @@ method void Set(CFWBitVector* this, int bitIndex, bool value)
 
     if (wordIndex >= this->length) {
         this->words = realloc(this->words, sizeof(unsigned int) * (wordIndex + 1));
-        // this = realloc(this, sizeof(CFWObject) + sizeof(int) + sizeof(unsigned int) * wordIndex + 1);
+        // this = realloc(this, sizeof(CFObject) + sizeof(int) + sizeof(unsigned int) * wordIndex + 1);
     }
     if (wordsInUse < wordsRequired) {
 
         int mm = Max(2 * wordsInUse, wordsRequired);
         // words.resize(int.max(2 * wordsInUse, wordsRequired));
-        // this = realloc(this, sizeof(CFWObject) + sizeof(int) + sizeof(unsigned int) * Max(2 * wordsInUse, wordsRequired));
+        // this = realloc(this, sizeof(CFObject) + sizeof(int) + sizeof(unsigned int) * Max(2 * wordsInUse, wordsRequired));
         this->words = realloc(this->words, sizeof(unsigned int) * mm);
         for (int i = wordsInUse, l = this->length; i < l; i++) {
             this->words[i] = 0;
@@ -157,7 +157,7 @@ method void Set(CFWBitVector* this, int bitIndex, bool value)
     }
 }
 
-method bool Get(CFWBitVector* this, int bitIndex)
+method bool Get(CFBitVectorRef this, int bitIndex)
 {
     int wordIndex = bitIndex >> ADDRESS_BITS_PER_WORD;
     int wordsInUse = this->length;
@@ -165,7 +165,7 @@ method bool Get(CFWBitVector* this, int bitIndex)
     return (wordIndex < wordsInUse) && ((this->words[wordIndex] & (1 << bitIndex)) != 0);
 }
 
-method void method Clear(CFWBitVector* this, int bitIndex)
+method void method Clear(CFBitVectorRef this, int bitIndex)
 {
     if (bitIndex == -1) {
         int wordsInUse = this->length;
@@ -178,22 +178,22 @@ method void method Clear(CFWBitVector* this, int bitIndex)
     int wordIndex = bitIndex >> ADDRESS_BITS_PER_WORD;
     if (this->length <= wordIndex) {
         this->words = realloc(this->words, sizeof(unsigned int) * wordIndex + 1);
-        // this = realloc(this, sizeof(CFWObject) + sizeof(int) + sizeof(unsigned int) * wordIndex + 1);
+        // this = realloc(this, sizeof(CFObject) + sizeof(int) + sizeof(unsigned int) * wordIndex + 1);
     }
     this->words[wordIndex] &= ~(1 << bitIndex);
 }
 
-method void method Clear(CFWBitVector* this)
+method void method Clear(CFBitVectorRef this)
 {
     Clear(this, -1);
 }
 
 /**
- * Returns the string value of this CFWBitVector
+ * Returns the string value of this CFBitVector
  */
-method char* ToString(CFWBitVector* this)
+method char* ToString(CFBitVectorRef this)
 {
-    return "CFWBitVector";
+    return "CFBitVector";
     //     string[] s = new string[words.length];
     //     for (var i=0; i<words.length; i++)
     //     {

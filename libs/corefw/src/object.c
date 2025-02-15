@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2012, Jonathan Schleifer <js@webkeks.org>
+ * Copyright (c) 2018 Dark Overlord of Data <darkoverlordofdata@gmail.com>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -31,9 +32,9 @@
 #include "refpool.h"
 
 void*
-cfw_new(CFWClass *class, ...)
+CFNew(CFClassRef class, ...)
 {
-	CFWObject *obj;
+	CFObjectRef obj;
 
 	if ((obj = malloc(class->size)) == NULL)
 		return NULL;
@@ -46,7 +47,7 @@ cfw_new(CFWClass *class, ...)
 		va_start(args, class);
 
 		if (!class->ctor(obj, args)) {
-			cfw_unref(obj);
+			CFUnref(obj);
 			return NULL;
 		}
 
@@ -57,11 +58,11 @@ cfw_new(CFWClass *class, ...)
 }
 
 void*
-cfw_create(CFWClass *class, ...)
+CFCreate(CFClassRef class, ...)
 {
-	CFWObject *obj;
+	CFObjectRef obj;
 
-	assert(class != cfw_refpool);
+	assert(class != CFRefPool);
 
 	if ((obj = malloc(class->size)) == NULL)
 		return NULL;
@@ -74,15 +75,15 @@ cfw_create(CFWClass *class, ...)
 		va_start(args, class);
 
 		if (!class->ctor(obj, args)) {
-			cfw_unref(obj);
+			CFUnref(obj);
 			return NULL;
 		}
 
 		va_end(args);
 	}
 
-	if (!cfw_refpool_add(obj)) {
-		cfw_unref(obj);
+	if (!CFRefPoolAdd(obj)) {
+		CFUnref(obj);
 		return NULL;
 	}
 
@@ -90,9 +91,9 @@ cfw_create(CFWClass *class, ...)
 }
 
 void*
-cfw_ref(void *ptr)
+CFRef(void *ptr)
 {
-	CFWObject *obj = ptr;
+	CFObjectRef obj = ptr;
 
 	if (obj == NULL)
 		return NULL;
@@ -103,21 +104,21 @@ cfw_ref(void *ptr)
 }
 
 void
-cfw_unref(void *ptr)
+CFUnref(void *ptr)
 {
-	CFWObject *obj = ptr;
+	CFObjectRef obj = ptr;
 
 	if (obj == NULL)
 		return;
 
 	if (--obj->ref_cnt == 0)
-		cfw_free(obj);
+		CFFree(obj);
 }
 
 void
-cfw_free(void *ptr)
+CFFree(void *ptr)
 {
-	CFWObject *obj = ptr;
+	CFObjectRef obj = ptr;
 
 	if (obj == NULL)
 		return;
@@ -128,10 +129,10 @@ cfw_free(void *ptr)
 	free(obj);
 }
 
-CFWClass*
-cfw_class(void *ptr)
+CFClassRef
+CFClass(void *ptr)
 {
-	CFWObject *obj = ptr;
+	CFObjectRef obj = ptr;
 
 	if (obj == NULL)
 		return NULL;
@@ -140,9 +141,9 @@ cfw_class(void *ptr)
 }
 
 bool
-cfw_is(void *ptr, CFWClass *cls)
+CFIs(void *ptr, CFClassRef cls)
 {
-	CFWObject *obj = ptr;
+	CFObjectRef obj = ptr;
 
 	if (obj == NULL || cls == NULL)
 		return false;
@@ -151,9 +152,9 @@ cfw_is(void *ptr, CFWClass *cls)
 }
 
 bool
-cfw_equal(void *ptr1, void *ptr2)
+CFEqual(void *ptr1, void *ptr2)
 {
-	CFWObject *obj1 = ptr1, *obj2 = ptr2;
+	CFObjectRef obj1 = ptr1, obj2 = ptr2;
 
 	if (obj1 == obj2)
 		return true;
@@ -168,9 +169,9 @@ cfw_equal(void *ptr1, void *ptr2)
 }
 
 uint32_t
-cfw_hash(void *ptr)
+CFHash(void *ptr)
 {
-	CFWObject *obj = ptr;
+	CFObjectRef obj = ptr;
 
 	if (obj == NULL)
 		return 0;
@@ -182,9 +183,9 @@ cfw_hash(void *ptr)
 }
 
 void*
-cfw_copy(void *ptr)
+CFCopy(void *ptr)
 {
-	CFWObject *obj = ptr;
+	CFObjectRef obj = ptr;
 
 	if (obj == NULL)
 		return NULL;
@@ -195,8 +196,8 @@ cfw_copy(void *ptr)
 	return NULL;
 }
 
-static CFWClass class = {
-	.name = "CFWObject",
-	.size = sizeof(CFWObject),
+static struct __CFClass class = {
+	.name = "CFObject",
+	.size = sizeof(struct __CFObject),
 };
-CFWClass *cfw_object = &class;
+CFClassRef CFObject = &class;

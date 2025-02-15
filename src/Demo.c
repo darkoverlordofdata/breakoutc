@@ -5,11 +5,11 @@
 #include "Collision.h"
 #include "object.h"
 
-static struct CFWClass class = {
+static struct __CFClass class = {
     .name = "Demo",
     .size = sizeof(Demo),
 };
-const CFWClass* DemoClass = &class;
+const CFClassRef DemoClass = &class;
 typedef void (*DemoProc)(Demo* this);
 
 
@@ -44,7 +44,7 @@ void* New(Demo* this, char* title, int width, int height)
 
     New((DNAGame*)this, title, width, height, this, &overrides);
 
-    this->Levels = cfw_new(cfw_array, NULL);
+    this->Levels = CFNew(CFArray, NULL);
     this->Level = 0;
     this->State = GAME_ACTIVE;
     this->width = width;
@@ -84,7 +84,7 @@ method void LoadContent(Demo* this)
     LoadTexture(ResourceManager, "Resources/textures/background.jpg", false, "background");
     // Set render-specific controls
 
-    Renderer = New((DNAArrayRenderer*)cfw_create(DNAArrayRendererClass), GetShader(ResourceManager, "sprite"));
+    Renderer = New((DNAArrayRenderer*)CFCreate(DNAArrayRendererClass), GetShader(ResourceManager, "sprite"));
 
     // Load levels
     Add(this->Levels, NewGameLevel("Resources/levels/one.lvl", this->width, this->height * 0.5));
@@ -289,7 +289,7 @@ Collision* CheckCollision(
 method void DoCollisions(Demo* this)
 {
     GameLevel* level = Get(this->Levels, this->Level);
-    CFWArray* bricks = level->Bricks;
+    CFArrayRef bricks = level->Bricks;
 
     for (int i = 0; i < Length(bricks); i++) {
         GameObject* box = (GameObject*)Get(bricks, i);

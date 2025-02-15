@@ -20,11 +20,11 @@ static const Vec3 COLOR3 = { 0.8f, 0.8f, 0.4f };
 static const Vec3 COLOR4 = { 1.0f, 0.5f, 0.0f };
 static const Vec3 COLOR5 = { 1.0f, 1.0f, 1.0f };
 
-static struct CFWClass class = {
+static struct __CFClass class = {
     .name = "GameLevel",
     .size = sizeof(GameLevel),
 };
-const CFWClass* GameLevelClass = &class;
+const CFClassRef GameLevelClass = &class;
 
 /**
  * GameLevel
@@ -35,7 +35,7 @@ method GameLevel* New(
     int levelWidth,
     int levelHeight)
 {
-    this->Bricks = cfw_create(cfw_array, NULL);
+    this->Bricks = CFCreate(CFArray, NULL);
     Load(this, file, levelWidth, levelHeight);
     return this;
 }
@@ -62,31 +62,31 @@ method GameLevel* Load(
 
     FILE* fstream = fopen(file, "r");
 
-    // CFWFile* handle = cfw_new(cfw_file, file, "r");
+    // CFFileRef  handle = CFNew(CFFile, file, "r");
     // if (!handle) {
     //     printf("Unable to open %s\n", file);
     //     return this;
     // }
 
     // printf("===============================================\n");
-    // while (!cfw_stream_at_end(handle)) {
-    //     CFWStream* line = cfw_stream_read_line(handle);
-    //     printf("%s\n", cfw_string_c(line));
+    // while (!CFStreamAtEnd(handle)) {
+    //     CFRefPoolRef line = CFStreamReadLine(handle);
+    //     printf("%s\n", CFStringC(line));
     // }
-    // cfw_stream_close(handle);
+    // CFStreamClose(handle);
     // printf("===============================================\n");
 
 
-    CFWArray* tileData = cfw_create(cfw_array, NULL);
-    CFWArray* row = cfw_create(cfw_array, NULL);
+    CFArrayRef tileData = CFCreate(CFArray, NULL);
+    CFArrayRef row = CFCreate(CFArray, NULL);
     int i;
     char c;
     if (fstream) {
         while (fscanf(fstream, "%d%c", &i, &c) != EOF) {
-            Add(row, cfw_create(cfw_int, i));
+            Add(row, CFCreate(CFInt, i));
             if (c == '\n') {
                 Add(tileData, row);
-                row = cfw_create(cfw_array, NULL);
+                row = CFCreate(CFArray, NULL);
             }
         }
 
@@ -141,21 +141,21 @@ method bool IsCompleted(GameLevel* this)
  */
 method void init(
     GameLevel* this,
-    CFWArray* tileData,
+    CFArrayRef tileData,
     GLuint levelWidth,
     GLuint levelHeight)
 {
     // Calculate dimensions
     GLuint height = Length(tileData);
-    CFWArray* row = Get(tileData, 0);
+    CFArrayRef row = Get(tileData, 0);
     GLuint width = Length(row); // Note we can index vector at [0] since this static inline is only called if height > 0
     GLfloat unit_width = levelWidth / (GLfloat)width, unit_height = levelHeight / height;
     // Initialize level tiles based on tileData
     for (GLuint y = 0; y < height; ++y) {
         for (GLuint x = 0; x < width; ++x) {
             // Check block type from level data (2D level array)
-            CFWArray* row = Get(tileData, y);
-            int blockType = cfw_int_value((Get(row, x)));
+            CFArrayRef row = Get(tileData, y);
+            int blockType = CFIntValue((Get(row, x)));
 
             Vec2 pos = { unit_width * x, unit_height * y };
             Vec2 size = { unit_width, unit_height };
@@ -183,13 +183,13 @@ method void init(
             if (blockType == 1) // Solid
             {
                 DNATexture2D* tex = GetTexture(ResourceManager, "block_solid");
-                GameObject* obj = New((GameObject*)cfw_create(GameObjectClass), "tile", pos, size, tex, color);
+                GameObject* obj = New((GameObject*)CFCreate(GameObjectClass), "tile", pos, size, tex, color);
                 obj->IsSolid = true;
                 Add(this->Bricks, obj);
             } else if (blockType > 1) // Non-solid; now determine its color based on level data
             {
                 DNATexture2D* tex = GetTexture(ResourceManager, "block");
-                GameObject* obj = New((GameObject*)cfw_create(GameObjectClass), "tile", pos, size, tex, color);
+                GameObject* obj = New((GameObject*)CFCreate(GameObjectClass), "tile", pos, size, tex, color);
                 Add(this->Bricks, obj);
             }
         }

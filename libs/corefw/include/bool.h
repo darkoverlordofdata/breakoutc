@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2012, Jonathan Schleifer <js@webkeks.org>
+ * Copyright (c) 2018 Dark Overlord of Data <darkoverlordofdata@gmail.com>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -23,14 +24,10 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-
-#ifndef __COREFW_BOOL_H__
-#define __COREFW_BOOL_H__
-
+#pragma once
 #include "class.h"
 
-typedef struct CFWBool CFWBool;
-extern CFWClass *cfw_bool;
-extern bool cfw_bool_value(CFWBool*);
+typedef struct __CFBool* CFBoolRef;
+extern CFClassRef CFBool;
+extern bool CFBoolValue(CFBoolRef);
 
-#endif

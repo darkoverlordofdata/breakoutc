@@ -40,8 +40,8 @@
 #include "stream.h"
 #include "tcpsocket.h"
 
-struct CFWTCPSocket {
-	CFWStream stream;
+struct __CFTCPSocket {
+	struct __CFStream stream;
 	int fd;
 	bool at_end;
 };
@@ -49,7 +49,7 @@ struct CFWTCPSocket {
 static ssize_t
 sock_read(void *ptr, void *buf, size_t len)
 {
-	CFWTCPSocket *sock = ptr;
+	CFTCPSocketRef sock = ptr;
 	ssize_t ret;
 
 	if ((ret = recv(sock->fd, buf, len, 0)) == 0)
@@ -61,7 +61,7 @@ sock_read(void *ptr, void *buf, size_t len)
 static bool
 sock_write(void *ptr, const void *buf, size_t len)
 {
-	CFWTCPSocket *sock = ptr;
+	CFTCPSocketRef sock = ptr;
 	ssize_t ret;
 
 	if ((ret = send(sock->fd, buf, len, 0)) < len)
@@ -73,7 +73,7 @@ sock_write(void *ptr, const void *buf, size_t len)
 static bool
 sock_at_end(void *ptr)
 {
-	CFWTCPSocket *sock = ptr;
+	CFTCPSocketRef sock = ptr;
 
 	return sock->at_end;
 }
@@ -81,13 +81,13 @@ sock_at_end(void *ptr)
 static void
 sock_close(void *ptr)
 {
-	CFWTCPSocket *sock = ptr;
+	CFTCPSocketRef sock = ptr;
 
 	if (sock->fd != -1)
 		close(sock->fd);
 }
 
-static struct cfw_stream_ops stream_ops = {
+static struct CFStreamOps stream_ops = {
 	.read = sock_read,
 	.write = sock_write,
 	.at_end = sock_at_end,
@@ -97,9 +97,9 @@ static struct cfw_stream_ops stream_ops = {
 static bool
 ctor(void *ptr, va_list args)
 {
-	CFWTCPSocket *sock = ptr;
+	CFTCPSocketRef sock = ptr;
 
-	cfw_stream->ctor(ptr, args);
+	CFStream->ctor(ptr, args);
 
 	sock->fd = -1;
 	sock->stream.ops = &stream_ops;
@@ -111,11 +111,11 @@ ctor(void *ptr, va_list args)
 static void
 dtor(void *ptr)
 {
-	cfw_stream->dtor(ptr);
+	CFStream->dtor(ptr);
 }
 
 bool
-cfw_tcpsocket_connect(CFWTCPSocket *sock, const char *host, uint16_t port)
+CFTCPSocketConnect(CFTCPSocketRef sock, const char *host, uint16_t port)
 {
 	struct addrinfo hints, *res, *res0;
 	char portstr[7];
@@ -150,10 +150,10 @@ cfw_tcpsocket_connect(CFWTCPSocket *sock, const char *host, uint16_t port)
 	return (sock->fd != -1);
 }
 
-static CFWClass class = {
-	.name = "CFWTCPSocket",
-	.size = sizeof(CFWTCPSocket),
+static struct __CFClass class = {
+	.name = "CFTCPSocket",
+	.size = sizeof(struct __CFTCPSocket),
 	.ctor = ctor,
 	.dtor = dtor
 };
-CFWClass *cfw_tcpsocket = &class;
+CFClassRef CFTcpSocket = &class;

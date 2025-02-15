@@ -5,13 +5,13 @@
 int main(int argc, char *argv[])
 {
 
-	CFWRefPool *pool = cfw_new(cfw_refpool);
+	CFRefPoolRef pool = CFNew(CFRefPool);
 
 	Demo *demo = NewDemo("Demo", 720, 480);
 
 	Run(demo);
 
-	cfw_unref(pool);
+	CFUnref(pool);
 
 	return 0;
 }

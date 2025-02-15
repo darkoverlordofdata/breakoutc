@@ -21,12 +21,12 @@
 #include "Particle.h"
 
 typedef struct ParticleGenerator ParticleGenerator;
-extern const CFWClass* ParticleGeneratorClass;
+extern const CFClassRef ParticleGeneratorClass;
 // ParticleGenerator acts as a container for rendering a large number of
 // particles by repeatedly spawning and updating particles and killing
 // them after a given amount of time.
 struct ParticleGenerator {
-    CFWObject obj;
+    struct __CFObject obj;
     Particle* particles;
     GLuint amount;
     DNAShader* shader;
@@ -44,5 +44,5 @@ extern method char* ToString(ParticleGenerator* this);
 
 static inline ParticleGenerator* NewParticleGenerator(DNAShader* shader, DNATexture2D* texture, int amount)
 {
-    return New((ParticleGenerator*)cfw_create(ParticleGeneratorClass), shader, texture, amount);
+    return New((ParticleGenerator*)CFCreate(ParticleGeneratorClass), shader, texture, amount);
 }

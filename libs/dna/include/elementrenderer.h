@@ -15,13 +15,13 @@
 #include "dna.h"
 
 typedef struct DNAElementRenderer DNAElementRenderer;
-extern const CFWClass* DNAElementRendererClass;
+extern const CFClassRef DNAElementRendererClass;
 
 /**
  *  class DNAElementRenderer
  */
 struct DNAElementRenderer {
-    CFWObject obj;
+    struct __CFObject obj;
     struct DNAShader* shader;
     GLuint VBO;
     GLuint VAO;
@@ -35,6 +35,6 @@ extern method void Draw(DNAElementRenderer* this, DNATexture2D* texture, Vec2 po
 
 static inline DNAElementRenderer* NewDNAElementRenderer(DNAShader* shader)
 {
-    return New((DNAElementRenderer*)cfw_create(DNAElementRendererClass), shader);
+    return New((DNAElementRenderer*)CFCreate(DNAElementRendererClass), shader);
 }
 

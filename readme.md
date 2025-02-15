@@ -22,17 +22,17 @@ sudo apt install libglfw3-dev
 
 - [x] remove all macros
     - [~] method    "__attribute__((overloadable))"
-    - [x] new       "new(T, args...) New((T*)cfw_create((CFClass*)T##Class), ## args)"
+    - [x] new       "new(T, args...) New((T*)CFCreate((CFClass*)T##Class), ## args)"
     - [x] static inline all constructors for prior change
 - [x] remove *-private.h headers
 
-- [ ] upgrade corefw
+- [x] upgrade corefw
     - [x] move library internally
     - [x] merge cfw into corefw and delete cfw
-    - [ ] use CF style naming as in the spaceinvaders game
-    - [ ] use the bitvector, random, fs and uuid classese from this project
-    - [ ] use generic functions {__attribute__((overloadable))} for collections (CFGet/CFPut, etc)
-    - [ ] use foreach function with anonymous function for collections 
+    - [x] use CF style naming as in the spaceinvaders game
+    - [x] use the bitvector, random, fs and uuid classese from this project
+    - [x] use generic functions {__attribute__((overloadable))} for collections (CFGet/CFPut, etc)
+    - [x] use foreach function with anonymous function for collections 
 
 - [ ] use Artemis lib from spaceinvaders game
 

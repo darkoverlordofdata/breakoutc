@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2012, Jonathan Schleifer <js@webkeks.org>
+ * Copyright (c) 2018 Dark Overlord of Data <darkoverlordofdata@gmail.com>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,8 +30,8 @@
 #include "object.h"
 #include "box.h"
 
-struct CFWBox {
-	CFWObject obj;
+struct __CFBox {
+	struct __CFObject obj;
 	void *ptr;
 	uint32_t type;
 	bool free;
@@ -39,7 +40,7 @@ struct CFWBox {
 static bool
 ctor(void *ptr, va_list args)
 {
-	CFWBox *box = ptr;
+	CFBoxRef box = ptr;
 
 	box->ptr = va_arg(args, void*);
 	box->type = va_arg(args, uint32_t);
@@ -51,28 +52,28 @@ ctor(void *ptr, va_list args)
 static void
 dtor(void *ptr)
 {
-	CFWBox *box = ptr;
+	CFBoxRef box = ptr;
 
 	if (box->free)
 		free(box->ptr);
 }
 
 void*
-cfw_box_ptr(CFWBox *box)
+CFBoxPtr(CFBoxRef box)
 {
 	return box->ptr;
 }
 
 uint32_t
-cfw_box_type(CFWBox *box)
+CFBoxType(CFBoxRef box)
 {
 	return box->type;
 }
 
-static CFWClass class = {
-	.name = "CFWBox",
-	.size = sizeof(CFWBox),
+static struct __CFClass class = {
+	.name = "CFBox",
+	.size = sizeof(struct __CFBox),
 	.ctor = ctor,
 	.dtor = dtor
 };
-CFWClass *cfw_box = &class;
+CFClassRef CFBox = &class;

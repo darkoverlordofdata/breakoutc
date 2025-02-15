@@ -19,13 +19,13 @@
 #include <dna.h>
 
 typedef struct GameObject GameObject;
-extern const CFWClass* GameObjectClass;
+extern const CFClassRef GameObjectClass;
 
 // Container object for holding all state relevant for a single
 // game object entity. Each object in the game likely needs the
 // minimal of state as described within GameObject.
 struct GameObject {
-    CFWObject obj;
+    struct __CFObject obj;
     Vec2 Position;
     Vec2 Size;
     Vec2 Velocity;
@@ -43,6 +43,6 @@ extern method char* ToString(GameObject* this);
 
 static inline GameObject* NewGameObject(char* name, Vec2 Position, Vec2 Size, DNATexture2D* Sprite, Vec3 Color)
 {
-    return New((GameObject*)cfw_create(GameObjectClass), name, Position, Size, Sprite, Color);
+    return New((GameObject*)CFCreate(GameObjectClass), name, Position, Size, Sprite, Color);
 }
 

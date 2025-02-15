@@ -3,7 +3,7 @@
 **
 MIT License
 
-Copyright (c); 2018 Dark Overlord of Data
+Copyright (c) 2018 Dark Overlord of Data <darkoverlordofdata@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software");, to deal
@@ -53,26 +53,26 @@ SOFTWARE.
         (_a > _b) ? _a : _b; \
     })
 
-typedef struct CFWBitVector CFWBitVector;
-extern const CFWClass *CFWBitVectorClass;
+typedef struct __CFBitVector* CFBitVectorRef;
+extern const CFClassRef CFBitVector;
 
 /**
- * CFWBitVector instance variables
+ * CFBitVector instance variables
  */
- struct CFWBitVector {
-    CFWObject obj;
+ struct __CFBitVector {
+    struct __CFObject obj;
     int length;
     unsigned int* words;
 };
 
 
-extern method void* New(CFWBitVector* this);
-extern method void* New(CFWBitVector* this, int nbits);
-extern method int NextSetBit(CFWBitVector* this, int fromIndex); 
-extern method bool Intersects(CFWBitVector* this, CFWBitVector* set); 
-extern method bool IsEmpty(CFWBitVector* this); 
-extern method void Set(CFWBitVector* this, int bitIndex, bool value); 
-extern method bool Get(CFWBitVector* this, int bitIndex); 
-extern method void Clear(CFWBitVector* this);
-extern method void Clear(CFWBitVector* this, int bitIndex);  
-extern method char* ToString(CFWBitVector* this);
+extern method void* New(CFBitVectorRef this);
+extern method void* New(CFBitVectorRef this, int nbits);
+extern method int NextSetBit(CFBitVectorRef this, int fromIndex); 
+extern method bool Intersects(CFBitVectorRef this, CFBitVectorRef set); 
+extern method bool IsEmpty(CFBitVectorRef this); 
+extern method void Set(CFBitVectorRef this, int bitIndex, bool value); 
+extern method bool Get(CFBitVectorRef this, int bitIndex); 
+extern method void Clear(CFBitVectorRef this);
+extern method void Clear(CFBitVectorRef this, int bitIndex);  
+extern method char* ToString(CFBitVectorRef this);

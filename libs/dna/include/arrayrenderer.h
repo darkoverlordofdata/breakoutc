@@ -14,13 +14,13 @@
 #include <corefw.h>
 
 typedef struct DNAArrayRenderer DNAArrayRenderer;
-extern const CFWClass* DNAArrayRendererClass;
+extern const CFClassRef DNAArrayRendererClass;
 
 /**
  *  class DNAArrayRenderer
  */
 struct DNAArrayRenderer {
-    CFWObject obj;
+    struct __CFObject obj;
     struct DNAShader* shader;
     GLuint VBO;
     GLuint VAO;
@@ -33,5 +33,5 @@ extern method void Draw(DNAArrayRenderer* this, DNATexture2D* texture, Vec2 posi
 
 static inline DNAArrayRenderer* NewDNAArrayRenderer(DNAShader* shader)
 {
-    return New((DNAArrayRenderer*)cfw_create(DNAArrayRendererClass), shader);
+    return New((DNAArrayRenderer*)CFCreate(DNAArrayRendererClass), shader);
 }

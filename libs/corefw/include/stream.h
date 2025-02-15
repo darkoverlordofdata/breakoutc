@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2012, Jonathan Schleifer <js@webkeks.org>
+ * Copyright (c) 2018 Dark Overlord of Data <darkoverlordofdata@gmail.com>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -23,36 +24,35 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-
-#ifndef __COREFW_STREAM_H__
-#define __COREFW_STREAM_H__
-
+#pragma once
 #include <unistd.h>
 
 #include "class.h"
 #include "object.h"
 #include "string.h"
 
-struct cfw_stream_ops {
+typedef struct __CFStream* CFStreamRef;
+
+struct CFStreamOps {
 	ssize_t (*read)(void*, void*, size_t);
 	bool (*write)(void*, const void*, size_t);
 	bool (*at_end)(void*);
 	void (*close)(void*);
 };
 
-typedef struct CFWStream {
-	CFWObject obj;
-	struct cfw_stream_ops *ops;
+typedef struct __CFStream {
+	struct __CFObject obj;
+	struct CFStreamOps *ops;
 	char *cache;
 	size_t cache_len;
-} CFWStream;
+};
 
-extern CFWClass *cfw_stream;
-extern ssize_t cfw_stream_read(void*, void*, size_t);
-extern CFWString* cfw_stream_read_line(void*);
-extern bool cfw_stream_write(void*, const void*, size_t);
-extern bool cfw_stream_write_string(void*, const char*);
-extern bool cfw_stream_write_line(void*, const char*);
-extern bool cfw_stream_at_end(void*);
-extern void cfw_stream_close(void*);
-#endif
+extern CFClassRef CFStream;
+extern ssize_t CFStreamRead(void*, void*, size_t);
+extern CFStringRef CFStreamReadLine(void*);
+extern bool CFStreamWrite(void*, const void*, size_t);
+extern bool CFStreamWriteString(void*, const char*);
+extern bool CFStreamWriteLine(void*, const char*);
+extern bool CFStreamAtEnd(void*);
+extern void CFStreamClose(void*);
+

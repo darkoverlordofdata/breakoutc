@@ -27,12 +27,12 @@
  */
 static void dtor(void* self);
 
-const static CFWClass class = {      
+const static struct __CFClass class = {      
     .name = "DNAGame",             
     .size = sizeof(DNAGame), 
     .dtor = dtor     
 };                                  
-const CFWClass* DNAGameClass = &class;
+const CFClassRef DNAGameClass = &class;
 
 
 static void dtor(void* self)
@@ -89,7 +89,7 @@ method void* New(DNAGame* this, char* cstr, int width, int height, void* subclas
     this->subclass = subclass;
     this->override = vptr;
     srand(time(NULL));
-    this->title = cfw_strdup(cstr);
+    this->title = CFStrDup(cstr);
     this->len = strlen(cstr);
     this->keys = calloc(1024, 1);
     this->width = width;

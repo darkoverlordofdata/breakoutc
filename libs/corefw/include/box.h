@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2012, Jonathan Schleifer <js@webkeks.org>
+ * Copyright (c) 2018 Dark Overlord of Data <darkoverlordofdata@gmail.com>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -23,15 +24,11 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-
-#ifndef __COREFW_BOX_H__
-#define __COREFW_BOX_H__
-
+#pragma once
 #include "class.h"
 
-typedef struct CFWBox CFWBox;
-extern CFWClass *cfw_box;
-extern void* cfw_box_ptr(CFWBox*);
-extern uint32_t cfw_box_type(CFWBox*);
+typedef struct __CFBox* CFBoxRef;
+extern CFClassRef CFBox;
+extern void* CFBoxPtr(CFBoxRef);
+extern uint32_t CFBoxType(CFBoxRef);
 
-#endif

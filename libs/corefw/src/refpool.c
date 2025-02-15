@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2012, Jonathan Schleifer <js@webkeks.org>
+ * Copyright (c) 2018 Dark Overlord of Data <darkoverlordofdata@gmail.com>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -31,19 +32,19 @@
 #include "refpool.h"
 #include "array.h"
 
-struct CFWRefPool {
-	CFWObject obj;
+struct __CFRefPool {
+	struct __CFObject obj;
 	void **data;
 	size_t size;
-	CFWRefPool *prev, *next;
+	CFRefPoolRef prev, *next;
 };
 
-static CFWRefPool *top;
+static CFRefPoolRef top;
 
 static bool
 ctor(void *ptr, va_list args)
 {
-	CFWRefPool *pool = ptr;
+	CFRefPoolRef pool = ptr;
 
 	pool->data = NULL;
 	pool->size = 0;
@@ -63,14 +64,14 @@ ctor(void *ptr, va_list args)
 static void
 dtor(void *ptr)
 {
-	CFWRefPool *pool = ptr;
+	CFRefPoolRef pool = ptr;
 	size_t i;
 
 	if (pool->next != NULL)
-		cfw_unref(pool->next);
+		CFUnref(pool->next);
 
 	for (i = 0; i < pool->size; i++)
-		cfw_unref(pool->data[i]);
+		CFUnref(pool->data[i]);
 
 	if (pool->data != NULL)
 		free(pool->data);
@@ -82,7 +83,7 @@ dtor(void *ptr)
 }
 
 bool
-cfw_refpool_add(void *ptr)
+CFRefPoolAdd(void *ptr)
 {
 	void **ndata;
 
@@ -103,10 +104,10 @@ cfw_refpool_add(void *ptr)
 	return true;
 }
 
-static CFWClass class = {
-	.name = "CFWRefPool",
-	.size = sizeof(CFWRefPool),
+static struct __CFClass class = {
+	.name = "CFRefPool",
+	.size = sizeof(struct __CFRefPool),
 	.ctor = ctor,
 	.dtor = dtor
 };
-CFWClass *cfw_refpool = &class;
+CFClassRef CFRefPool = &class;

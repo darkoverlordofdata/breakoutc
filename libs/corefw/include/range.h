@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2012, Jonathan Schleifer <js@webkeks.org>
+ * Copyright (c) 2018 Dark Overlord of Data <darkoverlordofdata@gmail.com>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -23,16 +24,14 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
+#pragma once
+#include <stddef.h>
 
-#ifndef __COREFW_RANGE_H__
-#define __COREFW_RANGE_H__
-
-typedef struct cfw_range_t {
+typedef struct CFRange_t {
 	size_t start;
 	size_t length;
-} cfw_range_t;
+} CFRange_t;
 
-extern cfw_range_t cfw_range_all;
-extern cfw_range_t cfw_range(size_t, size_t);
+extern CFRange_t CFRangeAll;
+extern CFRange_t CFRange(size_t, size_t);
 
-#endif

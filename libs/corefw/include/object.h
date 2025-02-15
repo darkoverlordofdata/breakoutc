@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2012, Jonathan Schleifer <js@webkeks.org>
+ * Copyright (c) 2018 Dark Overlord of Data <darkoverlordofdata@gmail.com>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -23,27 +24,25 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-
-#ifndef __COREFW_OBJECT_H__
-#define __COREFW_OBJECT_H__
-
+#pragma once
 #include "class.h"
 
-typedef struct CFWObject {
-	CFWClass *cls;
+typedef struct __CFObject* CFObjectRef;
+
+struct __CFObject {
+	CFClassRef cls;
 	int ref_cnt;
-} CFWObject;
+} ;
 
-extern CFWClass *cfw_object;
-extern void* cfw_new(CFWClass*, ...);
-extern void* cfw_create(CFWClass*, ...);
-extern void* cfw_ref(void*);
-extern void cfw_unref(void*);
-extern void cfw_free(void*);
-extern CFWClass* cfw_class(void*);
-extern bool cfw_is(void*, CFWClass*);
-extern bool cfw_equal(void*, void*);
-extern uint32_t cfw_hash(void*);
-extern void* cfw_copy(void*);
+extern CFClassRef CFObject;
+extern void* CFNew(CFClassRef, ...);
+extern void* CFCreate(CFClassRef, ...);
+extern void* CFRef(void*);
+extern void CFUnref(void*);
+extern void CFFree(void*);
+extern CFClassRef CFClass(void*);
+extern bool CFIs(void*, CFClassRef);
+extern bool CFEqual(void*, void*);
+extern uint32_t CFHash(void*);
+extern void* CFCopy(void*);
 
-#endif

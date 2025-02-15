@@ -40,7 +40,6 @@
    http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/emt.html
    email: m-mat @ math.sci.hiroshima-u.ac.jp (remove space)
 */
-
 #pragma once
 #include "class.h"
 #include "object.h"
@@ -59,20 +58,20 @@
 // static unsigned long mt[MT19937_N]; /* the array for the state vector  */
 // static int mti=MT19937_N+1; /* mti==MT19937_N+1 means mt[MT19937_N] is not initialized */
 
-typedef struct CFWRandom CFWRandom;
-extern const CFWClass *CFWRandomClass;
+typedef struct __CFRandom* CFRandomRef;
+extern const CFClassRef CFRandomClass;
 
-struct CFWRandom {
-   CFWObject obj;
+struct __CFRandom {
+   struct __CFObject obj;
    int mti;
    unsigned long mt[MT19937_N];
 };
 
-// static CFWRandom* CFWRandomInstance = NULL;
+// static CFRandomRef CFRandomInstance = NULL;
 
-extern method void* New(CFWRandom* this);
-extern method void* New(CFWRandom* this, unsigned long seed);
-extern method void* New(CFWRandom* this, unsigned long seed[], int length);
+extern method void* New(CFRandomRef this);
+extern method void* New(CFRandomRef this, unsigned long seed);
+extern method void* New(CFRandomRef this, unsigned long seed[], int length);
 
 extern method unsigned long NextLong(void);
 extern method double NextDouble(void);

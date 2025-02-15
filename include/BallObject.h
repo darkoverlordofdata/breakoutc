@@ -19,14 +19,14 @@
 #include <dna.h>
 
 typedef struct BallObject BallObject;
-extern const CFWClass* BallObjectClass;
+extern const CFClassRef BallObjectClass;
 
 // BallObject holds the state of the Ball object inheriting
 // relevant state data from GameObject. Contains some extra
 // functionality specific to Breakout's ball object that
 // were too specific for within GameObject alone.
 struct BallObject { // extend GameObject
-    CFWObject obj;
+    struct __CFObject obj;
     Vec2 Position;
     Vec2 Size;
     Vec2 Velocity;
@@ -51,5 +51,5 @@ extern method char* ToString(BallObject*  this);
 
 static inline BallObject* NewBallObject(Vec2 Position, float Radius, Vec2 Velocity, DNATexture2D* Sprite)
 {
-    return New((BallObject*)cfw_create(BallObjectClass), Position, Radius, Velocity, Sprite);
+    return New((BallObject*)CFCreate(BallObjectClass), Position, Radius, Velocity, Sprite);
 }

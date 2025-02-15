@@ -7,12 +7,12 @@
 #include "file.h"
 #include "stream.h"
 
-struct CFWFS {
-    CFWString* (*getPath)(const char* path);
+struct CFFS {
+    CFStringRef (*getPath)(const char* path);
     char* const (*getRoot)();
-    CFWString* (*getPathRelativeRoot)(const char* path);
-    CFWString* (*getPathRelativeBinary)(const char* path);
-    CFWString* (*readTextFile)(char* path);
+    CFStringRef (*getPathRelativeRoot)(const char* path);
+    CFStringRef (*getPathRelativeBinary)(const char* path);
+    CFStringRef (*readTextFile)(char* path);
 };
 
-extern struct CFWFS CFWFS;
+extern struct CFFS CFFS;

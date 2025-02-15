@@ -23,7 +23,7 @@
 #endif
 
 typedef struct Demo Demo;
-extern const CFWClass *DemoClass;
+extern const CFClassRef DemoClass;
 struct DemoVtbl;
 typedef enum {
     GAME_ACTIVE,
@@ -33,7 +33,7 @@ typedef enum {
 
 
 struct Demo {
-    CFWObject obj;
+    struct __CFObject obj;
     void* subclass;
     struct DNAGameVtbl const* override;
     GLFWwindow* window;
@@ -71,7 +71,7 @@ struct Demo {
     bool suppressDraw;
 
     GameState State;
-    CFWArray* Levels;
+    CFArrayRef Levels;
     GLuint Level;
     int Lives;
 };
@@ -96,6 +96,6 @@ extern method void DoCollisions(Demo* this);
 
 static inline Demo* NewDemo(char* title, int width, int height)
 {
-    return New((Demo*)cfw_create(DemoClass), title, width, height);
+    return New((Demo*)CFCreate(DemoClass), title, width, height);
 }
 

@@ -19,7 +19,7 @@
 #include <dna.h>
 
 typedef struct Collision Collision;
-extern const CFWClass* CollisionClass;
+extern const CFClassRef CollisionClass;
 
 // Represents the four possible (collision) directions
 typedef enum {
@@ -31,7 +31,7 @@ typedef enum {
 
 /** Defines a Collision Result Tuple */
 struct Collision {
-    CFWObject obj;
+    struct __CFObject obj;
     bool IsTrue;
     Direction Dir;
     Vec2 Vec;
@@ -42,5 +42,5 @@ extern method char* ToString(Collision* this);
 
 static inline Collision* NewCollision(bool first, Direction second, Vec2 third)
 {
-    return New((Collision*)cfw_create(CollisionClass), first, second, third);
+    return New((Collision*)CFCreate(CollisionClass), first, second, third);
 }
